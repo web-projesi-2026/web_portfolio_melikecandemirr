@@ -120,7 +120,7 @@
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
+    <script src="assests/js/main.js"></script>
 </body>
 </html>
 
