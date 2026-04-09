@@ -704,5 +704,50 @@ a {
 }
 
 
+/* ===================================
+   MOBILE RESPONSIVE (768px ve altı)
+   =================================== */
+
+@media (max-width: 768px) {
+    /* Görsellerin taşmasını engelle */
+    img, svg, .hero-visual {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Flexbox Düzeni: Yan yana olanları alt alta getir */
+    .hero-content, .cards-grid, .footer-content {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-lg);
+        text-align: center;
+    }
+
+    /* Hamburger Menü Hazırlığı */
+    .navigation ul {
+        display: none; /* Başlangıçta gizle (JS ile açılacak) */
+        flex-direction: column;
+        width: 100%;
+        background: var(--dark-green);
+        position: absolute;
+        top: 100%;
+        left: 0;
+        padding: var(--spacing-md);
+    }
+
+    /* Hamburger İkonu İçin Buton (HTML'e ekleyeceğiz) */
+    .menu-toggle {
+        display: block;
+        font-size: 2rem;
+        color: var(--white);
+        cursor: pointer;
+    }
+
+    .navigation.active ul {
+        display: flex; /* JavaScript tetiklediğinde görünür yap */
+    }
+}
+
+
 
 
