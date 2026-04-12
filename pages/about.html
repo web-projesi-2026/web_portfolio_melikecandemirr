@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hakkında | Tech-Timeline</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <title>Hakkımda | Tech-Timeline</title>
+    <link rel="stylesheet" href="../assests/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -12,31 +12,58 @@
         <div class="header-content">
             <div class="logo">
                 <span class="logo-icon">⚙️</span>
-                <div class="logo-text"><h1>TECH-TIMELINE</h1><p>Dijital Müze</p></div>
+                <div class="logo-text">
+                    <h1>TECH-TIMELINE</h1>
+                    <p>Dijital Müze</p>
+                </div>
             </div>
             <nav class="navigation">
-                <ul>
-                    <li><a href="../index.php">Ana Sayfa</a></li>
-                    <li><a href="about.html" class="active">Hakkında</a></li>
-                    <li><a href="project.html">İcatlar</a></li>
-                    <li><a href="contact.html">İletişim</a></li>
+                <div class="menu-toggle" id="mobile-menu">
+                    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html" class="nav-link">Ana Sayfa</a></li>
+                    <li><a href="about.html" class="nav-link">Hakkımda</a></li>
+                    <li><a href="project.html" class="nav-link">Projeler</a></li>
+                    <li><a href="contact.html" class="nav-link">İletişim</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <section class="innovations">
-        <div class="section-header">
-            <h2>Proje Hakkında</h2>
-            <p>Ahi Evran Üniversitesi - Bilgisayar Programcılığı Bitirme Projesi</p>
-        </div>
-        <div class="card" style="max-width: 800px; margin: 0 auto; color: white; line-height: 1.6;">
-            <p>Bu proje, teknoloji dünyasının başlangıcından günümüze kadar gelen süreci dijital bir müze formatında sunmak amacıyla geliştirilmiştir. Kullanıcılar, ENIAC'tan günümüzün yapay zeka teknolojilerine kadar uzanan geniş bir yelpazeyi keşfedebilirler.</p>
-        </div>
-    </section>
+    <main>
+        <section class="about-hero">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h2 class="hero-title">Merhaba, Ben Melike 👋</h2>
+                    <p class="hero-subtitle">Teknolojiye meraklı bir yazılımcı adayı ve sağlık yönetimi öğrencisiyim. İki farklı disiplini dijital dünyada birleştiriyorum.</p>
+                </div>
+            </div>
+        </section>
 
-    <footer class="footer"><div class="footer-bottom"><p>&copy; 2026 Tech-Timeline | Melike Candemir</p></div></footer>
+        <section class="education-section">
+            <div class="section-header">
+                <h2>Eğitim Yolculuğum</h2>
+            </div>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>💻 Bilgisayar Programcılığı</h3>
+                    <p><strong>Ahi Evran Üniversitesi</strong></p>
+                    <p>Java (Swing), Web Geliştirme (PHP, MySQL) ve Bulut Bilişim üzerine uzmanlaşıyorum.</p>
+                </div>
+                <div class="card">
+                    <h3>⚕️ Tıbbi Dokümantasyon</h3>
+                    <p><strong>Anadolu Üniversitesi (AÖF)</strong></p>
+                    <p>Sağlık yönetimi süreçleri ve dokümantasyon üzerine akademik eğitimime devam ediyorum.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Melike Candemir | Ahi Evran Üniversitesi</p>
+    </footer>
+
+    <script src="../assests/js/main.js"></script>
 </body>
 </html>
-
-
