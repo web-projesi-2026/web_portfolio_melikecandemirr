@@ -28,9 +28,11 @@
                 </div>
             </div>
 
-            <nav class="navigation">
+            <nav class="navigation" id="main-nav">
                 <div class="menu-toggle" id="mobile-menu">
-                    <span>☰</span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
                 </div>
                 
                 <ul class="nav-menu">
@@ -66,7 +68,6 @@
                     <div class="floating-element element-1">
                         <svg width="120" height="120" viewBox="0 0 120 120">
                             <circle cx="60" cy="60" r="55" fill="none" stroke="#FFB81C" stroke-width="2" opacity="0.5"/>
-                            <circle cx="60" cy="60" r="45" fill="none" stroke="#00592D" stroke-width="2" opacity="0.5"/>
                             <path d="M30 60 Q60 30 90 60 Q60 90 30 60" fill="none" stroke="#FFB81C" stroke-width="2"/>
                         </svg>
                     </div>
@@ -87,36 +88,12 @@
                         <span class="card-year">1950'ler</span>
                     </div>
                     <h3>Bilgisayarların Doğuşu</h3>
-                    <p>İlk elektronik bilgisayarlar devasa odaları doldururken, bugünün dijital dünyasının temellerini attılar.</p>
+                    <p>İlk elektronik bilgisayarlar devasa odaları doldururken, bugünün dünyasının temellerini attılar.</p>
                     <div class="card-footer">
                         <a href="pages/icatlar.php" class="card-link">Detayları Gör →</a>
                     </div>
                 </div>
-
-                <div class="card innovation-card">
-                    <div class="card-header">
-                        <div class="card-icon">📱</div>
-                        <span class="card-year">1970'ler</span>
-                    </div>
-                    <h3>Kişisel Bilgisayar Devrimi</h3>
-                    <p>Apple ve IBM gibi markaların çıkışı, teknolojiyi herkesin evine ve masasına taşıdı.</p>
-                    <div class="card-footer">
-                        <a href="pages/icatlar.php" class="card-link">Detayları Gör →</a>
-                    </div>
                 </div>
-
-                <div class="card innovation-card">
-                    <div class="card-header">
-                        <div class="card-icon">🌐</div>
-                        <span class="card-year">1990'lar</span>
-                    </div>
-                    <h3>İnternet Çağı</h3>
-                    <p>Dünya Çapında Ağ (WWW) ile iletişim, ticaret ve bilgi paylaşımı tamamen evrim geçirdi.</p>
-                    <div class="card-footer">
-                        <a href="pages/icatlar.php" class="card-link">Detayları Gör →</a>
-                    </div>
-                </div>
-            </div>
         </section>
     </main>
 
