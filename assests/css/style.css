@@ -147,3 +147,25 @@ body { font-family: 'Montserrat', sans-serif; overflow-x: hidden; line-height: 1
     .hero-title { font-size: 2.2rem; }
     .card-image { height: 200px; }
 }
+
+/* ===================================
+   6. FOOTER (ALT BİLGİ) - YEŞİL VE ORTALI
+   =================================== */
+.footer {
+    background-color: var(--dark-green); /* Tekrar o güzel yeşil yaptık */
+    color: var(--white); /* Yazıları beyaz yaptık */
+    padding: 2.5rem 5%; /* Yukarıdan ve aşağıdan ferah boşluk */
+    text-align: center; /* Yazıyı tam merkeze mühürledik */
+    width: 100%;
+    margin-top: 4rem; /* İçerikle arasında boşluk bıraktık */
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Mobilde de düzgün durması için */
+@media (max-width: 768px) {
+    .footer {
+        padding: 2rem 5%;
+        font-size: 0.8rem;
+    }
+}
