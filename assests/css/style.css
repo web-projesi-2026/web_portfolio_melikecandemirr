@@ -1,29 +1,21 @@
 /* ===================================
-   TECH-TIMELINE: CSS STYLES
-   Ahi Evran Üniversitesi Kurumsal Renkleri
+   1. DEĞİŞKENLER & TEMEL SIFIRLAMA
    =================================== */
-
 :root {
     --dark-green: #00592D;
     --gold: #FFB81C;
     --light-green: #00854D;
-    --very-light-green: #E8F2ED;
     --white: #FFFFFF;
-    --light-gray: #F5F5F5;
-    --medium-gray: #E0E0E0;
     --text-color: #222222;
-    --spacing-xs: 0.5rem;
-    --spacing-sm: 1rem;
-    --spacing-md: 1.5rem;
-    --spacing-lg: 2rem;
-    --spacing-xl: 3rem;
-    --spacing-2xl: 4rem;
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-smooth: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    --transition: all 0.3s ease;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Montserrat', sans-serif;
     color: var(--text-color);
@@ -32,21 +24,16 @@ body {
     overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; font-weight: 900; }
-p { font-size: 0.95rem; color: #555555; }
-a { text-decoration: none; color: inherit; transition: var(--transition); }
-
 /* ===================================
-   HEADER & NAVIGATION
+   2. HEADER & MASAÜSTÜ NAVİGASYON
    =================================== */
-
 .header {
     background: linear-gradient(135deg, var(--dark-green) 0%, var(--light-green) 100%);
-    padding: var(--spacing-md) var(--spacing-xl);
+    padding: 1rem 5%;
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 10px 30px rgba(0, 89, 45, 0.15);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 .header-content {
@@ -55,141 +42,98 @@ a { text-decoration: none; color: inherit; transition: var(--transition); }
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
 }
 
-.logo { display: flex; align-items: center; gap: var(--spacing-md); }
-.logo-icon { font-size: 2.5rem; }
-.logo-text h1 { color: var(--white); font-size: 1.8rem; margin: 0; }
-.logo-text p { color: var(--gold); font-size: 0.75rem; font-weight: 600; margin: 0; }
+/* Logo Ayarları */
+.logo { display: flex; align-items: center; gap: 1rem; }
+.logo-icon { font-size: 2rem; }
+.logo-text h1 { color: var(--white); font-size: 1.5rem; }
+.logo-text p { color: var(--gold); font-size: 0.7rem; font-weight: bold; }
 
-/* Masaüstü Menü */
-.navigation ul {
-    display: flex;
+/* LAPTOPTA YAN YANA MENÜ (Önemli Kısım) */
+.nav-menu {
+    display: flex; /* Flexbox ile yan yana dizer */
     list-style: none;
-    gap: var(--spacing-lg);
+    gap: 2rem;
 }
 
 .nav-link {
     color: var(--white);
+    text-decoration: none;
     font-weight: 600;
     font-size: 0.9rem;
     text-transform: uppercase;
-    position: relative;
-    padding-bottom: 0.5rem;
+    transition: var(--transition);
 }
 
-.nav-link:hover { color: var(--gold); }
+.nav-link:hover, .nav-link.active {
+    color: var(--gold);
+}
 
-/* Hamburger İkonu - Masaüstünde Gizli */
+/* HAMBURGER İKONU - MASAÜSTÜNDE GİZLİ */
 .menu-toggle {
-    display: none;
-    font-size: 2rem;
-    color: var(--white);
+    display: none; 
+    flex-direction: column;
     cursor: pointer;
-    z-index: 1001;
+    gap: 5px;
+}
+
+.menu-toggle .bar {
+    width: 25px;
+    height: 3px;
+    background-color: var(--white);
+    transition: var(--transition);
 }
 
 /* ===================================
-   HERO & INNOVATIONS (GENEL)
+   3. İÇERİK ALANLARI (HERO & CARDS)
    =================================== */
-
-.hero {
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    padding: var(--spacing-2xl) var(--spacing-xl);
-    background: linear-gradient(180deg, var(--very-light-green) 0%, var(--white) 100%);
-}
-
-.hero-content {
-    max-width: 1400px;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-2xl);
-    align-items: center;
-}
-
-.hero-title { font-size: 3.5rem; color: var(--dark-green); margin-bottom: var(--spacing-lg); }
+.hero { padding: 4rem 5%; background: #f9f9f9; }
+.hero-content { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
+.hero-title { font-size: 3rem; color: var(--dark-green); margin-bottom: 1rem; }
 
 .cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: var(--spacing-xl);
-    padding: var(--spacing-2xl) 0;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
 }
 
 .card {
-    background: var(--white);
-    border-radius: 12px;
-    padding: var(--spacing-lg);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    border-top: 4px solid var(--gold);
-    transition: var(--transition-smooth);
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-top: 5px solid var(--gold);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
 }
 
-.card:hover { transform: translateY(-10px); }
-
 /* ===================================
-   FOOTER
+   4. MOBİL TASARIM (Media Query - 768px Altı)
    =================================== */
-.footer { background: var(--dark-green); color: var(--white); padding: var(--spacing-2xl) var(--spacing-xl); }
-.footer-bottom { text-align: center; margin-top: var(--spacing-xl); opacity: 0.6; }
-
-/* ===================================
-   RESPONSIVE DESIGN (MOBİL AYARLAR)
-   =================================== */
-
-/* ===================================
-   RESPONSIVE DESIGN (MOBİL AYARLAR)
-   =================================== */
-
 @media (max-width: 768px) {
     /* Hamburger İkonunu Göster */
-    .menu-toggle {
-        display: block !important; 
-        cursor: pointer !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        z-index: 9999;
-    }
+    .menu-toggle { display: flex; }
 
-    .menu-toggle span {
-        font-size: 30px;
-        color: var(--gold); /* Ahi Evran Sarısı */
-    }
-
-    /* Mobilde Menü Listesi Ayarları */
-    .navigation ul {
-        display: none; /* Başlangıçta gizli */
+    /* Menüyü Alt Alta Getir ve Gizle */
+    .nav-menu {
+        display: none; /* İlk başta kapalı */
         flex-direction: column;
         position: absolute;
         top: 100%;
         left: 0;
         width: 100%;
-        background: var(--dark-green);
-        padding: var(--spacing-lg);
+        background-color: var(--dark-green);
+        padding: 2rem;
         text-align: center;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        gap: 1.5rem;
     }
 
-    /* JS ile 'active' klası gelince menüyü aç */
-    .navigation.active ul {
-        display: flex !important;
+    /* JavaScript 'active' klası eklediğinde menü açılır */
+    .navigation.active .nav-menu {
+        display: flex;
     }
 
-    /* İçerikleri mobilde alt alta diz */
-    .hero-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
-
-    .hero-title {
-        font-size: 2.2rem;
-    }
-
-    .cards-grid {
-        grid-template-columns: 1fr;
-    }
+    /* Hero ve Kartları Mobilde Tek Sütun Yap */
+    .hero-content { grid-template-columns: 1fr; text-align: center; }
+    .hero-title { font-size: 2rem; }
 }
