@@ -5,238 +5,90 @@
     --dark-green: #00592D;
     --gold: #FFB81C;
     --light-green: #00854D;
+    --very-light-green: #E8F2ED;
     --white: #FFFFFF;
     --text-color: #222222;
     --transition: all 0.3s ease;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
 
-body {
-    font-family: 'Montserrat', sans-serif;
-    color: var(--text-color);
-    background-color: var(--white);
-    line-height: 1.6;
-    overflow-x: hidden;
-}
-
-/* ===================================
-   2. HEADER & MASAÜSTÜ NAVİGASYON
-   =================================== */
+/* HEADER */
 .header {
     background: linear-gradient(135deg, var(--dark-green) 0%, var(--light-green) 100%);
     padding: 1rem 5%;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    position: sticky; top: 0; z-index: 1000;
 }
-
 .header-content {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    max-width: 1400px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
 }
+.logo { display: flex; align-items: center; gap: 1rem; color: white; }
+.nav-menu { display: flex; list-style: none; gap: 2rem; }
+.nav-link { color: white; text-decoration: none; font-weight: 600; text-transform: uppercase; }
 
-/* Logo Ayarları */
-.logo { display: flex; align-items: center; gap: 1rem; }
-.logo-icon { font-size: 2rem; }
-.logo-text h1 { color: var(--white); font-size: 1.5rem; }
-.logo-text p { color: var(--gold); font-size: 0.7rem; font-weight: bold; }
-
-/* LAPTOPTA YAN YANA MENÜ (Önemli Kısım) */
-.nav-menu {
-    display: flex; /* Flexbox ile yan yana dizer */
-    list-style: none;
-    gap: 2rem;
-}
-
-.nav-link {
-    color: var(--white);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    transition: var(--transition);
-}
-
-.nav-link:hover, .nav-link.active {
-    color: var(--gold);
-}
-
-/* HAMBURGER İKONU - MASAÜSTÜNDE GİZLİ */
-.menu-toggle {
-    display: none; 
-    flex-direction: column;
-    cursor: pointer;
-    gap: 5px;
-}
-
-.menu-toggle .bar {
-    width: 25px;
-    height: 3px;
-    background-color: var(--white);
-    transition: var(--transition);
-}
-
-/* ===================================
-   3. İÇERİK ALANLARI (HERO & CARDS)
-   =================================== */
-.hero { 
-    padding: 6rem 10%; /* Payları artırarak laptopta daha iyi odaklanma sağladık */
-    background: linear-gradient(180deg, var(--very-light-green) 0%, var(--white) 100%);
+/* HERO SECTION */
+.hero {
+    padding: 6rem 10%;
     min-height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center; /* İçeriği laptopta ortalar */
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(180deg, var(--very-light-green) 0%, var(--white) 100%);
 }
-
-.hero-content { 
-    max-width: 1200px; /* Yazıların çok fazla sola kaymasını engeller, merkeze sabitler */
-    width: 100%;
-    display: grid; 
-    grid-template-columns: 1.2fr 0.8fr; /* Yazı alanı ve görsel alanını dengeledik */
-    gap: 4rem; 
-    align-items: center; 
+.hero-content {
+    max-width: 1200px; width: 100%;
+    display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; align-items: center;
 }
+.hero-title { font-size: 3.5rem; color: var(--dark-green); margin-bottom: 1.5rem; }
 
-.hero-text {
-    text-align: left; /* Yazılar kutu içinde sola yaslı kalsın ama kutu ortada olsun */
+/* BUTONLAR (Alt alta ve sevimli) */
+.hero-buttons {
+    display: flex; flex-direction: column; gap: 20px; margin-top: 30px;
+    align-items: flex-start;
 }
-
-.hero-title { 
-    font-size: 3.5rem; /* Laptopta başlığı biraz daha büyüttük */
-    color: var(--dark-green); 
-    margin-bottom: 1.5rem;
-    line-height: 1.2;
+.btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 15px 35px; border-radius: 50px; font-weight: 700;
+    text-decoration: none; min-width: 280px; transition: var(--transition);
 }
+.btn-primary { background: var(--dark-green); color: white; }
+.btn-secondary { border: 2px solid var(--dark-green); color: var(--dark-green); }
+.btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 
-/* Sağdaki İkonu (SVG) Büyütme */
-.hero-visual {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+/* VISUAL */
+.hero-visual { display: flex; justify-content: center; }
 
-.floating-element svg {
-    width: 350px; /* İkonu iyice büyüttük (Eskisi 120px civarıydı) */
-    height: 350px;
-    filter: drop-shadow(0 15px 30px rgba(0, 89, 45, 0.2)); /* Şık bir gölge verdik */
-}
-
-.cards-grid {
-    max-width: 1200px;
-    margin: 0 auto; /* Kartları da laptopta ortalar */
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    padding: 3rem 0;
-}
-
-.card {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 10px;
-    border-top: 5px solid var(--gold);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-}
-
-/* ===================================
-   İCATLAR BÖLÜMÜ (Innovations) 
-   =================================== */
+/* INNOVATIONS (Ortalı Başlık ve Kartlar) */
 .innovations {
-    padding: 5rem 10%;
-    background-color: #fcfcfc;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Başlığı ve kartları genel olarak ortalar */
-    width: 100%;
+    padding: 5rem 10%; display: flex; flex-direction: column; align-items: center;
 }
+.section-header { text-align: center; margin-bottom: 3rem; }
+.section-header h2 { font-size: 2.8rem; color: var(--dark-green); }
 
-.section-header {
-    text-align: center; /* Yazıları ortalar */
-    margin-bottom: 3rem;
-    width: 100%;
-}
-
-.section-header h2 {
-    font-size: 2.8rem;
-    color: var(--dark-green);
-    margin-bottom: 1rem;
-}
-
-/* KART GRİDİ - Laptopta ortada kalması için */
 .cards-grid {
-    max-width: 1200px; /* Çok yayılmasın */
-    margin: 0 auto;    /* Kutu olarak ortalansın */
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
-    width: 100%;
-    justify-content: center; /* Kartlar azsa merkezde toplansın */
+    max-width: 1200px; margin: 0 auto; width: 100%;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem; justify-content: center;
 }
-
 .card {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    border-top: 5px solid var(--gold);
+    background: white; padding: 2.5rem; border-radius: 12px;
+    border-top: 5px solid var(--gold); text-align: center;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    text-align: center; /* Kart içindeki yazıları da ortaladık */
 }
 
+/* FOOTER */
+.footer { background: var(--dark-green); color: white; padding: 2rem; text-align: center; }
 
-
-
-
-
-
-/* ===================================
-   4. MOBİL TASARIM (Media Query - 768px Altı)
-   =================================== */
+/* MOBİL TASARIM */
 @media (max-width: 768px) {
-    .menu-toggle { display: flex; }
-
+    .menu-toggle { display: flex; flex-direction: column; gap: 5px; cursor: pointer; }
+    .menu-toggle .bar { width: 25px; height: 3px; background: white; }
     .nav-menu {
-        display: none; 
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background-color: var(--dark-green);
-        padding: 2rem;
-        text-align: center;
-        gap: 1.5rem;
+        display: none; position: absolute; top: 100%; left: 0; width: 100%;
+        background: var(--dark-green); flex-direction: column; padding: 2rem;
     }
-
-    .navigation.active .nav-menu {
-        display: flex;
-    }
-
-    /* MOBİLDE ORTALAMA: Yazılar tam merkeze gelir */
-    .hero-content { 
-        grid-template-columns: 1fr; 
-        text-align: center; 
-        gap: 3rem;
-    }
-
-    .hero-text {
-        text-align: center;
-    }
-
-    .hero-title { 
-        font-size: 2.2rem; 
-    }
-
-    .floating-element svg {
-        width: 200px; /* Mobilde taşmasın diye biraz küçülttük */
-        height: 200px;
-    }
+    .navigation.active .nav-menu { display: flex; }
+    .hero-content { grid-template-columns: 1fr; text-align: center; }
+    .hero-buttons { align-items: center; }
+    .hero-title { font-size: 2.2rem; }
 }
