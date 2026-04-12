@@ -88,15 +88,55 @@ body {
 /* ===================================
    3. İÇERİK ALANLARI (HERO & CARDS)
    =================================== */
-.hero { padding: 4rem 5%; background: #f9f9f9; }
-.hero-content { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
-.hero-title { font-size: 3rem; color: var(--dark-green); margin-bottom: 1rem; }
+.hero { 
+    padding: 6rem 10%; /* Payları artırarak laptopta daha iyi odaklanma sağladık */
+    background: linear-gradient(180deg, var(--very-light-green) 0%, var(--white) 100%);
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* İçeriği laptopta ortalar */
+}
+
+.hero-content { 
+    max-width: 1200px; /* Yazıların çok fazla sola kaymasını engeller, merkeze sabitler */
+    width: 100%;
+    display: grid; 
+    grid-template-columns: 1.2fr 0.8fr; /* Yazı alanı ve görsel alanını dengeledik */
+    gap: 4rem; 
+    align-items: center; 
+}
+
+.hero-text {
+    text-align: left; /* Yazılar kutu içinde sola yaslı kalsın ama kutu ortada olsun */
+}
+
+.hero-title { 
+    font-size: 3.5rem; /* Laptopta başlığı biraz daha büyüttük */
+    color: var(--dark-green); 
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+/* Sağdaki İkonu (SVG) Büyütme */
+.hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.floating-element svg {
+    width: 350px; /* İkonu iyice büyüttük (Eskisi 120px civarıydı) */
+    height: 350px;
+    filter: drop-shadow(0 15px 30px rgba(0, 89, 45, 0.2)); /* Şık bir gölge verdik */
+}
 
 .cards-grid {
+    max-width: 1200px;
+    margin: 0 auto; /* Kartları da laptopta ortalar */
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-    padding: 2rem 0;
+    padding: 3rem 0;
 }
 
 .card {
@@ -111,12 +151,10 @@ body {
    4. MOBİL TASARIM (Media Query - 768px Altı)
    =================================== */
 @media (max-width: 768px) {
-    /* Hamburger İkonunu Göster */
     .menu-toggle { display: flex; }
 
-    /* Menüyü Alt Alta Getir ve Gizle */
     .nav-menu {
-        display: none; /* İlk başta kapalı */
+        display: none; 
         flex-direction: column;
         position: absolute;
         top: 100%;
@@ -128,12 +166,27 @@ body {
         gap: 1.5rem;
     }
 
-    /* JavaScript 'active' klası eklediğinde menü açılır */
     .navigation.active .nav-menu {
         display: flex;
     }
 
-    /* Hero ve Kartları Mobilde Tek Sütun Yap */
-    .hero-content { grid-template-columns: 1fr; text-align: center; }
-    .hero-title { font-size: 2rem; }
+    /* MOBİLDE ORTALAMA: Yazılar tam merkeze gelir */
+    .hero-content { 
+        grid-template-columns: 1fr; 
+        text-align: center; 
+        gap: 3rem;
+    }
+
+    .hero-text {
+        text-align: center;
+    }
+
+    .hero-title { 
+        font-size: 2.2rem; 
+    }
+
+    .floating-element svg {
+        width: 200px; /* Mobilde taşmasın diye biraz küçülttük */
+        height: 200px;
+    }
 }
