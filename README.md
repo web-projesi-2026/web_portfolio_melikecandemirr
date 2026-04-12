@@ -31,3 +31,5 @@ bu içeriklere yorum yaparak etkileşime girebilirler.
 
 ## Canlı Link
 Henüz yayınlanmadı.
+
+##Bu proje responsive tasarım ve GitHub yönetimi becerilerini içerir.
