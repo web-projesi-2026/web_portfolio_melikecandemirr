@@ -3,52 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İcatlar | Tech-Timeline</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <title>Projeler | Tech-Timeline</title>
+    <link rel="stylesheet" href="../assests/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="header">
         <div class="header-content">
             <div class="logo">
                 <span class="logo-icon">⚙️</span>
-                <div class="logo-text"><h1>TECH-TIMELINE</h1><p>Dijital Müze</p></div>
+                <div class="logo-text">
+                    <h1>TECH-TIMELINE</h1>
+                    <p>Dijital Müze</p>
+                </div>
             </div>
             <nav class="navigation">
-                <ul>
-                    <li><a href="../index.php">Ana Sayfa</a></li>
-                    <li><a href="about.html">Hakkında</a></li>
-                    <li><a href="project.html" class="active">İcatlar</a></li>
-                    <li><a href="contact.html">İletişim</a></li>
+                <div class="menu-toggle" id="mobile-menu">
+                    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html" class="nav-link">Ana Sayfa</a></li>
+                    <li><a href="about.html" class="nav-link">Hakkımda</a></li>
+                    <li><a href="project.html" class="nav-link">Projeler</a></li>
+                    <li><a href="contact.html" class="nav-link">İletişim</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <section class="innovations">
-        <div class="section-header">
-            <h2>Teknolojik İcatlar</h2>
-            <p>Müze koleksiyonumuzdaki öne çıkan buluşlar</p>
-        </div>
-        <div class="cards-grid">
-            <div class="card">
-                <div class="card-header"><span class="card-year">1946</span></div>
-                <h3>ENIAC</h3>
-                <p>İlk elektronik veri işlemcisi ve modern bilgisayarın atası.</p>
+    <main>
+        <section class="innovations">
+            <div class="section-header">
+                <h2>Teknoloji Koleksiyonu</h2>
+                <p>İnsanlık tarihini değiştiren diğer önemli dijital dönüm noktaları.</p>
             </div>
-            <div class="card">
-                <div class="card-header"><span class="card-year">1989</span></div>
-                <h3>World Wide Web</h3>
-                <p>Tim Berners-Lee tarafından geliştirilen internetin görsel yüzü.</p>
-            </div>
-            <div class="card">
-                <div class="card-header"><span class="card-year">2020+</span></div>
-                <h3>Generative AI</h3>
-                <p>Yaratıcı içerik üretebilen yeni nesil yapay zeka sistemleri.</p>
-            </div>
-        </div>
-    </section>
 
-    <footer class="footer"><div class="footer-bottom"><p>&copy; 2026 Tech-Timeline | Melike Candemir</p></div></footer>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200" alt="Yapay Zeka">
+                    </div>
+                    <h3>🤖 Yapay Zeka (AI)</h3>
+                    <p>Veriyi bilgiye, bilgiyi karara dönüştüren akıllı algoritmaların yükselişi.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=1200" alt="Bulut Bilişim">
+                    </div>
+                    <h3>☁️ Bulut Bilişim</h3>
+                    <p>Verilerin fiziksel sınırlardan kurtulup her an her yerde erişilebilir olduğu yeni çağ.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?q=80&w=1200" alt="Gıda Kurtarma">
+                    </div>
+                    <h3>🍎 Atma Sat Sistemi</h3>
+                    <p>Yerel işletmeler için geliştirdiğim akıllı gıda kurtarma ve yönetim sistemi.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Melike Candemir | Ahi Evran Üniversitesi</p>
+    </footer>
+
+    <script src="../assests/js/main.js"></script>
 </body>
 </html>
-
