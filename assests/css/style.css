@@ -148,6 +148,56 @@ body {
 }
 
 /* ===================================
+   İCATLAR BÖLÜMÜ (Innovations) 
+   =================================== */
+.innovations {
+    padding: 5rem 10%;
+    background-color: #fcfcfc;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Başlığı ve kartları genel olarak ortalar */
+    width: 100%;
+}
+
+.section-header {
+    text-align: center; /* Yazıları ortalar */
+    margin-bottom: 3rem;
+    width: 100%;
+}
+
+.section-header h2 {
+    font-size: 2.8rem;
+    color: var(--dark-green);
+    margin-bottom: 1rem;
+}
+
+/* KART GRİDİ - Laptopta ortada kalması için */
+.cards-grid {
+    max-width: 1200px; /* Çok yayılmasın */
+    margin: 0 auto;    /* Kutu olarak ortalansın */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    justify-content: center; /* Kartlar azsa merkezde toplansın */
+}
+
+.card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    border-top: 5px solid var(--gold);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    text-align: center; /* Kart içindeki yazıları da ortaladık */
+}
+
+
+
+
+
+
+
+/* ===================================
    4. MOBİL TASARIM (Media Query - 768px Altı)
    =================================== */
 @media (max-width: 768px) {
