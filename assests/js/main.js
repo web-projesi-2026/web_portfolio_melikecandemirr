@@ -1,8 +1,33 @@
-// Mobil Menü Açma/Kapatma Fonksiyonu
-const menu = document.querySelector('#mobile-menu');
-const nav = document.querySelector('.navigation');
+/* Tech-Timeline Dijital Müze Projesi 
+   Geliştirici: Melike Candemir
+   Görev: Mobil Menü Kontrolü
+*/
 
-// Menü ikonuna tıklandığında 'active' class'ını ekle veya çıkar
-menu.addEventListener('click', () => {
-    nav.classList.toggle('active');
+document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.querySelector('#mobile-menu');
+    const navigation = document.querySelector('.navigation');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    // 1. Hamburger İkonuna Tıklayınca Menüyü Aç/Kapat
+    if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            navigation.classList.toggle('active');
+            
+            // İsteğe bağlı: Menü açıkken sayfanın arkada kaymasını engeller
+            if (navigation.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        });
+    }
+
+    // 2. Bir Linke Tıklanırsa Menüyü Otomatik Kapat
+    // (Özellikle Zaman Tüneli gibi sayfa içi linklerde çok işe yarar)
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navigation.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+    });
 });
