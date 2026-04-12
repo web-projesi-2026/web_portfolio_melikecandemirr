@@ -1,14 +1,10 @@
-// main.js içeriği
-window.onload = function() {
+document.addEventListener('DOMContentLoaded', () => {
     const menu = document.querySelector('#mobile-menu');
     const nav = document.querySelector('.navigation');
 
     if (menu) {
-        menu.onclick = function() {
+        menu.addEventListener('click', () => {
             nav.classList.toggle('active');
-            console.log("Menüye tıklandı!"); // Çalıştığını anlamak için
-        };
-    } else {
-        console.error("Hata: #mobile-menu bulunamadı!");
+        });
     }
-};
+});
