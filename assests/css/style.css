@@ -37,10 +37,34 @@ html, body {
 .btn-primary { background: var(--dark-green); color: white; }
 .btn-secondary { border: 2px solid var(--dark-green); color: var(--dark-green); }
 
-/* 4. İCATLAR (KARTLAR) */
+/* 4. İCATLAR (KARTLAR VE LİNKLER) */
 .innovations { padding: 4rem 10%; text-align: center; }
 .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 3rem; }
-.card { padding: 20px; background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid var(--gold); }
+
+/* Kart linkinin varsayılan mavi rengini ve alt çizgisini kaldırır */
+.card-link {
+    text-decoration: none;
+    color: inherit; /* Yazı rengini karttan alır */
+    display: block; /* Tüm alanı tıklanabilir yapar */
+}
+
+.card { 
+    padding: 20px; 
+    background: white; 
+    border-radius: 15px; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+    border-top: 5px solid var(--gold);
+    cursor: pointer; /* Fare gelince el ikonu çıkar */
+    transition: var(--transition);
+    height: 100%; /* Kartların boyunu eşitler */
+}
+
+/* Üzerine gelince kartın yukarı kayması ve gölge efekti */
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
 .card-image img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; }
 
 /* 5. FOOTER (MÜHÜRLÜ YEŞİL ALAN) */
