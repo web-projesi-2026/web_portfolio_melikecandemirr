@@ -91,81 +91,53 @@ body { font-family: 'Montserrat', sans-serif; overflow-x: hidden; line-height: 1
 .card h3 { font-size: 1.5rem; color: var(--dark-green); margin-bottom: 20px; }
 .card p { color: #444; line-height: 1.8; font-size: 1rem; }
 
-/* ===================================
-   5. MOBİL TASARIM (RESPONSIVE)
-   =================================== */
+/* --- MOBİL TAŞMA VE YANA KAYMA ÇÖZÜMÜ --- */
+
+/* 1. Tüm sayfanın sağa kaymasını kökten engelle */
+html, body {
+    max-width: 100%;
+    overflow-x: hidden; /* Sağ tarafa taşan her şeyi gizler */
+    position: relative;
+}
+
 @media (max-width: 950px) {
-    /* 1. Header İçeriğini Yanlara Yasla */
+    /* 2. Header içeriğinin taşmasını engelle */
     .header-content {
-        display: flex;
-        justify-content: space-between; /* Logo sola, Menü sağa */
-        align-items: center;
-        flex-wrap: nowrap; /* Mobilde üst üste binmesinler */
-    }
-
-    /* 2. Hamburger Menü İkonunu Görünür ve Sağda Tut */
-    .menu-toggle {
-        display: flex !important; /* Gizliyse görünür yap */
-        flex-direction: column;
-        gap: 5px;
-        cursor: pointer;
-        z-index: 1001;
-        padding: 10px; /* Tıklama alanını genişlettik */
-    }
-
-    /* Çizgilerin rengi ve boyutu */
-    .menu-toggle .bar {
-        width: 30px;
-        height: 3px;
-        background-color: var(--white); /* Yeşil üzerinde beyaz çok net görünür */
-        transition: var(--transition);
-        border-radius: 3px;
-    }
-
-    /* 3. Menü Linklerini Gizle (Tıklayınca Açılacak Şekilde) */
-    .nav-menu {
-        display: none; /* Varsayılan olarak kapalı */
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
         width: 100%;
-        background-color: var(--dark-green);
-        padding: 20px;
-        text-align: center;
-        gap: 15px;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        padding: 0 15px; /* Kenarlardan güvenli boşluk */
+        box-sizing: border-box;
     }
 
-    /* JavaScript tıklandığında bu sınıf devreye girer */
-    .navigation.active .nav-menu {
+    /* 3. Kartların ve içeriğin dışarı çıkmasını engelle */
+    .innovations, .hero {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .cards-grid {
         display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 25px;
     }
 
-    /* Diğer Mobil Ayarlar */
-    .hero-content { grid-template-columns: 1fr; text-align: center; }
-    .hero-title { font-size: 2.2rem; }
-    .card-image { height: 200px; }
-}
+    .card {
+        width: 100%; /* Kartların genişliğini ekranla sınırla */
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
 
-/* ===================================
-   6. FOOTER (ALT BİLGİ) - YEŞİL VE ORTALI
-   =================================== */
-.footer {
-    background-color: var(--dark-green); /* Tekrar o güzel yeşil yaptık */
-    color: var(--white); /* Yazıları beyaz yaptık */
-    padding: 2.5rem 5%; /* Yukarıdan ve aşağıdan ferah boşluk */
-    text-align: center; /* Yazıyı tam merkeze mühürledik */
-    width: 100%;
-    margin-top: 4rem; /* İçerikle arasında boşluk bıraktık */
-    font-size: 0.9rem;
-    font-weight: 500;
-}
+    /* 4. Resimlerin kapladığı alanı sabitle */
+    .card-image {
+        width: 100%;
+        max-width: 100%;
+    }
 
-/* Mobilde de düzgün durması için */
-@media (max-width: 768px) {
-    .footer {
-        padding: 2rem 5%;
-        font-size: 0.8rem;
+    /* 5. Yazıların taşmasını engelle (Çok uzun kelimeler için) */
+    h1, h2, h3, p {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 }
