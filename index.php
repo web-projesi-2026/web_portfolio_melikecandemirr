@@ -22,19 +22,15 @@
                     <p>Dijital Müze</p>
                 </div>
             </div>
-
             <nav class="navigation">
                 <div class="menu-toggle" id="mobile-menu">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
+                    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
                 </div>
-                
                 <ul class="nav-menu">
-                    <li><a href="index.php" class="nav-link">Ana Sayfa</a></li>
-                    <li><a href="pages/zaman-tuneli.php" class="nav-link">Zaman Tüneli</a></li>
-                    <li><a href="pages/icatlar.php" class="nav-link">İcatlar</a></li>
-                    <li><a href="pages/iletisim.php" class="nav-link">İletişim</a></li>
+                    <li><a href="index.html" class="nav-link">Ana Sayfa</a></li>
+                    <li><a href="pages/about.html" class="nav-link">Hakkımda</a></li>
+                    <li><a href="pages/project.html" class="nav-link">Projeler</a></li>
+                    <li><a href="pages/contact.html" class="nav-link">İletişim</a></li>
                 </ul>
             </nav>
         </div>
@@ -44,48 +40,25 @@
         <section class="hero">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h2 class="hero-title">Teknoloji Tarihinin Yolculuğuna Hoş Geldiniz</h2>
-                    <p class="hero-subtitle">Geçmişten geleceğe uzanan dijital bir yolculuk. İnsanlığın en büyük buluşlarını keşfedin.</p>
-                    
+                    <h2 class="hero-title">Teknoloji Tarihine Hoş Geldiniz</h2>
+                    <p class="hero-subtitle">Geçmişten geleceğe dijital bir yolculuk. İnsanlığın en büyük buluşlarını keşfedin.</p>
                     <div class="hero-buttons">
-                        <a href="pages/zaman-tuneli.php" class="btn btn-primary">
-                            <span>💻</span> Keşfetmeye Başla
-                        </a>
-                        <a href="pages/iletisim.php" class="btn btn-secondary">
-                            <span>✨</span> Bize Ulaşın <span>🤗</span>
-                        </a>
+                        <a href="pages/project.html" class="btn btn-primary">💻 Keşfetmeye Başla</a>
+                        <a href="pages/contact.html" class="btn btn-secondary">✨ Bize Ulaşın 🤗</a>
                     </div>
                 </div>
-                
                 <div class="hero-visual">
                     <div class="floating-element">
                         <svg width="350" height="350" viewBox="0 0 120 120">
-                            <circle cx="60" cy="60" r="55" fill="none" stroke="#FFB81C" stroke-width="4"/>
-                            <circle cx="60" cy="60" r="40" fill="none" stroke="#00592D" stroke-width="4"/>
-                            <path d="M30 60 Q60 30 90 60 Q60 90 30 60" fill="none" stroke="#FFB81C" stroke-width="3"/>
+                            <circle cx="60" cy="60" r="55" fill="none" stroke="#FFB81C" stroke-width="3"/>
+                            <path d="M30 60 Q60 30 90 60 Q60 90 30 60" fill="none" stroke="#00592D" stroke-width="3"/>
                         </svg>
                     </div>
                 </div>
             </div>
         </section>
-
-        <section class="innovations">
-            <div class="section-header">
-                <h2>Tarih Boyunca Büyük İcatlar</h2>
-                <p>Teknolojinin sınırlarını genişleten dönüm noktaları</p>
-            </div>
-            <div class="cards-grid">
-                <div class="card"><h3>💻 Bilgisayar</h3><p>Dijital çağın temeli.</p></div>
-                <div class="card"><h3>📱 Mobil</h3><p>Her an yanımızda.</p></div>
-                <div class="card"><h3>🌐 İnternet</h3><p>Dünyayı bağlar.</p></div>
-            </div>
-        </section>
     </main>
-
-    <footer class="footer">
-        <p>&copy; 2026 Tech-Timeline | Melike Candemir</p>
-    </footer>
-
+    <footer class="footer"><p>&copy; 2026 Melike Candemir | Ahi Evran Üniversitesi</p></footer>
     <script src="assests/js/main.js"></script>
 </body>
 </html>
