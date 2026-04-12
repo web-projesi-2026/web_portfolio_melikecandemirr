@@ -58,11 +58,14 @@
                     <p class="hero-subtitle">
                         Geçmişten geleceğe uzanan dijital bir yolculuk. İnsanlığın en büyük buluşlarını keşfedin ve teknolojinin evrimini takip edin.
                     </p>
-                    <div class="hero-buttons">
-                        <a href="pages/zaman-tuneli.php" class="btn btn-primary">Keşfetmeye Başla</a>
-                        <a href="pages/iletisim.php" class="btn btn-secondary">Bize Ulaşın</a>
-                    </div>
-                </div>
+                  <div class="hero-buttons">
+    <a href="pages/zaman-tuneli.php" class="btn btn-primary">
+        💻 Keşfetmeye Başla
+    </a>
+    <a href="pages/iletisim.php" class="btn btn-secondary">
+        ✨ Bize Ulaşın 🤗
+    </a>
+</div>
                 
                 <div class="hero-visual">
                     <div class="floating-element element-1">
