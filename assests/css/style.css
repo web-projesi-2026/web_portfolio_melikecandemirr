@@ -1,7 +1,7 @@
 /* 1. TEMEL AYARLAR */
 :root { 
     --dark-green: #00592D; 
-    --gold: #FFB81C; 
+    --gold: ##FFC107; 
     --white: #FFFFFF; 
     --transition: all 0.3s ease;
 }
