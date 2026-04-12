@@ -4,39 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>İletişim | Tech-Timeline</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assests/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="header">
         <div class="header-content">
             <div class="logo">
-                <span class="logo-icon">✉️</span>
-                <div class="logo-text"><h1>BİZE ULAŞIN</h1><p>Ahi Evran Üniversitesi</p></div>
+                <span class="logo-icon">⚙️</span>
+                <div class="logo-text">
+                    <h1>TECH-TIMELINE</h1>
+                    <p>Dijital Müze</p>
+                </div>
             </div>
             <nav class="navigation">
-                <ul>
-                    <li><a href="../index.php">Ana Sayfa</a></li>
-                    <li><a href="about.html">Hakkında</a></li>
-                    <li><a href="project.html">İcatlar</a></li>
-                    <li><a href="contact.html" class="active">İletişim</a></li>
+                <div class="menu-toggle" id="mobile-menu">
+                    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html" class="nav-link">Ana Sayfa</a></li>
+                    <li><a href="about.html" class="nav-link">Hakkımda</a></li>
+                    <li><a href="project.html" class="nav-link">Projeler</a></li>
+                    <li><a href="contact.html" class="nav-link">İletişim</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <section class="innovations">
-        <div class="section-header">
-            <h2>İletişim</h2>
-            <p>Melike Candemir - Bilgisayar Programcılığı</p>
-        </div>
-        <div style="text-align: center; color: white; padding: 40px; background: rgba(0,89,45,0.3); border-radius: 15px; max-width: 500px; margin: 0 auto; border: 1px solid #FFB81C;">
-            <p>📧 <strong>E-posta:</strong> melike@example.com</p>
-            <p>📍 <strong>Konum:</strong> Kırşehir / Türkiye</p>
-            <p>🏛 <strong>Okul:</strong> Ahi Evran Üniversitesi</p>
-        </div>
-    </section>
+    <main class="contact-main">
+        <section class="innovations">
+            <div class="section-header">
+                <h2>Bize Ulaşın</h2>
+                <p>Sorularınız veya iş birliği için mesaj gönderebilirsiniz.</p>
+            </div>
+            
+            <div class="contact-container">
+                <form class="card" style="max-width: 600px; margin: 0 auto; text-align: left;">
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Ad Soyad</label>
+                        <input type="text" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">E-posta</label>
+                        <input type="email" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Mesajınız</label>
+                        <textarea rows="5" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; cursor: pointer;">Gönder ✨</button>
+                </form>
+            </div>
+        </section>
+    </main>
 
-    <footer class="footer"><div class="footer-bottom"><p>&copy; 2026 Tech-Timeline | Melike Candemir</p></div></footer>
+    <footer class="footer">
+        <p>&copy; 2026 Melike Candemir | Ahi Evran Üniversitesi</p>
+    </footer>
+
+    <script src="../assests/js/main.js"></script>
 </body>
 </html>
-
