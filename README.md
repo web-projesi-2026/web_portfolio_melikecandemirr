@@ -32,7 +32,6 @@ bu içeriklere yorum yaparak etkileşime girebilirler.
 3. İndirdiğiniz klasörü sunucunuzun "htdocs" klasörüne kopyalayın.
 4. Tarayıcınızın adres çubuğuna "localhost/Tech-Timeline" yazarak projeyi görüntüleyebilirsiniz.
 
-## Canlı Link
-Henüz yayınlanmadı.
+
 
 ##Bu proje responsive tasarım ve GitHub yönetimi becerilerini içerir.Mobilde aktif olan hamburger menü mevcut.
