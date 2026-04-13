@@ -5,6 +5,9 @@ Bu proje, dijital teknolojinin tarihsel gelişimini (ilk bilgisayarlardan günü
 kronolojik bir sıra ile sunan etkileşimli bir dijital müze platformudur. Kullanıcılar teknoloji tarihindeki önemli dönüm noktalarını inceleyebilir ve
 bu içeriklere yorum yaparak etkileşime girebilirler.
 
+##  Canlı Link 
+✅[Tıklayınız...](https://web-projesi-2026.github.io/web_portfolio_melikecandemirr/)
+
 ## Hedef Kullanıcılar Kim?
 * Teknoloji tarihine meraklı öğrenciler ve araştırmacılar.
 * Yazılım dillerinin ve donanımların kökenini öğrenmek isteyen geliştiriciler.
