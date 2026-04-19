@@ -47,3 +47,37 @@ if (themeBtn) {
         }
     });
 }
+
+// RESİM GALERİSİ (LIGHTBOX) ETKİLEŞİMİ ---
+// Sayfadaki tüm galeri resimlerini seçiyoruz
+const galleryImages = document.querySelectorAll('.gallery-img');
+
+galleryImages.forEach(img => {
+    img.addEventListener('click', (e) => {
+        // Resme tıklandığında linkin (sayfa değişimi) çalışmasını engellemek istersen:
+        e.preventDefault(); 
+        
+        // Siyah arka plan (modal) oluşturma
+        const modal = document.createElement('div');
+        modal.style.cssText = `
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); display: flex; align-items: center;
+            justify-content: center; z-index: 9999; cursor: zoom-out;
+        `;
+        
+        // Büyütülecek resim oluşturma
+        const fullImg = document.createElement('img');
+        fullImg.src = img.src;
+        fullImg.style.maxWidth = '90%';
+        fullImg.style.maxHeight = '90%';
+        fullImg.style.borderRadius = '10px';
+        fullImg.style.boxShadow = '0 0 20px rgba(255,255,255,0.2)';
+        
+        // Resmi siyah arka plana, arka planı da sayfaya ekliyoruz
+        modal.appendChild(fullImg);
+        document.body.appendChild(modal);
+        
+        // Herhangi bir yere tıklandığında galeriyi kapat
+        modal.onclick = () => modal.remove();
+    });
+});
