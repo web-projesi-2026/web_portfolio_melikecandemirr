@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 2. DARK MODE (HAFIZALI SİSTEM) ---
     const themeBtn = document.getElementById("theme-toggle");
     
-    // Sayfa yüklendiğinde kullanıcının önceki tercihini kontrol et
     const currentTheme = localStorage.getItem("theme");
     if (currentTheme === "dark") {
         document.body.classList.add("dark-mode");
@@ -44,14 +43,14 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 themeBtn.innerText = "🌙 Koyu Tema";
             }
-            // Tercihi hafızaya kaydet
             localStorage.setItem("theme", theme);
         });
     }
 
     // --- 3. RESİM GALERİSİ (LIGHTBOX) ---
-    // Sadece .gallery-img sınıfına sahip resimlerde çalışır
-    const galleryImages = document.querySelectorAll('.gallery-img');
+    // GÜNCELLEME: Sadece 'gallery-img' sınıfına sahip <img> etiketlerini hedef alır.
+    // project.html içinde bu sınıfı sildiğin için büyüteç orada çalışmayacaktır.
+    const galleryImages = document.querySelectorAll('img.gallery-img');
 
     galleryImages.forEach(img => {
         img.addEventListener('click', (e) => {
@@ -76,7 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
             modal.appendChild(fullImg);
             document.body.appendChild(modal);
             
-            // Küçük bir animasyon efekti
             setTimeout(() => { fullImg.style.transform = 'scale(1)'; }, 10);
             
             modal.onclick = () => {
@@ -87,7 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// CSS için basit bir fade-in animasyonu (JS içinde dinamik ekleme)
 const style = document.createElement('style');
 style.textContent = `
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
