@@ -91,35 +91,46 @@ html, body {
 /*  RESPONSIVE ve HAMBURGER MENU eklendi*/
 
 
-/*  DARK MODE TASARIMI --- */
-/* Arka plan ve genel yazı rengi */
+/* --- HAFTA 2: GÜNCELLENMİŞ DARK MODE TASARIMI --- */
+/* Arka planı koyulaştırıp yazı rengini açıyoruz */
 body.dark-mode {
-    background-color: #121212 !important;
+    background-color: #0f0f0f !important;
     color: #ffffff !important;
 }
 
-/* Navigasyon barı (navigation class'ına sahipse) */
-body.dark-mode .navigation {
-    background-color: #1f1f1f !important;
-    border-bottom: 1px solid #333;
+/* Navigasyon barındaki arka plan rengini ve kutu görünümünü kaldırıyoruz */
+body.dark-mode .navigation, 
+body.dark-mode .nav-menu {
+    background-color: transparent !important; /* Kutu görünümü gitti */
+    border: none !important;
+    box-shadow: none !important;
 }
 
-/* Menü linkleri */
+/* Linkleri senin istediğin mor tonuna çeviriyoruz, kutu (background) eklemiyoruz */
 body.dark-mode .nav-link {
-    color: #bb86fc !important; /* Şık bir mor tonu */
+    color: #bb86fc !important;
+    background: transparent !important; /* Arka plan tamamen şeffaf */
+    text-shadow: 0 0 5px rgba(187, 134, 252, 0.3); /* Hafif bir parlama efekti */
 }
 
-/* Dark Mode butonunun kendisi */
+/* Linklerin üzerine gelince mor parlamayı artıralım */
+body.dark-mode .nav-link:hover {
+    color: #d7b7fd !important;
+    text-shadow: 0 0 10px #bb86fc;
+}
+
+/* Dark Mode butonunu daha zarif yapalım */
 body.dark-mode #theme-toggle {
-    background-color: #333 !important;
-    color: white !important;
+    background-color: transparent !important;
+    color: #bb86fc !important;
     border: 1px solid #bb86fc !important;
 }
 
-/* Varsa kartların veya bölümlerin arka planı */
-body.dark-mode section, body.dark-mode .card {
-    background-color: #1e1e1e !important;
-    color: white !important;
+/* Kartların içindeki siyah kutu etkisini yumuşatalım */
+body.dark-mode .card {
+    background-color: #1a1a1a !important;
+    border: 1px solid #333 !important;
+    color: #eeeeee !important;
 }
 
 
