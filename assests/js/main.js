@@ -31,3 +31,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// Dark Mode Etkileşimi
+const themeBtn = document.getElementById("theme-toggle");
+
+if (themeBtn) {
+    themeBtn.addEventListener("click", function() {
+        document.body.classList.toggle("dark-mode");
+
+        // Butonun içindeki emojiyi ve metni değiştir
+        if (document.body.classList.contains("dark-mode")) {
+            themeBtn.innerText = "☀️ Açık Tema";
+        } else {
+            themeBtn.innerText = "🌙 Koyu Tema";
+        }
+    });
+}
