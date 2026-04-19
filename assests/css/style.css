@@ -1,7 +1,7 @@
 /* 1. TEMEL AYARLAR */
 :root { 
     --dark-green: #00592D; 
-    --gold: ##FFC107; 
+    --gold: #FFC107; 
     --white: #FFFFFF; 
     --transition: all 0.3s ease;
 }
@@ -89,5 +89,37 @@ html, body {
     .hero-title { font-size: 2rem; }
 }
 /*  RESPONSIVE ve HAMBURGER MENU eklendi*/
+
+
+/*  DARK MODE TASARIMI --- */
+/* Arka plan ve genel yazı rengi */
+body.dark-mode {
+    background-color: #121212 !important;
+    color: #ffffff !important;
+}
+
+/* Navigasyon barı (navigation class'ına sahipse) */
+body.dark-mode .navigation {
+    background-color: #1f1f1f !important;
+    border-bottom: 1px solid #333;
+}
+
+/* Menü linkleri */
+body.dark-mode .nav-link {
+    color: #bb86fc !important; /* Şık bir mor tonu */
+}
+
+/* Dark Mode butonunun kendisi */
+body.dark-mode #theme-toggle {
+    background-color: #333 !important;
+    color: white !important;
+    border: 1px solid #bb86fc !important;
+}
+
+/* Varsa kartların veya bölümlerin arka planı */
+body.dark-mode section, body.dark-mode .card {
+    background-color: #1e1e1e !important;
+    color: white !important;
+}
 
 
