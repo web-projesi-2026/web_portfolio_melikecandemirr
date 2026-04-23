@@ -1,21 +1,22 @@
-/* --- 1. TEMEL VE DARK MODE AYARLARI --- */
+/* 1. TEMEL VE DARK MODE AYARLARI */
 :root { --dark-green: #00592D; --gold: #FFC107; --white: #FFFFFF; --transition: all 0.3s ease; }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Montserrat', sans-serif; background-color: #f4f4f4; transition: background 0.4s; }
+body { font-family: 'Montserrat', sans-serif; background-color: #f4f4f4; transition: background 0.4s; overflow-x: hidden; }
 
-/* Dark Mode: Her yeri kapsayan kesin çözüm */
+/* Dark Mode: Kesin ve Tam Çözüm */
 body.dark-mode { background-color: #121212 !important; color: white !important; }
 body.dark-mode .header, body.dark-mode .footer { background-color: #0a0a0a !important; border-bottom: 1px solid #333; }
 body.dark-mode main, body.dark-mode .hero, body.dark-mode .innovations, body.dark-mode .contact-main { background-color: #121212 !important; }
 body.dark-mode .card, body.dark-mode .stat-card { background: #1e1e1e !important; color: white; border-color: #333; }
 
-/* --- 2. HEADER & İKONLU NAVİGASYON --- */
+/* 2. HEADER & İKONLU NAVİGASYON (Üst üste binmeyi çözen kısım) */
 .header { background: var(--dark-green); padding: 1rem 5%; position: sticky; top: 0; z-index: 1000; }
 .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
 
-.nav-menu { display: flex; list-style: none; gap: 10px; align-items: center; }
-.nav-link { color: white !important; text-decoration: none; font-weight: bold; font-size: 0.85rem; padding: 5px 10px; }
+.navigation { display: flex; align-items: center; }
+.nav-menu { display: flex; list-style: none; gap: 15px; align-items: center; }
+.nav-link { color: white !important; text-decoration: none; font-weight: bold; font-size: 0.85rem; white-space: nowrap; }
 
 /* İkon Butonları (📞, 📖, 💡) */
 .nav-icon { 
@@ -25,9 +26,7 @@ body.dark-mode .card, body.dark-mode .stat-card { background: #1e1e1e !important
 }
 .nav-icon:hover { background: var(--gold); transform: translateY(-3px); box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4); }
 
-.mobile-text { display: none; } /* Masaüstünde yazı yok, sadece ikon */
-
-/* --- 3. MODAL & FORM DÜZENİ --- */
+/* 3. MODAL & FORM DÜZENİ */
 .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); }
 .modal-content { 
     background: white; margin: 5% auto; padding: 35px; border-radius: 25px; 
@@ -45,12 +44,10 @@ body.dark-mode .form-group input, body.dark-mode .form-group select, body.dark-m
 
 .checkbox-group { display: flex; align-items: center; gap: 10px; margin: 15px 0; font-size: 0.85rem; }
 
-/* --- 4. BUTONLAR --- */
-.btn-primary { background: var(--dark-green) !important; color: white !important; padding: 15px; border-radius: 50px; border: none; font-weight: bold; cursor: pointer; width: 100%; transition: var(--transition); }
-.btn-primary:hover { transform: scale(1.03); background: #004523 !important; }
-
+/* 4. BUTONLAR */
+.btn-primary { background: var(--dark-green) !important; color: white !important; padding: 15px; border-radius: 50px; border: none; font-weight: bold; cursor: pointer; width: 100%; transition: var(--transition); text-align: center; text-decoration: none; display: block; }
 .hero-buttons { display: flex; flex-direction: column; gap: 15px; align-items: center; margin-top: 30px; }
-.hero-buttons .btn-primary { min-width: 250px; }
+.hero-buttons .btn-primary { min-width: 250px; width: auto; }
 
 .footer { background: var(--dark-green); color: white; padding: 2rem; text-align: center; margin-top: 3rem; }
 .close-btn { position: absolute; right: 20px; top: 15px; font-size: 28px; cursor: pointer; color: #888; }
