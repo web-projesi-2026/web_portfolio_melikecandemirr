@@ -14,7 +14,7 @@ html, body {
     background-color: #f4f4f4;
 }
 
-/* 2. HEADER & NAVIGASYON */
+/* 2. HEADER & NAVIGASYON (📞, 📖, 💡 İkon Düzenlemesi) */
 .header { background: var(--dark-green); padding: 1rem 5%; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
 .header-content { 
     max-width: 1400px; margin: 0 auto; 
@@ -23,58 +23,71 @@ html, body {
 .logo { color: white; display: flex; align-items: center; gap: 10px; text-decoration: none; }
 .logo h1 { font-size: 1.2rem; letter-spacing: 1px; }
 
-.nav-menu { display: flex; list-style: none; gap: 15px; align-items: center; }
+.nav-menu { display: flex; list-style: none; gap: 10px; align-items: center; }
+
+/* Menü Linkleri */
 .nav-link { 
     color: white !important; 
     text-decoration: none !important; 
     font-weight: bold; 
     font-size: 0.85rem; 
     transition: var(--transition);
-    display: flex;
-    align-items: center;
+    padding: 8px 12px;
+    border-radius: 8px;
 }
-.nav-link:hover { color: var(--gold) !important; }
+.nav-link:hover:not(.nav-icon) { color: var(--gold) !important; }
 
+/* Sağ Üst İkonlu Butonlar (Telefon, Kitap, Lamba) */
 .nav-icon { 
     font-size: 1.2rem; 
     cursor: pointer; 
-    margin-left: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 5px 10px;
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1); /* Hafif şeffaf arka plan */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* Tam yuvarlak */
+    margin-left: 5px;
 }
-.nav-icon:hover { background: var(--gold); transform: translateY(-2px); }
+
+.nav-icon:hover { 
+    background: var(--gold); 
+    transform: translateY(-3px); 
+    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4);
+}
+
+/* Mobilde İkonların Yanındaki Yazıları Gizle/Göster Ayarı */
+.mobile-text { display: none; } 
 
 .menu-toggle { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
 .menu-toggle .bar { width: 25px; height: 3px; background: white; border-radius: 2px; }
 
-/* 3. HERO ALANI & BUTONLARI ALT ALTA DİZME */
+/* 3. HERO ALANI & BUTONLAR */
 .hero { padding: 4rem 10%; background: #f9f9f9; min-height: auto; display: flex; align-items: center; }
 .hero-content { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 1200px; margin: 0 auto; width: 100%; }
 .hero-title { font-size: 2.5rem; color: var(--dark-green); margin-bottom: 20px; }
 .hero-subtitle { color: #555; margin-bottom: 20px; line-height: 1.6; }
 
-/* Butonları alt alta dizen kapsayıcı */
 .hero-buttons {
     display: flex;
-    flex-direction: column; /* Yan yana yerine alt alta yapar */
-    gap: 15px;              /* Butonlar arası boşluk */
-    align-items: center;    /* Ortalar */
+    flex-direction: column; 
+    gap: 15px;              
+    align-items: center;    
     margin-top: 20px;
 }
 
-/* 4. BUTON STİLLERİ (Yeşil & Oval) */
 .btn-primary { 
     background: var(--dark-green) !important; 
     color: white !important; 
     padding: 14px 30px; 
-    border-radius: 50px; /* Oval yapı */
-    text-decoration: none !important; /* Mor alt çizgiyi kaldırır */
+    border-radius: 50px; 
+    text-decoration: none !important; 
     display: inline-block;
     border: none;
     cursor: pointer;
     font-weight: bold;
-    min-width: 250px; /* Buton boylarını eşitler */
+    min-width: 250px; 
     text-align: center;
     transition: var(--transition);
 }
@@ -84,7 +97,7 @@ html, body {
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-/* 5. KARTLAR & MODAL SİSTEMİ */
+/* 4. KARTLAR & MODAL SİSTEMİ */
 .innovations { padding: 4rem 5%; text-align: center; }
 .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 2rem; }
 .card { 
@@ -94,6 +107,7 @@ html, body {
 }
 .card-image img { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; }
 
+/* MODAL TASARIMI */
 .modal {
     display: none; position: fixed; z-index: 2000; left: 0; top: 0; 
     width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px);
@@ -104,8 +118,9 @@ html, body {
     color: #333; border-top: 8px solid var(--gold);
 }
 .close-btn { position: absolute; right: 20px; top: 15px; font-size: 28px; cursor: pointer; color: #888; }
+.close-btn:hover { color: #ff4d4d; }
 
-/* 6. RESPONSIVE & FOOTER */
+/* 5. RESPONSIVE & FOOTER */
 @media (max-width: 950px) {
     .menu-toggle { display: flex; }
     .nav-menu { 
@@ -113,6 +128,8 @@ html, body {
         top: 100%; left: 0; width: 100%; background: var(--dark-green); padding: 20px; 
     }
     .navigation.active .nav-menu { display: flex; }
+    .nav-icon { width: 100%; border-radius: 8px; margin-left: 0; background: rgba(255,255,255,0.05); }
+    .mobile-text { display: inline; margin-left: 10px; font-size: 0.9rem; }
 }
 
 .footer { background: var(--dark-green); color: white; padding: 2rem; text-align: center; margin-top: 3rem; }
@@ -121,3 +138,4 @@ html, body {
 body.dark-mode { background: #121212; color: white; }
 body.dark-mode .card, body.dark-mode .modal-content { background: #1e1e1e; border-color: #333; color: white; }
 body.dark-mode .nav-link { color: #bb86fc !important; }
+body.dark-mode .nav-icon { background: rgba(187, 134, 252, 0.1); }
