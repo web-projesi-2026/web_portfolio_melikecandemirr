@@ -40,7 +40,6 @@
                 <div class="hero-text">
                     <h2 class="hero-title">Teknoloji Tarihine Hoş Geldiniz</h2>
                     <p class="hero-subtitle">Geçmişten geleceğe dijital bir yolculuk. İnsanlığın en büyük buluşlarını keşfedin.</p>
-                    
                     <div class="hero-buttons">
                         <a href="pages/project.html" class="btn btn-primary">💻 Keşfetmeye Başla</a>
                         <a href="javascript:void(0)" onclick="openModal('contactModal')" class="btn btn-primary">✨ Bize Ulaşın 🤗</a>
@@ -62,7 +61,6 @@
                 <h2 style="color: var(--dark-green); margin-bottom: 10px;">Teknoloji Koleksiyonu</h2>
                 <p>İnsanlık tarihini değiştiren dönüm noktaları</p>
             </div>
-            
             <div class="cards-grid">
                 <a href="pages/project.html" class="card-link">
                     <div class="card">
@@ -94,12 +92,28 @@
             <span class="close-btn" onclick="closeModal('contactModal')">&times;</span>
             <h2>📞 İletişim Formu</h2>
             <form id="contact-form">
-                <label>Mesaj Konusu *</label>
-                <input type="text" required placeholder="Konu başlığı">
-                <label>Mesajınız *</label>
-                <textarea rows="4" required placeholder="Sorularınızı yazın..."></textarea>
-                <button type="submit" class="btn btn-primary" style="width:100%; margin-top:15px;">Gönder ✉️</button>
-                <div id="contact-success" class="success-msg" style="display:none; color:green; margin-top:10px;">Mesajınız iletildi!</div>
+                <div class="form-group">
+                    <label>Ad Soyad *</label>
+                    <input type="text" required placeholder="Melike Candemir">
+                </div>
+                <div class="form-group">
+                    <label>E-posta Adresi *</label>
+                    <input type="email" required placeholder="ornek@mail.com">
+                </div>
+                <div class="form-group">
+                    <label>Tarih</label>
+                    <input type="date">
+                </div>
+                <div class="form-group">
+                    <label>Mesajınız *</label>
+                    <textarea rows="4" required placeholder="Sorularınızı yazın..."></textarea>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" required id="kvkk">
+                    <label for="kvkk">KVKK metnini okudum ve onaylıyorum.</label>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%">Gönder ✉️</button>
+                <div id="contact-success" class="success-msg" style="display:none; color:green; margin-top:10px; text-align:center;">Mesajınız iletildi!</div>
             </form>
         </div>
     </div>
@@ -109,12 +123,16 @@
             <span class="close-btn" onclick="closeModal('visitorModal')">&times;</span>
             <h2>📖 Ziyaretçi Defteri</h2>
             <form id="visitor-form">
-                <label>Ad Soyad *</label>
-                <input type="text" required>
-                <label>Puanınız (1-5) *</label>
-                <input type="number" min="1" max="5" required>
-                <button type="submit" class="btn btn-primary" style="width:100%; margin-top:15px;">Kaydet ✨</button>
-                <div id="visitor-success" class="success-msg" style="display:none; color:green; margin-top:10px;">Defter imzalandı!</div>
+                <div class="form-group">
+                    <label>Ziyaretçi Adı *</label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group">
+                    <label>Deneyim Puanınız (1-5) *</label>
+                    <input type="number" min="1" max="5" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%">Kaydet ✨</button>
+                <div id="visitor-success" class="success-msg" style="display:none; color:green; margin-top:10px; text-align:center;">Defter imzalandı!</div>
             </form>
         </div>
     </div>
@@ -124,16 +142,20 @@
             <span class="close-btn" onclick="closeModal('suggestModal')">&times;</span>
             <h2>💡 Teknoloji Önerisi</h2>
             <form id="suggest-form">
-                <label>Teknoloji İsmi *</label>
-                <input type="text" required>
-                <label>Kategori *</label>
-                <select required style="width:100%; padding:8px; border-radius:8px;">
-                    <option value="">Seçiniz...</option>
-                    <option value="hw">Donanım</option>
-                    <option value="sw">Yazılım</option>
-                </select>
-                <button type="submit" class="btn btn-primary" style="width:100%; margin-top:15px;">Öneriyi Gönder 🚀</button>
-                <div id="suggest-success" class="success-msg" style="display:none; color:green; margin-top:10px;">Öneriniz alındı!</div>
+                <div class="form-group">
+                    <label>Teknoloji İsmi *</label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group">
+                    <label>Kategori *</label>
+                    <select required>
+                        <option value="">Seçiniz...</option>
+                        <option value="hw">Donanım</option>
+                        <option value="sw">Yazılım</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%">Öneriyi Gönder 🚀</button>
+                <div id="suggest-success" class="success-msg" style="display:none; color:green; margin-top:10px; text-align:center;">Öneriniz alındı!</div>
             </form>
         </div>
     </div>
