@@ -7,17 +7,45 @@
     <link rel="stylesheet" href="../assests/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* Formlara özel hata ve doğrulama stilleri */
+        /* Ödev Kriteri: Doğrulama Stilleri */
         input:invalid:focus { border: 2px solid #ff4d4d; }
         input:valid:focus { border: 2px solid #2ecc71; }
-        .form-section { margin-bottom: 3rem; padding: 2rem; border-radius: 15px; background: var(--card-bg); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .success-msg { display: none; color: #2ecc71; font-weight: bold; margin-top: 10px; text-align: center; }
         
-        /* İstatistik Paneli Stilleri */
-        .stats-grid { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; margin-top: 20px; }
-        .stat-item { text-align: center; flex: 1; min-width: 150px; }
-        .stat-number { font-size: 2.2rem; font-weight: bold; color: var(--gold); display: block; }
-        .stat-label { font-size: 0.9rem; color: #ffffff; opacity: 0.9; }
+        .form-section { 
+            margin-bottom: 3rem; 
+            padding: 2.5rem; 
+            border-radius: 20px; 
+            background: var(--card-bg, #ffffff); 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .form-title {
+            color: var(--dark-green);
+            border-left: 5px solid var(--gold);
+            padding-left: 15px;
+            margin-bottom: 1.5rem;
+            font-size: 1.6rem;
+        }
+
+        .success-msg { 
+            display: none; 
+            color: #27ae60; 
+            background: #eafaf1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px; 
+            text-align: center;
+            font-weight: bold;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        label { font-weight: 700; color: #444; display: block; margin-bottom: 8px; }
     </style>
 </head>
 <body>
@@ -44,108 +72,105 @@
         </div>
     </header>
 
-    <main class="contact-main" style="padding: 2rem 10%;">
+    <main class="contact-main" style="padding: 3rem 10%; max-width: 1200px; margin: 0 auto;">
         
-        <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
-            <h2>Etkileşim Merkezi</h2>
-            <p>Müzemize katkıda bulunun, öneri verin veya bizimle iletişime geçin.</p>
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <h2 style="font-size: 2.5rem; color: var(--dark-green);">Dijital Etkileşim Kapısı</h2>
+            <p>Müzemizin gelişimine katkıda bulunmak için aşağıdaki formları kullanabilirsiniz.</p>
         </div>
 
         <section class="form-section">
-            <h2 style="color: var(--dark-green); border-bottom: 3px solid var(--gold); display: inline-block; margin-bottom: 1.5rem;">✍️ Müze Ziyaretçi Defteri</h2>
-            <p>Müzemiz hakkındaki deneyimlerinizi bizimle paylaşın.</p>
+            <h2 class="form-title">✍️ Müze Ziyaretçi Defteri</h2>
+            <p>Deneyiminizi tarihsel bir not olarak bırakın.</p>
             
             <form id="visitor-form" class="tech-form">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 1.5rem;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 1.5rem;">
                     <div>
-                        <label>Ad Soyad *</label>
-                        <input type="text" required placeholder="Adınız ve Soyadınız" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
+                        <label for="v-name">Ad Soyad *</label>
+                        <input type="text" id="v-name" required placeholder="İsminiz" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd;">
                     </div>
                     <div>
-                        <label>E-posta *</label>
-                        <input type="email" required placeholder="ornek@mail.com" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
+                        <label for="v-mail">E-posta Adresi *</label>
+                        <input type="email" id="v-mail" required placeholder="ornek@mail.com" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd;">
                     </div>
                 </div>
-                <div style="margin-top: 20px;">
-                    <label>Müzeyi Nasıl Buldunuz? (1-5 Puan) *</label>
-                    <input type="number" min="1" max="5" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
+                <div style="margin-top: 25px;">
+                    <label>Müzeyi Puanlayın (1-5) *</label>
+                    <input type="number" min="1" max="5" required placeholder="5" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd;">
                 </div>
-                <div style="margin-top: 20px;">
-                    <label>Ziyaret Tarihiniz *</label>
-                    <input type="date" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
+                <div style="margin-top: 25px;">
+                    <label>Ziyaret Tarihi *</label>
+                    <input type="date" required style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd;">
                 </div>
-                <button type="submit" class="btn btn-primary" style="margin-top: 20px; width: 100%;">Defteri İmzala ✨</button>
-                <p id="visitor-success" class="success-msg">Teşekkürler! Ziyaretiniz kaydedildi.</p>
+                <button type="submit" class="btn btn-primary" style="margin-top: 30px; width: 100%; padding: 15px; font-size: 1.1rem;">Deftere Kaydet ✨</button>
+                <div id="visitor-success" class="success-msg">Ziyaretçi kaydınız başarıyla oluşturuldu!</div>
             </form>
         </section>
 
         <section class="form-section">
-            <h2 style="color: var(--dark-green); border-bottom: 3px solid var(--gold); display: inline-block; margin-bottom: 1.5rem;">💡 Yeni Teknoloji Öner</h2>
-            <p>Müzemizde sergilenmesini istediğiniz bir teknoloji mi var? Bize bildirin!</p>
+            <h2 class="form-title">💡 Yeni Teknoloji Önerisi</h2>
+            <p>Müze koleksiyonumuzda görmek istediğiniz teknolojileri paylaşın.</p>
             
             <form id="suggest-form" class="tech-form">
                 <div style="margin-top: 1.5rem;">
-                    <label>Teknoloji Adı *</label>
-                    <input type="text" required placeholder="Örn: Enigma Makinesi" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
+                    <label>Teknoloji İsmi *</label>
+                    <input type="text" required placeholder="Örn: IBM 5150" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd;">
                 </div>
-                <div style="margin-top: 20px;">
-                    <label>İcat Edildiği Tahmini Yıl (1800-2026) *</label>
-                    <input type="number" min="1800" max="2026" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
+                <div style="margin-top: 25px;">
+                    <label>Üretim/İcat Yılı (1800 - 2026) *</label>
+                    <input type="number" min="1800" max="2026" required style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd;">
                 </div>
-                <div style="margin-top: 20px;">
-                    <label>Teknoloji Kategorisi *</label>
-                    <select required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
-                        <option value="">Lütfen seçiniz...</option>
-                        <option value="donanim">Donanım</option>
-                        <option value="yazilim">Yazılım / İşletim Sistemi</option>
-                        <option value="yapay-zeka">Yapay Zeka</option>
-                        <option value="iletisim">İletişim Teknolojileri</option>
+                <div style="margin-top: 25px;">
+                    <label>Kategori *</label>
+                    <select required style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd;">
+                        <option value="">Seçim yapınız...</option>
+                        <option value="hardware">Donanım Dünyası</option>
+                        <option value="software">Yazılım Devrimi</option>
+                        <option value="space">Uzay Teknolojileri</option>
                     </select>
                 </div>
-                <div style="margin-top: 20px;">
-                    <label>Tarihsel Önem Derecesi (0-100)</label>
-                    <input type="range" min="0" max="100" style="width: 100%; cursor: pointer;">
+                <div style="margin-top: 25px;">
+                    <label>Teknolojinin Etki Gücü (0-100)</label>
+                    <input type="range" min="0" max="100" style="width: 100%; cursor: pointer; accent-color: var(--dark-green);">
                 </div>
-                <button type="submit" class="btn btn-primary" style="margin-top: 20px; width: 100%;">Öneriyi Gönder 🚀</button>
-                <p id="suggest-success" class="success-msg">Harika öneri! Ekibimiz inceleyecektir.</p>
+                <button type="submit" class="btn btn-primary" style="margin-top: 30px; width: 100%; padding: 15px;">Öneriyi Gönder 🚀</button>
+                <div id="suggest-success" class="success-msg">Öneriniz arşivimize eklendi, teşekkürler!</div>
             </form>
         </section>
 
         <section class="form-section">
-            <h2 style="color: var(--dark-green); border-bottom: 3px solid var(--gold); display: inline-block; margin-bottom: 1.5rem;">📧 Genel İletişim</h2>
-            <p>Bizimle iletişime geçmek için aşağıdaki formu doldurabilirsiniz.</p>
-            
+            <h2 class="form-title">📧 İletişim ve Destek</h2>
             <form id="contact-form" class="tech-form">
                 <div style="margin-top: 1.5rem;">
-                    <label>Konu *</label>
-                    <input type="text" required placeholder="Mesajınızın konusu" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
+                    <label>Mesaj Konusu *</label>
+                    <input type="text" required placeholder="Hangi konuda yazıyorsunuz?" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd;">
                 </div>
-                <div style="margin-top: 20px;">
-                    <label>Mesajınız *</label>
-                    <textarea rows="5" required placeholder="Mesajınızı buraya yazınız..." style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;"></textarea>
+                <div style="margin-top: 25px;">
+                    <label>Detaylı Mesajınız *</label>
+                    <textarea rows="5" required placeholder="Sorularınızı buraya yazabilirsiniz..." style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd;"></textarea>
                 </div>
-                <div style="margin-top: 20px; display: flex; align-items: center; gap: 10px;">
-                    <input type="checkbox" id="kvkk" required>
-                    <label for="kvkk" style="font-size: 0.9rem;">Verilerimin işlenmesini kabul ediyorum. *</label>
+                <div style="margin-top: 20px; display: flex; align-items: center; gap: 12px;">
+                    <input type="checkbox" id="kvkk-check" required style="width: 20px; height: 20px; cursor: pointer;">
+                    <label for="kvkk-check" style="margin-bottom: 0; font-size: 0.85rem;">Bilgilerimin müze veritabanında saklanmasını onaylıyorum. *</label>
                 </div>
-                <button type="submit" class="btn btn-primary" style="margin-top: 20px; width: 100%;">Mesajı Gönder ✉️</button>
-                <p id="contact-success" class="success-msg">Mesajınız başarıyla iletildi!</p>
+                <button type="submit" class="btn btn-primary" style="margin-top: 30px; width: 100%; padding: 15px;">Mesajı İlet ✉️</button>
+                <div id="contact-success" class="success-msg">Mesajınız başarıyla tarafımıza ulaştı.</div>
             </form>
         </section>
 
-        <section class="form-section" style="background: linear-gradient(135deg, #1e4d35, #0d2117); border: none;">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <span class="stat-number">1,240+</span>
-                    <span class="stat-label">Toplam Ziyaretçi</span>
+        <section class="form-section" style="background: linear-gradient(135deg, #1e4d35, #0d2117); color: white; border: none; text-align: center;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 30px;">
+                <div>
+                    <span style="font-size: 2.2rem; font-weight: bold; color: var(--gold); display: block;">1,240+</span>
+                    <span style="font-size: 0.9rem; opacity: 0.8;">Mutlu Ziyaretçi</span>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-number">85</span>
-                    <span class="stat-label">Sergilenen Teknoloji</span>
+                <div>
+                    <span style="font-size: 2.2rem; font-weight: bold; color: var(--gold); display: block;">85</span>
+                    <span style="font-size: 0.9rem; opacity: 0.8;">Aktif Sergi</span>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-number">420</span>
-                    <span class="stat-label">Ziyaretçi Notu</span>
+                <div>
+                    <span style="font-size: 2.2rem; font-weight: bold; color: var(--gold); display: block;">420</span>
+                    <span style="font-size: 0.9rem; opacity: 0.8;">Öneri Kaydı</span>
                 </div>
             </div>
         </section>
@@ -158,25 +183,23 @@
 
     <script src="../assests/js/main.js"></script>
     <script>
-        // Form Gönderim Simülasyonu
-        const formConfigs = [
-            { id: 'visitor-form', success: 'visitor-success' },
-            { id: 'suggest-form', success: 'suggest-success' },
-            { id: 'contact-form', success: 'contact-success' }
-        ];
-
-        formConfigs.forEach(config => {
-            const formElement = document.getElementById(config.id);
-            if(formElement) {
-                formElement.addEventListener('submit', function(e) {
+        // Form Gönderim Yönetimi
+        const setupForm = (formId, successId) => {
+            const form = document.getElementById(formId);
+            if(form) {
+                form.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    const msg = document.getElementById(config.success);
-                    msg.style.display = 'block';
+                    const success = document.getElementById(successId);
+                    success.style.display = 'block';
                     this.reset();
-                    setTimeout(() => { msg.style.display = 'none'; }, 5000);
+                    setTimeout(() => { success.style.display = 'none'; }, 6000);
                 });
             }
-        });
+        };
+
+        setupForm('visitor-form', 'visitor-success');
+        setupForm('suggest-form', 'suggest-success');
+        setupForm('contact-form', 'contact-success');
     </script>
 </body>
 </html>
