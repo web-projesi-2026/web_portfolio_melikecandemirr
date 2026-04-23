@@ -7,44 +7,55 @@
     <link rel="stylesheet" href="../assests/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* Ödev Kriteri: Doğrulama Stilleri */
-        input:invalid:focus { border: 2px solid #ff4d4d; }
-        input:valid:focus { border: 2px solid #2ecc71; }
-        
-        .form-section { 
-            margin-bottom: 3rem; 
-            padding: 2.5rem; 
-            border-radius: 20px; 
-            background: var(--card-bg, #ffffff); 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .form-title {
-            color: var(--dark-green);
-            border-left: 5px solid var(--gold);
-            padding-left: 15px;
-            margin-bottom: 1.5rem;
-            font-size: 1.6rem;
-        }
-
-        .success-msg { 
+        /* Modal (Açılır Pencere) Stilleri */
+        .modal {
             display: none; 
-            color: #27ae60; 
-            background: #eafaf1;
+            position: fixed; 
+            z-index: 1000; 
+            left: 0; top: 0; 
+            width: 100%; height: 100%; 
+            background-color: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background-color: var(--card-bg, #fff);
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            animation: zoomIn 0.3s ease;
+        }
+        @keyframes zoomIn {
+            from {transform: scale(0.8); opacity: 0;}
+            to {transform: scale(1); opacity: 1;}
+        }
+        .close-btn {
+            position: absolute;
+            right: 20px; top: 15px;
+            font-size: 28px; cursor: pointer; color: #888;
+        }
+
+        /* İkon Menü Stili */
+        .icon-nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 3rem;
+        }
+        .tool-icon {
+            font-size: 3rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            background: white;
             padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px; 
-            text-align: center;
-            font-weight: bold;
-            animation: slideUp 0.4s ease;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        .tool-icon:hover { transform: scale(1.2) rotate(10deg); }
+        
+        .success-msg { display: none; color: #27ae60; background: #eafaf1; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: center; }
         label { font-weight: 700; color: #444; display: block; margin-bottom: 8px; }
     </style>
 </head>
@@ -67,6 +78,8 @@
                     <li><a href="about.html" class="nav-link">Hakkımda</a></li>
                     <li><a href="project.html" class="nav-link">Projeler</a></li>
                     <li><a href="contact.html" class="nav-link">İletişim</a></li>
+                    <li class="mobile-only"><a href="javascript:void(0)" onclick="openModal('visitorModal')" class="nav-link">📖 Ziyaretçi Defteri</a></li>
+                    <li class="mobile-only"><a href="javascript:void(0)" onclick="openModal('suggestModal')" class="nav-link">💡 Teknoloji Öner</a></li>
                 </ul>
             </nav>
         </div>
@@ -74,106 +87,81 @@
 
     <main class="contact-main" style="padding: 3rem 10%; max-width: 1200px; margin: 0 auto;">
         
-        <div style="text-align: center; margin-bottom: 4rem;">
-            <h2 style="font-size: 2.5rem; color: var(--dark-green);">Dijital Etkileşim Kapısı</h2>
-            <p>Müzemizin gelişimine katkıda bulunmak için aşağıdaki formları kullanabilirsiniz.</p>
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <h2 style="font-size: 2.5rem; color: var(--dark-green);">Dijital Etkileşim Araçları</h2>
+            <p>Bir iz bırakmak için ikonlara tıklayın.</p>
+        </div>
+
+        <div class="icon-nav">
+            <div class="tool-icon" onclick="openModal('visitorModal')" title="Ziyaretçi Defterini Aç">📖</div>
+            <div class="tool-icon" onclick="openModal('suggestModal')" title="Teknoloji Öner">💡</div>
         </div>
 
         <section class="form-section">
-            <h2 class="form-title">✍️ Müze Ziyaretçi Defteri</h2>
-            <p>Deneyiminizi tarihsel bir not olarak bırakın.</p>
-            
-            <form id="visitor-form" class="tech-form">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 1.5rem;">
-                    <div>
-                        <label for="v-name">Ad Soyad *</label>
-                        <input type="text" id="v-name" required placeholder="İsminiz" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd;">
-                    </div>
-                    <div>
-                        <label for="v-mail">E-posta Adresi *</label>
-                        <input type="email" id="v-mail" required placeholder="ornek@mail.com" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd;">
-                    </div>
-                </div>
-                <div style="margin-top: 25px;">
-                    <label>Müzeyi Puanlayın (1-5) *</label>
-                    <input type="number" min="1" max="5" required placeholder="5" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd;">
-                </div>
-                <div style="margin-top: 25px;">
-                    <label>Ziyaret Tarihi *</label>
-                    <input type="date" required style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd;">
-                </div>
-                <button type="submit" class="btn btn-primary" style="margin-top: 30px; width: 100%; padding: 15px; font-size: 1.1rem;">Deftere Kaydet ✨</button>
-                <div id="visitor-success" class="success-msg">Ziyaretçi kaydınız başarıyla oluşturuldu!</div>
-            </form>
-        </section>
-
-        <section class="form-section">
-            <h2 class="form-title">💡 Yeni Teknoloji Önerisi</h2>
-            <p>Müze koleksiyonumuzda görmek istediğiniz teknolojileri paylaşın.</p>
-            
-            <form id="suggest-form" class="tech-form">
-                <div style="margin-top: 1.5rem;">
-                    <label>Teknoloji İsmi *</label>
-                    <input type="text" required placeholder="Örn: IBM 5150" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd;">
-                </div>
-                <div style="margin-top: 25px;">
-                    <label>Üretim/İcat Yılı (1800 - 2026) *</label>
-                    <input type="number" min="1800" max="2026" required style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd;">
-                </div>
-                <div style="margin-top: 25px;">
-                    <label>Kategori *</label>
-                    <select required style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd;">
-                        <option value="">Seçim yapınız...</option>
-                        <option value="hardware">Donanım Dünyası</option>
-                        <option value="software">Yazılım Devrimi</option>
-                        <option value="space">Uzay Teknolojileri</option>
-                    </select>
-                </div>
-                <div style="margin-top: 25px;">
-                    <label>Teknolojinin Etki Gücü (0-100)</label>
-                    <input type="range" min="0" max="100" style="width: 100%; cursor: pointer; accent-color: var(--dark-green);">
-                </div>
-                <button type="submit" class="btn btn-primary" style="margin-top: 30px; width: 100%; padding: 15px;">Öneriyi Gönder 🚀</button>
-                <div id="suggest-success" class="success-msg">Öneriniz arşivimize eklendi, teşekkürler!</div>
-            </form>
-        </section>
-
-        <section class="form-section">
-            <h2 class="form-title">📧 İletişim ve Destek</h2>
-            <form id="contact-form" class="tech-form">
-                <div style="margin-top: 1.5rem;">
+            <h2 style="color: var(--dark-green); border-left: 5px solid var(--gold); padding-left: 15px; margin-bottom: 1.5rem;">📧 İletişim ve Destek</h2>
+            <form id="contact-form">
+                <div style="margin-top: 1rem;">
                     <label>Mesaj Konusu *</label>
-                    <input type="text" required placeholder="Hangi konuda yazıyorsunuz?" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd;">
+                    <input type="text" required placeholder="Konu başlığı" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd;">
                 </div>
-                <div style="margin-top: 25px;">
-                    <label>Detaylı Mesajınız *</label>
-                    <textarea rows="5" required placeholder="Sorularınızı buraya yazabilirsiniz..." style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd;"></textarea>
+                <div style="margin-top: 20px;">
+                    <label>Mesajınız *</label>
+                    <textarea rows="5" required placeholder="Sorularınızı yazın..." style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd;"></textarea>
                 </div>
-                <div style="margin-top: 20px; display: flex; align-items: center; gap: 12px;">
-                    <input type="checkbox" id="kvkk-check" required style="width: 20px; height: 20px; cursor: pointer;">
-                    <label for="kvkk-check" style="margin-bottom: 0; font-size: 0.85rem;">Bilgilerimin müze veritabanında saklanmasını onaylıyorum. *</label>
-                </div>
-                <button type="submit" class="btn btn-primary" style="margin-top: 30px; width: 100%; padding: 15px;">Mesajı İlet ✉️</button>
+                <button type="submit" class="btn btn-primary" style="margin-top: 25px; width: 100%;">Mesajı İlet ✉️</button>
                 <div id="contact-success" class="success-msg">Mesajınız başarıyla tarafımıza ulaştı.</div>
             </form>
         </section>
 
-        <section class="form-section" style="background: linear-gradient(135deg, #1e4d35, #0d2117); color: white; border: none; text-align: center;">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 30px;">
-                <div>
-                    <span style="font-size: 2.2rem; font-weight: bold; color: var(--gold); display: block;">1,240+</span>
-                    <span style="font-size: 0.9rem; opacity: 0.8;">Mutlu Ziyaretçi</span>
-                </div>
-                <div>
-                    <span style="font-size: 2.2rem; font-weight: bold; color: var(--gold); display: block;">85</span>
-                    <span style="font-size: 0.9rem; opacity: 0.8;">Aktif Sergi</span>
-                </div>
-                <div>
-                    <span style="font-size: 2.2rem; font-weight: bold; color: var(--gold); display: block;">420</span>
-                    <span style="font-size: 0.9rem; opacity: 0.8;">Öneri Kaydı</span>
-                </div>
+        <div id="visitorModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeModal('visitorModal')">&times;</span>
+                <h2 style="color: var(--dark-green);">📖 Ziyaretçi Defteri</h2>
+                <form id="visitor-form">
+                    <div style="margin-top: 15px;">
+                        <label>Ad Soyad *</label>
+                        <input type="text" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <label>E-posta *</label>
+                        <input type="email" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <label>Puanınız (1-5) *</label>
+                        <input type="number" min="1" max="5" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 20px; width: 100%;">Kaydet ✨</button>
+                    <div id="visitor-success" class="success-msg">Defter başarıyla imzalandı!</div>
+                </form>
             </div>
-        </section>
+        </div>
+
+        <div id="suggestModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeModal('suggestModal')">&times;</span>
+                <h2 style="color: var(--dark-green);">💡 Teknoloji Önerisi</h2>
+                <form id="suggest-form">
+                    <div style="margin-top: 15px;">
+                        <label>Teknoloji İsmi *</label>
+                        <input type="text" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <label>Kategori *</label>
+                        <select required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
+                            <option value="">Seçiniz...</option>
+                            <option value="hw">Donanım</option>
+                            <option value="sw">Yazılım</option>
+                        </select>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <label>Önem Derecesi</label>
+                        <input type="range" min="0" max="100" style="width: 100%;">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 20px; width: 100%;">Öneriyi Gönder 🚀</button>
+                    <div id="suggest-success" class="success-msg">Öneriniz alındı!</div>
+                </form>
+            </div>
+        </div>
 
     </main>
 
@@ -183,8 +171,22 @@
 
     <script src="../assests/js/main.js"></script>
     <script>
+        // Modal Kontrol Fonksiyonları
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+        }
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+        // Dışarı tıklayınca kapatma
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = "none";
+            }
+        }
+
         // Form Gönderim Yönetimi
-        const setupForm = (formId, successId) => {
+        const setupForm = (formId, successId, modalId = null) => {
             const form = document.getElementById(formId);
             if(form) {
                 form.addEventListener('submit', function(e) {
@@ -192,13 +194,16 @@
                     const success = document.getElementById(successId);
                     success.style.display = 'block';
                     this.reset();
-                    setTimeout(() => { success.style.display = 'none'; }, 6000);
+                    setTimeout(() => { 
+                        success.style.display = 'none'; 
+                        if(modalId) closeModal(modalId);
+                    }, 3000);
                 });
             }
         };
 
-        setupForm('visitor-form', 'visitor-success');
-        setupForm('suggest-form', 'suggest-success');
+        setupForm('visitor-form', 'visitor-success', 'visitorModal');
+        setupForm('suggest-form', 'suggest-success', 'suggestModal');
         setupForm('contact-form', 'contact-success');
     </script>
 </body>
