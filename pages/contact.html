@@ -10,54 +10,31 @@
 <body>
     <header class="header">
         <div class="header-content">
-            <div class="logo">
-                <span class="logo-icon">⚙️</span>
-                <div class="logo-text">
-                    <h1>TECH-TIMELINE</h1>
-                    <p>Dijital Müze</p>
-                </div>
-            </div>
+            <div class="logo"><h1>TECH-TIMELINE</h1></div>
             <nav class="navigation">
-                <div class="menu-toggle" id="mobile-menu">
-                    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-                </div>
                 <ul class="nav-menu">
                     <li><a href="../index.html" class="nav-link">Ana Sayfa</a></li>
                     <li><a href="about.html" class="nav-link">Hakkımda</a></li>
                     <li><a href="project.html" class="nav-link">Projeler</a></li>
-                    <li><a href="javascript:void(0)" onclick="openModal('contactModal')" class="nav-link nav-icon" title="İletişim">📞 <span class="mobile-text">İletişim</span></a></li>
-                    <li><a href="javascript:void(0)" onclick="openModal('visitorModal')" class="nav-link nav-icon" title="Ziyaretçi Defteri">📖 <span class="mobile-text">Ziyaretçi Defteri</span></a></li>
-                    <li><a href="javascript:void(0)" onclick="openModal('suggestModal')" class="nav-link nav-icon" title="Teknoloji Öner">💡 <span class="mobile-text">Teknoloji Öner</span></a></li>
+                    <li><a href="javascript:void(0)" onclick="openModal('contactModal')" class="nav-icon">📞</a></li>
+                    <li><a href="javascript:void(0)" onclick="openModal('visitorModal')" class="nav-icon">📖</a></li>
+                    <li><a href="javascript:void(0)" onclick="openModal('suggestModal')" class="nav-icon">💡</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <main class="contact-main" style="padding: 10rem 10% 5rem; text-align: center; min-height: 80vh;">
-        <div class="welcome-area">
-            <h2 style="font-size: 3rem; color: var(--dark-green); margin-bottom: 1.5rem;">Etkileşim Merkezi</h2>
-            <p style="font-size: 1.2rem; color: #666; max-width: 700px; margin: 0 auto 2rem auto; line-height: 1.6;">
-                Müzemizin bir parçası olun! Aşağıdaki butonları veya menüdeki ikonları kullanarak bizimle iletişime geçebilirsiniz.
-            </p>
-            <div class="hero-buttons">
-                <a href="project.html" class="btn btn-primary">💻 Keşfetmeye Başla</a>
-                <a href="javascript:void(0)" onclick="openModal('contactModal')" class="btn btn-primary">✨ Bize Ulaşın 🤗</a>
-            </div>
+    <main class="contact-main" style="padding: 10rem 10% 5rem; text-align: center;">
+        <h2 style="font-size: 3rem; color: var(--dark-green);">Etkileşim Merkezi</h2>
+        <div class="hero-buttons">
+            <a href="project.html" class="btn btn-primary">💻 Keşfetmeye Başla</a>
+            <a href="javascript:void(0)" onclick="openModal('contactModal')" class="btn btn-primary">✨ Bize Ulaşın 🤗</a>
         </div>
-
+        
         <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-top: 6rem;">
-            <div class="stat-card">
-                <h3>1,240+</h3>
-                <p>Ziyaretçi</p>
-            </div>
-            <div class="stat-card">
-                <h3>85</h3>
-                <p>Eser</p>
-            </div>
-            <div class="stat-card">
-                <h3>420</h3>
-                <p>Öneri</p>
-            </div>
+            <div class="stat-card"><h3>1,240+</h3><p>Ziyaretçi</p></div>
+            <div class="stat-card"><h3>85</h3><p>Eser</p></div>
+            <div class="stat-card"><h3>420</h3><p>Öneri</p></div>
         </div>
     </main>
 
@@ -66,100 +43,19 @@
             <span class="close-btn" onclick="closeModal('contactModal')">&times;</span>
             <h2>📞 İletişim Formu</h2>
             <form id="contact-form">
-                <div class="form-group">
-                    <label>Ad Soyad *</label>
-                    <input type="text" required placeholder="Melike Candemir">
-                </div>
-                <div class="form-group">
-                    <label>E-posta Adresi *</label>
-                    <input type="email" required placeholder="melike@mail.com"> </div>
-                <div class="form-group">
-                    <label>Randevu/Mesaj Tarihi</label>
-                    <input type="date"> </div>
-                <div class="form-group">
-                    <label>Mesajınız *</label>
-                    <textarea rows="4" required placeholder="Size nasıl yardımcı olabiliriz?"></textarea>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" required id="kvkk-contact">
-                    <label for="kvkk-contact">Verilerimin işlenmesini kabul ediyorum.</label> </div>
-                <button type="submit" class="btn btn-primary" style="width:100%">Mesajı Gönder ✉️</button>
-                <div id="contact-success" class="success-msg" style="display:none; color: #27ae60; background: #eafaf1; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: center;">Mesajınız iletildi!</div>
+                <div class="form-group"><label>E-posta *</label><input type="email" required></div>
+                <div class="form-group"><label>Tarih</label><input type="date"></div>
+                <div class="form-group"><label>Mesajınız *</label><textarea rows="3" required></textarea></div>
+                <div class="checkbox-group"><input type="checkbox" required id="kvkk-con"><label for="kvkk-con">Onaylıyorum.</label></div>
+                <button type="submit" class="btn btn-primary">Gönder ✉️</button>
             </form>
         </div>
     </div>
 
-    <div id="visitorModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('visitorModal')">&times;</span>
-            <h2>📖 Ziyaretçi Defteri</h2>
-            <form id="visitor-form">
-                <div class="form-group">
-                    <label>Ziyaretçi Adı *</label>
-                    <input type="text" required>
-                </div>
-                <div class="form-group">
-                    <label>Puanınız (1-5) *</label>
-                    <input type="number" min="1" max="5" required>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="anonim">
-                    <label for="anonim">Yorumum anonim görünsün.</label>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width:100%">Defteri İmzala ✨</button>
-                <div id="visitor-success" class="success-msg" style="display:none; color: #27ae60; background: #eafaf1; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: center;">Deneyiminiz kaydedildi!</div>
-            </form>
-        </div>
-    </div>
-
-    <div id="suggestModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('suggestModal')">&times;</span>
-            <h2>💡 Teknoloji Önerisi</h2>
-            <form id="suggest-form">
-                <div class="form-group">
-                    <label>Teknoloji Adı *</label>
-                    <input type="text" required>
-                </div>
-                <div class="form-group">
-                    <label>Kategori *</label>
-                    <select required>
-                        <option value="">Seçiniz...</option>
-                        <option value="hw">Donanım</option>
-                        <option value="sw">Yazılım</option>
-                        <option value="cloud">Bulut Bilişim</option>
-                    </select> </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%">Öneriyi Gönder 🚀</button>
-                <div id="suggest-success" class="success-msg" style="display:none; color: #27ae60; background: #eafaf1; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: center;">Fikriniz alındı!</div>
-            </form>
-        </div>
-    </div>
-
-    <footer class="footer">
-        <p>&copy; 2026 Melike Candemir | Ahi Evran Üniversitesi</p>
-    </footer>
-
-    <script src="../assests/js/main.js"></script>
+    <footer class="footer"><p>&copy; 2026 Melike Candemir</p></footer>
     <script>
         function openModal(id) { document.getElementById(id).style.display = "block"; }
         function closeModal(id) { document.getElementById(id).style.display = "none"; }
-        window.onclick = function(e) { if(e.target.className === 'modal') e.target.style.display = "none"; }
-
-        const setup = (fId, sId, mId) => {
-            const f = document.getElementById(fId);
-            if(f) {
-                f.onsubmit = (e) => {
-                    e.preventDefault();
-                    const s = document.getElementById(sId);
-                    s.style.display = "block";
-                    f.reset();
-                    setTimeout(() => { s.style.display = "none"; closeModal(mId); }, 2500);
-                }
-            }
-        };
-        setup('contact-form', 'contact-success', 'contactModal');
-        setup('visitor-form', 'visitor-success', 'visitorModal');
-        setup('suggest-form', 'suggest-success', 'suggestModal');
     </script>
 </body>
 </html>
