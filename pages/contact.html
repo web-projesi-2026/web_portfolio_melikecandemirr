@@ -10,8 +10,14 @@
         /* Formlara özel hata ve doğrulama stilleri */
         input:invalid:focus { border: 2px solid #ff4d4d; }
         input:valid:focus { border: 2px solid #2ecc71; }
-        .form-section { margin-bottom: 4rem; padding: 2rem; border-radius: 15px; background: var(--card-bg); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .form-section { margin-bottom: 3rem; padding: 2rem; border-radius: 15px; background: var(--card-bg); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .success-msg { display: none; color: #2ecc71; font-weight: bold; margin-top: 10px; text-align: center; }
+        
+        /* İstatistik Paneli Stilleri */
+        .stats-grid { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; margin-top: 20px; }
+        .stat-item { text-align: center; flex: 1; min-width: 150px; }
+        .stat-number { font-size: 2.2rem; font-weight: bold; color: var(--gold); display: block; }
+        .stat-label { font-size: 0.9rem; color: #ffffff; opacity: 0.9; }
     </style>
 </head>
 <body>
@@ -40,6 +46,11 @@
 
     <main class="contact-main" style="padding: 2rem 10%;">
         
+        <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
+            <h2>Etkileşim Merkezi</h2>
+            <p>Müzemize katkıda bulunun, öneri verin veya bizimle iletişime geçin.</p>
+        </div>
+
         <section class="form-section">
             <h2 style="color: var(--dark-green); border-bottom: 3px solid var(--gold); display: inline-block; margin-bottom: 1.5rem;">✍️ Müze Ziyaretçi Defteri</h2>
             <p>Müzemiz hakkındaki deneyimlerinizi bizimle paylaşın.</p>
@@ -48,20 +59,20 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 1.5rem;">
                     <div>
                         <label>Ad Soyad *</label>
-                        <input type="text" required placeholder="Adınız ve Soyadınız" style="width: 100%; padding: 10px; border-radius: 8px;">
+                        <input type="text" required placeholder="Adınız ve Soyadınız" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
                     </div>
                     <div>
                         <label>E-posta *</label>
-                        <input type="email" required placeholder="ornek@mail.com" style="width: 100%; padding: 10px; border-radius: 8px;">
+                        <input type="email" required placeholder="ornek@mail.com" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
                     </div>
                 </div>
                 <div style="margin-top: 20px;">
                     <label>Müzeyi Nasıl Buldunuz? (1-5 Puan) *</label>
-                    <input type="number" min="1" max="5" required style="width: 100%; padding: 10px; border-radius: 8px;">
+                    <input type="number" min="1" max="5" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
                 </div>
                 <div style="margin-top: 20px;">
                     <label>Ziyaret Tarihiniz *</label>
-                    <input type="date" required style="width: 100%; padding: 10px; border-radius: 8px;">
+                    <input type="date" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
                 </div>
                 <button type="submit" class="btn btn-primary" style="margin-top: 20px; width: 100%;">Defteri İmzala ✨</button>
                 <p id="visitor-success" class="success-msg">Teşekkürler! Ziyaretiniz kaydedildi.</p>
@@ -75,15 +86,15 @@
             <form id="suggest-form" class="tech-form">
                 <div style="margin-top: 1.5rem;">
                     <label>Teknoloji Adı *</label>
-                    <input type="text" required placeholder="Örn: Enigma Makinesi" style="width: 100%; padding: 10px; border-radius: 8px;">
+                    <input type="text" required placeholder="Örn: Enigma Makinesi" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
                 </div>
                 <div style="margin-top: 20px;">
                     <label>İcat Edildiği Tahmini Yıl (1800-2026) *</label>
-                    <input type="number" min="1800" max="2026" required style="width: 100%; padding: 10px; border-radius: 8px;">
+                    <input type="number" min="1800" max="2026" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
                 </div>
                 <div style="margin-top: 20px;">
                     <label>Teknoloji Kategorisi *</label>
-                    <select required style="width: 100%; padding: 10px; border-radius: 8px;">
+                    <select required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
                         <option value="">Lütfen seçiniz...</option>
                         <option value="donanim">Donanım</option>
                         <option value="yazilim">Yazılım / İşletim Sistemi</option>
@@ -107,11 +118,11 @@
             <form id="contact-form" class="tech-form">
                 <div style="margin-top: 1.5rem;">
                     <label>Konu *</label>
-                    <input type="text" required placeholder="Mesajınızın konusu" style="width: 100%; padding: 10px; border-radius: 8px;">
+                    <input type="text" required placeholder="Mesajınızın konusu" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
                 </div>
                 <div style="margin-top: 20px;">
                     <label>Mesajınız *</label>
-                    <textarea rows="5" required placeholder="Mesajınızı buraya yazınız..." style="width: 100%; padding: 10px; border-radius: 8px;"></textarea>
+                    <textarea rows="5" required placeholder="Mesajınızı buraya yazınız..." style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;"></textarea>
                 </div>
                 <div style="margin-top: 20px; display: flex; align-items: center; gap: 10px;">
                     <input type="checkbox" id="kvkk" required>
@@ -122,6 +133,23 @@
             </form>
         </section>
 
+        <section class="form-section" style="background: linear-gradient(135deg, #1e4d35, #0d2117); border: none;">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">1,240+</span>
+                    <span class="stat-label">Toplam Ziyaretçi</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">85</span>
+                    <span class="stat-label">Sergilenen Teknoloji</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">420</span>
+                    <span class="stat-label">Ziyaretçi Notu</span>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <footer class="footer">
@@ -130,16 +158,24 @@
 
     <script src="../assests/js/main.js"></script>
     <script>
-        // Form Gönderim Simülasyonu (Başarı Mesajları için)
-        const forms = ['visitor-form', 'suggest-form', 'contact-form'];
-        forms.forEach(formId => {
-            document.getElementById(formId).addEventListener('submit', function(e) {
-                e.preventDefault();
-                const successMsg = document.getElementById(formId.split('-')[0] + '-success');
-                successMsg.style.display = 'block';
-                this.reset();
-                setTimeout(() => { successMsg.style.display = 'none'; }, 5000);
-            });
+        // Form Gönderim Simülasyonu
+        const formConfigs = [
+            { id: 'visitor-form', success: 'visitor-success' },
+            { id: 'suggest-form', success: 'suggest-success' },
+            { id: 'contact-form', success: 'contact-success' }
+        ];
+
+        formConfigs.forEach(config => {
+            const formElement = document.getElementById(config.id);
+            if(formElement) {
+                formElement.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const msg = document.getElementById(config.success);
+                    msg.style.display = 'block';
+                    this.reset();
+                    setTimeout(() => { msg.style.display = 'none'; }, 5000);
+                });
+            }
         });
     </script>
 </body>
