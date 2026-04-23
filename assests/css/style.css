@@ -20,95 +20,64 @@ html, body {
     display: flex; justify-content: space-between; align-items: center;
 }
 .logo { color: white; display: flex; align-items: center; gap: 10px; }
-.logo h1 { font-size: 1.5rem; }
+.logo h1 { font-size: 1.2rem; } /* Logoyu biraz küçülttük yer açmak için */
 
-/* Menü ve İkonların Yan Yana Dizilimi */
+/* Menü */
 .nav-menu { display: flex; list-style: none; gap: 15px; align-items: center; }
 .nav-link { color: white; text-decoration: none; font-weight: bold; font-size: 0.85rem; transition: var(--transition); }
 .nav-link:hover { color: var(--gold); }
 
-/* Sağ Üstteki İkon Butonları */
-.nav-icon {
-    font-size: 1.2rem;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 8px 12px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.nav-icon:hover {
-    background: var(--gold);
-    color: var(--dark-green) !important;
-    transform: translateY(-2px);
-}
-.mobile-text { display: none; } /* Masaüstünde yazıları gizle, sadece ikon kalsın */
+/* İkon Linkleri (Sade hal) */
+.nav-icon { font-size: 1.1rem; cursor: pointer; margin-left: 5px; }
+.mobile-text { display: none; } 
 
 .menu-toggle { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
 .menu-toggle .bar { width: 25px; height: 3px; background: white; border-radius: 2px; }
 
-/* 3. HERO */
-.hero { padding: 4rem 10%; background: #f9f9f9; min-height: 70vh; display: flex; align-items: center; transition: var(--transition); }
-.hero-content { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 1200px; margin: 0 auto; }
-.hero-title { font-size: 3rem; color: var(--dark-green); margin-bottom: 20px; }
-.hero-subtitle { color: #555; margin-bottom: 20px; }
-.hero-buttons { display: flex; flex-direction: column; gap: 15px; align-items: flex-start; }
+/* 3. HERO (Resim kesilme sorununu burada çözdük) */
+.hero { padding: 4rem 10%; background: #f9f9f9; min-height: auto; display: flex; align-items: center; }
+.hero-content { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 1200px; margin: 0 auto; width: 100%; }
+.hero-title { font-size: 2.5rem; color: var(--dark-green); margin-bottom: 20px; }
+.hero-subtitle { color: #555; margin-bottom: 20px; line-height: 1.6; }
 
-.btn { padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: bold; min-width: 200px; text-align: center; cursor: pointer; border: none; font-family: inherit; transition: var(--transition); }
-.btn-primary { background: var(--dark-green); color: white; }
-.btn-primary:hover { background: #004d26; transform: scale(1.05); }
+/* 4. İCATLAR / KARTLAR (Düzeni geri getirdik) */
+.innovations { padding: 4rem 5%; text-align: center; }
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 2rem; }
+.card { 
+    padding: 15px; background: white; border-radius: 15px; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid var(--gold);
+    transition: var(--transition); height: 100%;
+}
+.card:hover { transform: translateY(-5px); }
+.card-image img { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; }
 
-/* 4. MODAL SİSTEMİ (Glassmorphism) */
+/* 5. MODAL (Açılır Formlar) */
 .modal {
-    display: none; 
-    position: fixed; 
-    z-index: 2000; 
-    left: 0; top: 0; 
-    width: 100%; height: 100%; 
-    background-color: rgba(0, 89, 45, 0.85);
-    backdrop-filter: blur(8px);
+    display: none; position: fixed; z-index: 2000; left: 0; top: 0; 
+    width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
 }
 .modal-content {
-    background-color: var(--white);
-    margin: 8% auto;
-    padding: 35px;
-    border-radius: 25px;
-    width: 90%;
-    max-width: 500px;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.4);
-    position: relative;
-    border-top: 8px solid var(--gold);
-    animation: zoomIn 0.3s ease;
+    background-color: white; margin: 10% auto; padding: 30px; 
+    border-radius: 15px; width: 90%; max-width: 450px; position: relative;
 }
-@keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.close-btn { position: absolute; right: 15px; top: 10px; font-size: 24px; cursor: pointer; }
 
-.close-btn { position: absolute; right: 20px; top: 15px; font-size: 30px; cursor: pointer; color: #888; }
-.close-btn:hover { color: #ff4d4d; }
-
-/* 5. FOOTER */
-.footer { background-color: var(--dark-green) !important; color: white !important; padding: 2rem; text-align: center; width: 100%; margin-top: 4rem; }
-
-/* 6. RESPONSIVE (Mobil Ayarları) */
+/* 6. RESPONSIVE */
 @media (max-width: 950px) {
-    .menu-toggle { display: flex; z-index: 1001; }
+    .menu-toggle { display: flex; }
     .nav-menu { 
-        display: none; 
-        flex-direction: column; 
-        position: absolute; 
-        top: 0; left: 0; 
-        width: 100%; height: 100vh;
-        background: var(--dark-green); 
-        padding: 100px 20px; 
-        gap: 20px; 
+        display: none; flex-direction: column; position: absolute; 
+        top: 100%; left: 0; width: 100%; background: var(--dark-green); padding: 20px; 
     }
     .navigation.active .nav-menu { display: flex; }
-    .mobile-text { display: inline; margin-left: 10px; } /* Mobilde yazılar gelsin */
-    .nav-icon { background: none; font-size: 1.3rem; width: 100%; justify-content: center; }
-    .nav-link { font-size: 1.2rem; }
+    .mobile-text { display: inline; margin-left: 10px; }
+    .hero-content { grid-template-columns: 1fr; }
 }
 
-/* --- DARK MODE --- */
-body.dark-mode { background-color: #0f0f0f !important; color: #ffffff !important; }
-body.dark-mode .modal-content { background-color: #1a1a1a !important; border-top-color: #bb86fc !important; }
-body.dark-mode .nav-link { color: #bb86fc !important; }
-body.dark-mode .nav-icon { background: rgba(187, 134, 252, 0.1); }
+/* FOOTER */
+.footer { background: var(--dark-green); color: white; padding: 2rem; text-align: center; margin-top: 2rem; }
+
+/* DARK MODE */
+body.dark-mode { background: #121212; color: white; }
+body.dark-mode .card, body.dark-mode .modal-content { background: #1e1e1e; border-color: #333; }
+body.dark-mode .nav-link { color: #bb86fc; }
