@@ -41,3 +41,27 @@ body.dark-mode .innovations { background: #121212; }
 .hero-buttons { display: flex; flex-direction: column; gap: 15px; align-items: flex-start; margin-top: 2rem; }
 .footer { background: var(--dark-green); color: white; padding: 2rem; text-align: center; }
 .close-btn { position: absolute; right: 20px; top: 15px; font-size: 28px; cursor: pointer; }
+/* Kartların Tıklanabilir Alanını Sabitle */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    pointer-events: auto; /* Tıklama olaylarını aktifleştirir */
+}
+
+.card-link {
+    display: block;
+    text-decoration: none;
+    z-index: 5; /* Kartı ön plana çıkarır */
+    cursor: pointer;
+}
+
+.card {
+    pointer-events: none; /* İçindeki öğelerin linki engellemesini önler */
+    transition: var(--transition);
+}
+
+.card-link:hover .card {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
