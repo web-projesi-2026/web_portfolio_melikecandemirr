@@ -51,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Modal dışına tıklandığında kapatma
     window.onclick = function(event) {
         if (event.target.classList.contains('modal')) {
             event.target.style.display = "none";
@@ -59,14 +58,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Formların otomatik kapanması ve başarı mesajı
+    // --- FORM MESAJI GÜNCELLEMESİ ---
     const forms = ['contact-form', 'visitor-form', 'suggest-form'];
     forms.forEach(formId => {
         const form = document.getElementById(formId);
         if (form) {
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
-                alert("İşleminiz başarıyla kaydedildi! ✨");
+                // İstediğin yeni ve samimi mesaj buraya eklendi:
+                alert("Yanıtınız geliştiricimize iletilmek üzere kaydedilmiştir, teşekkür ederiz! ✨😊🚀");
                 form.reset();
                 const modalId = form.closest('.modal').id;
                 closeModal(modalId);
