@@ -57,16 +57,36 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.style.overflow = "auto";
         }
     };
-
-    // --- FORM MESAJI GÜNCELLEMESİ ---
+// --- FORM MESAJI GÜNCELLEMESİ (MODERN BİLDİRİM) ---
     const forms = ['contact-form', 'visitor-form', 'suggest-form'];
     forms.forEach(formId => {
         const form = document.getElementById(formId);
         if (form) {
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
-                // İstediğin yeni ve samimi mesaj buraya eklendi:
-                alert("Yanıtınız geliştiricimize iletilmek üzere kaydedilmiştir, teşekkür ederiz! ✨😊🚀");
+
+                const successMessage = "Yanıtınız geliştiricimize iletilmek üzere kaydedilmiştir, teşekkür ederiz! ✨😊🚀";
+                
+                // ŞIK BİLDİRİM KUTUSU OLUŞTURMA
+                const toast = document.createElement('div');
+                toast.style.cssText = `
+                    position: fixed; bottom: 30px; right: 30px; 
+                    background: var(--dark-green); color: white; 
+                    padding: 20px 30px; border-radius: 15px; 
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                    z-index: 10000; font-weight: bold; border-left: 8px solid var(--gold);
+                    animation: slideIn 0.5s ease-out;
+                `;
+                toast.innerText = successMessage;
+                document.body.appendChild(toast);
+
+                // 4 saniye sonra kaybolsun
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transition = '0.5s';
+                    setTimeout(() => toast.remove(), 500);
+                }, 4000);
+
                 form.reset();
                 const modalId = form.closest('.modal').id;
                 closeModal(modalId);
@@ -92,4 +112,4 @@ document.addEventListener('DOMContentLoaded', () => {
             modal.onclick = () => modal.remove();
         });
     });
-});
+
