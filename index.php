@@ -1,8 +1,3 @@
-<?php
-/* Proje: Tech-Timeline (Dijital Müze) 
-   Geliştirici: Melike Candemir
-*/
-?>
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -15,23 +10,17 @@
 <body>
     <header class="header">
         <div class="header-content">
-            <div class="logo">
-                <span class="logo-icon">⚙️</span>
-                <div class="logo-text">
-                    <h1>TECH-TIMELINE</h1>
-                    <p>Dijital Müze</p>
-                </div>
-            </div>
+            <div class="logo"><span class="logo-icon">⚙️</span><h1>TECH-TIMELINE</h1></div>
             <nav class="navigation">
-                <div class="menu-toggle" id="mobile-menu">
-                    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-                </div>
                 <ul class="nav-menu">
                     <li><a href="index.html" class="nav-link">Ana Sayfa</a></li>
                     <li><a href="pages/about.html" class="nav-link">Hakkımda</a></li>
                     <li><a href="pages/project.html" class="nav-link">Projeler</a></li>
-                    <li><a href="pages/contact.html" class="nav-link">İletişim</a></li>
+                    <li><a href="javascript:void(0)" onclick="window.openModal('contactModal')" class="nav-icon" title="İletişim">📞</a></li>
+                    <li><a href="javascript:void(0)" onclick="window.openModal('visitorModal')" class="nav-icon" title="Ziyaretçi Defteri">📖</a></li>
+                    <li><a href="javascript:void(0)" onclick="window.openModal('suggestModal')" class="nav-icon" title="Teknoloji Öner">💡</a></li>
                 </ul>
+                <button id="theme-toggle" style="cursor:pointer; padding: 8px 15px; border-radius: 20px; margin-left: 10px;">🌙 Koyu Tema</button>
             </nav>
         </div>
     </header>
@@ -44,21 +33,99 @@
                     <p class="hero-subtitle">Geçmişten geleceğe dijital bir yolculuk. İnsanlığın en büyük buluşlarını keşfedin.</p>
                     <div class="hero-buttons">
                         <a href="pages/project.html" class="btn btn-primary">💻 Keşfetmeye Başla</a>
-                        <a href="pages/contact.html" class="btn btn-secondary">✨ Bize Ulaşın 🤗</a>
+                        <a href="javascript:void(0)" onclick="window.openModal('contactModal')" class="btn btn-primary">✨ Bize Ulaşın 🤗</a>
                     </div>
                 </div>
                 <div class="hero-visual">
                     <div class="floating-element">
                         <svg width="350" height="350" viewBox="0 0 120 120">
-                            <circle cx="60" cy="60" r="55" fill="none" stroke="#FFB81C" stroke-width="3"/>
-                            <path d="M30 60 Q60 30 90 60 Q60 90 30 60" fill="none" stroke="#00592D" stroke-width="3"/>
+                            <circle cx="60" cy="60" r="55" fill="none" stroke="#FFC107" stroke-width="3"/>
+                            <path d="M30 60 Q60 30 90 60 Q60 90 30 60" fill="none" stroke="#00592D" stroke-width="4"/>
                         </svg>
                     </div>
                 </div>
             </div>
         </section>
+
+        <section class="innovations">
+            <div class="section-header">
+                <h2>Teknoloji Koleksiyonu</h2>
+                <p>İnsanlık tarihini değiştiren dönüm noktaları</p>
+            </div>
+            <div class="cards-grid">
+                <a href="pages/project.html" class="card-link" style="text-decoration: none;">
+                    <div class="card">
+                        <div class="card-image"><img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600" alt="Bilgisayar"></div>
+                        <h3>💻 Bilgisayarın Doğuşu</h3>
+                        <p>1950'lerden bugüne dijital evrimin temeli.</p>
+                    </div>
+                </a>
+                
+                <a href="pages/project.html" class="card-link" style="text-decoration: none;">
+                    <div class="card">
+                        <div class="card-image"><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=600" alt="Yapay Zeka"></div>
+                        <h3>🤖 Yapay Zeka (AI)</h3>
+                        <p>3D model deneyimi ve derin öğrenme süreci.</p>
+                    </div>
+                </a>
+
+                <a href="pages/project.html" class="card-link" style="text-decoration: none;">
+                    <div class="card">
+                        <div class="card-image"><img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=600" alt="Bulut Bilişim"></div>
+                        <h3>☁️ Bulut Bilişim</h3>
+                        <p>Verilerin fiziksel sınırlardan kurtulduğu yeni çağ.</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <div id="contactModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="window.closeModal('contactModal')">&times;</span>
+                <h2>📞 İletişim Formu</h2>
+                <form id="contact-form">
+                    <div class="form-group"><label>E-posta *</label><input type="email" required></div>
+                    <div class="form-group"><label>Mesaj Tarihi</label><input type="date"></div>
+                    <div class="form-group"><label>Mesajınız *</label><textarea rows="3" required></textarea></div>
+                    <div class="checkbox-group"><input type="checkbox" required id="kvkk-idx"><label for="kvkk-idx">Onaylıyorum.</label></div>
+                    <button type="submit" class="btn btn-primary">Gönder</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="visitorModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="window.closeModal('visitorModal')">&times;</span>
+                <h2>📖 Ziyaretçi Defteri</h2>
+                <form id="visitor-form">
+                    <div class="form-group"><label>Ad Soyad *</label><input type="text" required></div>
+                    <div class="form-group"><label>Puan (1-5) *</label><input type="number" min="1" max="5" required></div>
+                    <button type="submit" class="btn btn-primary">Kaydet ✨</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="suggestModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="window.closeModal('suggestModal')">&times;</span>
+                <h2>💡 Teknoloji Önerisi</h2>
+                <form id="suggest-form">
+                    <div class="form-group"><label>Teknoloji Adı *</label><input type="text" required></div>
+                    <div class="form-group"><label>Kategori *</label>
+                        <select required>
+                            <option value="">Seçiniz...</option>
+                            <option value="hw">Donanım</option>
+                            <option value="sw">Yazılım</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Öneriyi Gönder 🚀</button>
+                </form>
+            </div>
+        </div>
     </main>
+
     <footer class="footer"><p>&copy; 2026 Melike Candemir | Ahi Evran Üniversitesi</p></footer>
+    
     <script src="assests/js/main.js"></script>
 </body>
 </html>
