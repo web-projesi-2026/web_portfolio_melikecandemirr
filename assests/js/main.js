@@ -1,21 +1,27 @@
 /* Tech-Timeline Dijital Müze Projesi 
    Geliştirici: Melike Candemir
-   Görev: Etkileşim Kontrolleri (Menu, Dark Mode, Modal, Lightbox)
+   Görev: Menu, Dark Mode, Modal (Toast Bildirimli) ve Lightbox
 */
 
-document.addEventListener('DOMContentLoaded', () => {
-    // --- 1. MOBİL MENÜ KONTROLÜ ---
-    const menuToggle = document.querySelector('#mobile-menu');
-    const navigation = document.querySelector('.navigation');
-    const navLinks = document.querySelectorAll('.nav-link');
-
-    if (menuToggle) {
-        menuToggle.addEventListener('click', () => {
-            navigation.classList.toggle('active');
-            document.body.style.overflow = navigation.classList.contains('active') ? 'hidden' : 'auto';
-        });
+// --- 1. MODAL FONKSİYONLARI (Global Kapsam - İkonlar için) ---
+window.openModal = function(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+        modal.style.display = "block";
+        document.body.style.overflow = "hidden";
     }
+};
 
+window.closeModal = function(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+        modal.style.display = "none";
+        document.body.style.overflow = "auto";
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    
     // --- 2. DARK MODE (HAFIZALI SİSTEM) ---
     const themeBtn = document.getElementById("theme-toggle");
     const currentTheme = localStorage.getItem("theme");
@@ -34,30 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 3. MODAL SİSTEMİ (📞, 📖, 💡 İçin Kesin Çözüm) ---
-    window.openModal = function(id) {
-        const modal = document.getElementById(id);
-        if (modal) {
-            modal.style.display = "block";
-            document.body.style.overflow = "hidden";
-        }
-    };
-
-    window.closeModal = function(id) {
-        const modal = document.getElementById(id);
-        if (modal) {
-            modal.style.display = "none";
-            document.body.style.overflow = "auto";
-        }
-    };
-
-    window.onclick = function(event) {
-        if (event.target.classList.contains('modal')) {
-            event.target.style.display = "none";
-            document.body.style.overflow = "auto";
-        }
-    };
-// --- FORM MESAJI GÜNCELLEMESİ (MODERN BİLDİRİM) ---
+    // --- 3. FORM MESAJI VE TOAST BİLDİRİMİ ---
     const forms = ['contact-form', 'visitor-form', 'suggest-form'];
     forms.forEach(formId => {
         const form = document.getElementById(formId);
@@ -67,20 +50,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const successMessage = "Yanıtınız geliştiricimize iletilmek üzere kaydedilmiştir, teşekkür ederiz! ✨😊🚀";
                 
-                // ŞIK BİLDİRİM KUTUSU OLUŞTURMA
+                // ŞIK BİLDİRİM KUTUSU
                 const toast = document.createElement('div');
                 toast.style.cssText = `
                     position: fixed; bottom: 30px; right: 30px; 
-                    background: var(--dark-green); color: white; 
+                    background: #00592D; color: white; 
                     padding: 20px 30px; border-radius: 15px; 
                     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-                    z-index: 10000; font-weight: bold; border-left: 8px solid var(--gold);
+                    z-index: 10000; font-weight: bold; border-left: 8px solid #FFC107;
                     animation: slideIn 0.5s ease-out;
                 `;
                 toast.innerText = successMessage;
                 document.body.appendChild(toast);
 
-                // 4 saniye sonra kaybolsun
                 setTimeout(() => {
                     toast.style.opacity = '0';
                     toast.style.transition = '0.5s';
@@ -89,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 form.reset();
                 const modalId = form.closest('.modal').id;
-                closeModal(modalId);
+                window.closeModal(modalId);
             });
         }
     });
@@ -113,3 +95,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Dışarı tıklayınca kapatma
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            window.closeModal(event.target.id);
+        }
+    };
+
+}); // <--- İşte eksik olan kapatma buradaydı!
