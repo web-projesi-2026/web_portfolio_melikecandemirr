@@ -1,6 +1,6 @@
 /* Tech-Timeline Dijital Müze Projesi 
    Geliştirici: Melike Candemir
-   Görev: Etkileşim Kontrolleri (Menu, Dark Mode, Lightbox)
+   Görev: Etkileşim Kontrolleri (Menu, Dark Mode, Modal, Lightbox)
 */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -16,17 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            navigation.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-    });
-
     // --- 2. DARK MODE (HAFIZALI SİSTEM) ---
     const themeBtn = document.getElementById("theme-toggle");
-    
     const currentTheme = localStorage.getItem("theme");
+
     if (currentTheme === "dark") {
         document.body.classList.add("dark-mode");
         if (themeBtn) themeBtn.innerText = "☀️ Açık Tema";
@@ -35,58 +28,68 @@ document.addEventListener('DOMContentLoaded', () => {
     if (themeBtn) {
         themeBtn.addEventListener("click", function() {
             document.body.classList.toggle("dark-mode");
-            
-            let theme = "light";
-            if (document.body.classList.contains("dark-mode")) {
-                theme = "dark";
-                themeBtn.innerText = "☀️ Açık Tema";
-            } else {
-                themeBtn.innerText = "🌙 Koyu Tema";
-            }
+            let theme = document.body.classList.contains("dark-mode") ? "dark" : "light";
+            themeBtn.innerText = (theme === "dark") ? "☀️ Açık Tema" : "🌙 Koyu Tema";
             localStorage.setItem("theme", theme);
         });
     }
 
-    // --- 3. RESİM GALERİSİ (LIGHTBOX) ---
-    // GÜNCELLEME: Sadece 'gallery-img' sınıfına sahip <img> etiketlerini hedef alır.
-    // project.html içinde bu sınıfı sildiğin için büyüteç orada çalışmayacaktır.
-    const galleryImages = document.querySelectorAll('img.gallery-img');
+    // --- 3. MODAL SİSTEMİ (📞, 📖, 💡 İçin Kesin Çözüm) ---
+    window.openModal = function(id) {
+        const modal = document.getElementById(id);
+        if (modal) {
+            modal.style.display = "block";
+            document.body.style.overflow = "hidden";
+        }
+    };
 
+    window.closeModal = function(id) {
+        const modal = document.getElementById(id);
+        if (modal) {
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+    };
+
+    // Modal dışına tıklandığında kapatma
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+    };
+
+    // Formların otomatik kapanması ve başarı mesajı
+    const forms = ['contact-form', 'visitor-form', 'suggest-form'];
+    forms.forEach(formId => {
+        const form = document.getElementById(formId);
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert("İşleminiz başarıyla kaydedildi! ✨");
+                form.reset();
+                const modalId = form.closest('.modal').id;
+                closeModal(modalId);
+            });
+        }
+    });
+
+    // --- 4. RESİM GALERİSİ (LIGHTBOX) ---
+    const galleryImages = document.querySelectorAll('img.gallery-img');
     galleryImages.forEach(img => {
         img.addEventListener('click', (e) => {
-            e.preventDefault(); 
-            
             const modal = document.createElement('div');
             modal.style.cssText = `
                 position: fixed; top: 0; left: 0; width: 100%; height: 100%;
                 background: rgba(0,0,0,0.9); display: flex; align-items: center;
                 justify-content: center; z-index: 9999; cursor: zoom-out;
-                animation: fadeIn 0.3s ease;
             `;
-            
             const fullImg = document.createElement('img');
             fullImg.src = img.src;
-            fullImg.style.cssText = `
-                max-width: 90%; max-height: 90%; border-radius: 10px;
-                box-shadow: 0 0 30px rgba(0,0,0,0.5); transform: scale(0.9);
-                transition: transform 0.3s ease;
-            `;
-            
+            fullImg.style.cssText = "max-width: 90%; max-height: 90%; border-radius: 10px;";
             modal.appendChild(fullImg);
             document.body.appendChild(modal);
-            
-            setTimeout(() => { fullImg.style.transform = 'scale(1)'; }, 10);
-            
-            modal.onclick = () => {
-                modal.style.opacity = '0';
-                setTimeout(() => modal.remove(), 300);
-            };
+            modal.onclick = () => modal.remove();
         });
     });
 });
-
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-`;
-document.head.appendChild(style);
