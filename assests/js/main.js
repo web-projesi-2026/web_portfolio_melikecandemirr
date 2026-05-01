@@ -90,3 +90,18 @@ style.textContent = `
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 `;
 document.head.appendChild(style);
+
+
+// JSON verisini çekme fonksiyonu
+async function verileriGetir() {
+    try {
+        const yanit = await fetch('data.json'); // Dosyayı çağırıyoruz
+        const veriler = await yanit.json();    // Gelen veriyi JSON formatına çeviriyoruz
+        console.log("Gelen Veriler:", veriler); // Kontrol için konsola yazdırıyoruz
+    } catch (hata) {
+        console.error("Veri çekilirken bir hata oluştu:", hata);
+    }
+}
+
+// Sayfa yüklendiğinde fonksiyonu çalıştır
+verileriGetir();
