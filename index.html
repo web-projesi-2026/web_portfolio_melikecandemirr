@@ -65,9 +65,17 @@
     </section>
 
     <!-- KARTLARIN YÜKLENECEĞİ ALAN -->
-    <div id="koleksiyon-konteynir" class="card-grid" style="padding: 3rem 5%;">
-        <!-- Kartlar main.js aracılığıyla data.json'dan buraya dolacak -->
-    </div>
+   <!-- DİNAMİK KARTLARIN YÜKLENECEĞİ ALAN -->
+<div id="koleksiyon-konteynir" class="card-grid" style="
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+    gap: 30px; 
+    padding: 4rem 10%; 
+    max-width: 1400px; 
+    margin: 0 auto;
+">
+    <!-- Kartlar main.js aracılığıyla buraya dolacak -->
+</div>
 </main>
 
 
