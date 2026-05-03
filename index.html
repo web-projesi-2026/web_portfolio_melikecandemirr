@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech-Timeline | Dijital Müze</title>
+    <!-- Klasör isminin 'assests' (hatalı yazım) mi yoksa 'assets' mi olduğunu kontrol etmelisin -->
     <link rel="stylesheet" href="assests/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -32,13 +33,14 @@
                 <button id="theme-toggle" style="cursor:pointer; padding: 8px 15px; border-radius: 20px; margin: 10px; border: 1px solid #ccc;">🌙 Koyu Tema</button>
             </nav>
         </div>
-        <!-- Hızlı Erişim Form İkonları -->
-    <div class="form-icons-bar" style="display: flex; justify-content: center; gap: 20px; padding: 15px; background: #f4f4f4;">
-        <button onclick="window.openModal('contact-modal')" style="font-size: 24px; cursor: pointer; border: none; background: none;">📞</button>
-        <button onclick="window.openModal('visitor-modal')" style="font-size: 24px; cursor: pointer; border: none; background: none;">📖</button>
-        <button onclick="window.openModal('suggest-modal')" style="font-size: 24px; cursor: pointer; border: none; background: none;">💡</button>
-    </div>
     </header>
+
+    <!-- Hızlı Erişim Form İkonları (Header'ın Hemen Altında) -->
+    <div class="form-icons-bar" style="display: flex; justify-content: center; gap: 30px; padding: 20px; background: rgba(244, 244, 244, 0.8); backdrop-filter: blur(5px);">
+        <button onclick="window.openModal('contact-modal')" style="font-size: 28px; cursor: pointer; border: none; background: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" title="İletişim">📞</button>
+        <button onclick="window.openModal('visitor-modal')" style="font-size: 28px; cursor: pointer; border: none; background: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" title="Ziyaretçi Defteri">📖</button>
+        <button onclick="window.openModal('suggest-modal')" style="font-size: 28px; cursor: pointer; border: none; background: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" title="Öneri Yap">💡</button>
+    </div>
 
     <main>
         <section class="hero">
@@ -67,13 +69,37 @@
                 <h2>Teknoloji Koleksiyonu</h2>
                 <p>İnsanlık tarihini değiştiren dönüm noktaları</p>
             </div>
-            
-            <!-- JavaScript verileri bu ID'ye sahip div'in içine basacak -->
             <div class="cards-grid" id="koleksiyon-konteynir">
-                <!-- Burası başlangıçta boş kalacak, JS otomatik dolduracak -->
+                <!-- Veriler data.json'dan gelecek -->
             </div>
         </section>
     </main>
+
+    <!-- MODAL YAPILARI (İkonlara tıklandığında açılacak pencereler) -->
+    <div id="contact-modal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:2000; justify-content:center; align-items:center;">
+        <div style="background:white; padding:30px; border-radius:15px; width:90%; max-width:400px; position:relative; color: #333;">
+            <span onclick="window.closeModal('contact-modal')" style="position:absolute; top:10px; right:15px; cursor:pointer; font-size:24px;">&times;</span>
+            <h3>📞 İletişim Formu</h3>
+            <p>Size ulaşmamız için bilgilerinizi bırakın.</p>
+            <!-- Form buraya gelecek -->
+        </div>
+    </div>
+
+    <div id="visitor-modal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:2000; justify-content:center; align-items:center;">
+        <div style="background:white; padding:30px; border-radius:15px; width:90%; max-width:400px; position:relative; color: #333;">
+            <span onclick="window.closeModal('visitor-modal')" style="position:absolute; top:10px; right:15px; cursor:pointer; font-size:24px;">&times;</span>
+            <h3>📖 Ziyaretçi Defteri</h3>
+            <p>Müzemiz hakkındaki düşüncelerinizi yazın.</p>
+        </div>
+    </div>
+
+    <div id="suggest-modal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:2000; justify-content:center; align-items:center;">
+        <div style="background:white; padding:30px; border-radius:15px; width:90%; max-width:400px; position:relative; color: #333;">
+            <span onclick="window.closeModal('suggest-modal')" style="position:absolute; top:10px; right:15px; cursor:pointer; font-size:24px;">&times;</span>
+            <h3>💡 Müze Önerisi</h3>
+            <p>Hangi teknolojiyi burada görmek istersiniz?</p>
+        </div>
+    </div>
 
     <footer class="footer">
         <p>&copy; 2026 Melike Candemir | Ahi Evran Üniversitesi</p>
