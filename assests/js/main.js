@@ -77,3 +77,18 @@ function favoriIkonlariniGuncelle() {
         if (yildiz) yildiz.innerText = "⭐";
     });
 }
+// --- MODAL YÖNETİMİ ---
+window.openModal = function(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) modal.style.display = 'flex';
+};
+
+window.closeModal = function(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) modal.style.display = 'none';
+};
+
+// Toast bildirim sistemi için
+function showToast(mesaj) {
+    alert(mesaj); // Şimdilik alert, istersen toast CSS'ine bağlayabiliriz
+}
