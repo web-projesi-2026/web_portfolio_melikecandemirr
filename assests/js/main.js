@@ -1,6 +1,6 @@
 /* Tech-Timeline Dijital Müze Projesi 
    Geliştirici: Melike Candemir
-   Görev: Etkileşim Kontrolleri (Menu, Dark Mode, Lightbox)
+   Görev: Etkileşim Kontrolleri, Dinamik Veri ve Veri Saklama
 */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -25,8 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 2. DARK MODE (HAFIZALI SİSTEM) ---
     const themeBtn = document.getElementById("theme-toggle");
-    
     const currentTheme = localStorage.getItem("theme");
+
     if (currentTheme === "dark") {
         document.body.classList.add("dark-mode");
         if (themeBtn) themeBtn.innerText = "☀️ Açık Tema";
@@ -35,58 +35,109 @@ document.addEventListener('DOMContentLoaded', () => {
     if (themeBtn) {
         themeBtn.addEventListener("click", function() {
             document.body.classList.toggle("dark-mode");
-            
-            let theme = "light";
-            if (document.body.classList.contains("dark-mode")) {
-                theme = "dark";
-                themeBtn.innerText = "☀️ Açık Tema";
-            } else {
-                themeBtn.innerText = "🌙 Koyu Tema";
-            }
+            let theme = document.body.classList.contains("dark-mode") ? "dark" : "light";
+            themeBtn.innerText = theme === "dark" ? "☀️ Açık Tema" : "🌙 Koyu Tema";
             localStorage.setItem("theme", theme);
         });
     }
 
-    // --- 3. RESİM GALERİSİ (LIGHTBOX) ---
-    // GÜNCELLEME: Sadece 'gallery-img' sınıfına sahip <img> etiketlerini hedef alır.
-    // project.html içinde bu sınıfı sildiğin için büyüteç orada çalışmayacaktır.
-    const galleryImages = document.querySelectorAll('img.gallery-img');
+    // --- 3. DİNAMİK VERİ VE FAVORİ SİSTEMİ ---
+    if (document.getElementById('koleksiyon-konteynir')) {
+        kategorileriGetir();
+    }
 
-    galleryImages.forEach(img => {
-        img.addEventListener('click', (e) => {
-            e.preventDefault(); 
-            
-            const modal = document.createElement('div');
-            modal.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background: rgba(0,0,0,0.9); display: flex; align-items: center;
-                justify-content: center; z-index: 9999; cursor: zoom-out;
-                animation: fadeIn 0.3s ease;
-            `;
-            
-            const fullImg = document.createElement('img');
-            fullImg.src = img.src;
-            fullImg.style.cssText = `
-                max-width: 90%; max-height: 90%; border-radius: 10px;
-                box-shadow: 0 0 30px rgba(0,0,0,0.5); transform: scale(0.9);
-                transition: transform 0.3s ease;
-            `;
-            
-            modal.appendChild(fullImg);
-            document.body.appendChild(modal);
-            
-            setTimeout(() => { fullImg.style.transform = 'scale(1)'; }, 10);
-            
-            modal.onclick = () => {
-                modal.style.opacity = '0';
-                setTimeout(() => modal.remove(), 300);
-            };
-        });
-    });
+    if (document.getElementById('favorites-container')) {
+        window.favorileriGoster();
+    }
+
+    favoriIkonlariniGuncelle();
 });
 
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-`;
-document.head.appendChild(style);
+// JSON'dan Veri Çekme
+async function kategorileriGetir() {
+    try {
+        const yanit = await fetch('data.json');
+        const veriler = await yanit.json();
+        const konteynir = document.getElementById('koleksiyon-konteynir');
+        if (konteynir && veriler.kategoriler) {
+            konteynir.innerHTML = veriler.kategoriler.map(kategori => `
+                <div class="card" onclick="location.href='${kategori.link}'" style="cursor: pointer;">
+                    <div class="card-image"><img src="${kategori.resim}"></div>
+                    <div class="card-body">
+                        <h3>${kategori.baslik}</h3>
+                        <p>${kategori.aciklama}</p>
+                        <div class="card-footer"><span>Yıl: ${kategori.yil}</span></div>
+                    </div>
+                </div>`).join('');
+        }
+    } catch (e) { console.error("Veri yüklenemedi:", e); }
+}
+
+// Favori Kontrolü (Ekleme/Çıkarma Mantığı Düzeltildi)
+window.favoriKontrol = function(id, baslik) {
+    let favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
+    const index = favoriler.findIndex(item => item.id === id);
+    const toast = document.getElementById('toast-favourite');
+
+    if (index === -1) {
+        favoriler.push({ id, baslik });
+        if (toast) gosterToast(`${baslik} eklendi! ❤️`);
+    } else {
+        favoriler.splice(index, 1);
+        if (toast) gosterToast(`${baslik} çıkarıldı. 😊`);
+    }
+    
+    localStorage.setItem('techFavs', JSON.stringify(favoriler));
+    
+    // Favoriler sayfasındaysak anlık güncelle
+    if (document.getElementById('favorites-container')) {
+        window.favorileriGoster();
+    }
+    favoriIkonlariniGuncelle();
+};
+
+// Favorileri Listeleme (Boş Liste Mesajı Dahil)
+window.favorileriGoster = function() {
+    const konteynir = document.getElementById('favorites-container');
+    if (!konteynir) return;
+
+    const favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
+    
+    if (favoriler.length === 0) {
+        konteynir.innerHTML = `
+            <div style="text-align:center; grid-column: 1/-1; padding: 50px;">
+                <p style="font-size: 1.2rem; color: #666;">Favorilere herhangi bir şey eklemediniz. 😊</p>
+                <a href="../index.html" class="btn" style="display:inline-block; margin-top:20px; background:var(--dark-green); color:white; padding:10px 20px; text-decoration:none; border-radius:5px;">Keşfetmeye Başla 🚀</a>
+            </div>`;
+        return;
+    }
+
+    konteynir.innerHTML = favoriler.map(item => `
+        <div class="card" style="border-left: 5px solid #e74c3c; padding: 20px; background: white; border-radius: 10px;">
+            <div class="card-body">
+                <h3>${item.baslik}</h3>
+                <p style="color: #666;">Bu teknoloji favorilerinize eklendi.</p>
+                <button onclick="window.favoriKontrol('${item.id}', '${item.baslik}')" 
+                        style="background:#ff7675; color:white; border:none; padding:8px 12px; cursor:pointer; border-radius:5px; margin-top:10px;">
+                    Kaldır 🗑️
+                </button>
+            </div>
+        </div>`).join('');
+};
+
+function favoriIkonlariniGuncelle() {
+    const favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
+    const kalpIkoni = document.getElementById('fav-icon-robot-09');
+    if (kalpIkoni) {
+        kalpIkoni.innerText = favoriler.some(fav => fav.id === 'robot-09') ? "♥" : "♡";
+    }
+}
+
+function gosterToast(mesaj) {
+    const toast = document.getElementById('toast-favourite');
+    if (toast) {
+        toast.innerText = mesaj;
+        toast.style.display = 'block';
+        setTimeout(() => { toast.style.display = 'none'; }, 3000);
+    }
+}
