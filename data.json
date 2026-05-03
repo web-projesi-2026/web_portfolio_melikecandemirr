@@ -1,23 +1,30 @@
 [
   {
     "id": 1,
-    "baslik": "Bilgisayarın Doğuşu",
-    "aciklama": "1950'lerden bugüne dijital evrimin temeli.",
-    "resim": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600",
+    "baslik": "ENIAC: İlk Elektronik Bilgisayar",
+    "aciklama": "1945'te tamamlanan ENIAC, 167 metrekare alan kaplıyordu. İnsanlık tarihinin ilk genel amaçlı dijital bilgisayarıdır.",
+    "resim": "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200",
     "yil": "1945"
   },
   {
     "id": 2,
-    "baslik": "Yapay Zeka (AI)",
-    "aciklama": "3D model deneyimi ve derin öğrenme süreci.",
-    "resim": "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=600",
-    "yil": "1956"
+    "baslik": "Kişisel Bilgisayar Devrimi",
+    "aciklama": "1980'lerde IBM ve Apple'ın hamleleriyle bilgisayarlar devasa odalardan çıkıp masalarımızın üzerine konuk olmaya başladı.",
+    "resim": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200",
+    "yil": "1981"
   },
   {
     "id": 3,
-    "baslik": "Bulut Bilişim",
-    "aciklama": "Verilerin fiziksel sınırlardan kurtulduğu yeni çağ.",
-    "resim": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=600",
-    "yil": "2006"
+    "baslik": "İnsansı Robotlar (Humanoids)",
+    "aciklama": "Yapay zeka modelleriyle birleşen robotlar artık sadece fabrika kollarından ibaret değil; yürüyebilen ve etkileşime giren modeller geliştiriliyor.",
+    "resim": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=1200",
+    "yil": "2024"
+  },
+  {
+    "id": 4,
+    "baslik": "Kuantum Bilgisayarlar",
+    "aciklama": "Bulut bilişim üzerinden erişilebilen kuantum işlemciler, klasik bilgisayarların milyonlarca yılda yapacağı işlemleri saniyeler içinde çözüyor.",
+    "resim": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1200",
+    "yil": "2026"
   }
 ]
