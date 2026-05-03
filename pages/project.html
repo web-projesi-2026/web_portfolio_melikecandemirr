@@ -8,10 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Favori Bildirim Mesajı (Toast) -->
-    <div id="toast-favourite" style="display: none; position: fixed; bottom: 20px; right: 20px; background: #00592D; color: white; padding: 15px 25px; border-radius: 8px; z-index: 10000; box-shadow: 0 4px 12px rgba(0,0,0,0.2); font-weight: bold;">
-        <!-- Mesaj JS ile buraya yazılacak -->
-    </div>
+    <div id="toast-favourite" style="display: none; position: fixed; bottom: 20px; right: 20px; background: #00592D; color: white; padding: 15px 25px; border-radius: 8px; z-index: 99999; box-shadow: 0 4px 12px rgba(0,0,0,0.3); font-weight: bold;">
+        </div>
 
     <header class="header">
         <div class="header-content">
@@ -45,11 +43,8 @@
             </p>
 
             <div class="sketchfab-embed-wrapper"> 
-                <iframe title="Robot Nook 09" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" src="https://sketchfab.com/models/b1a6d5d6cdab4e3995eac3d922e8ccef/embed?autostart=1" style="width: 100%; height: 550px; border-radius: 25px; box-shadow: 0 15px 45px rgba(0,0,0,0.2);"> 
+                <iframe title="Robot Nook 09" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" src="https://sketchfab.com/models/b1a6d5d6cdab4e3995eac3d922e8ccef/embed?autostart=1" style="width: 100%; height: 550px; border-radius: 25px; box-shadow: 0 15px 45px rgba(0,0,0,0.2);"> 
                 </iframe> 
-                <p style="font-size: 13px; font-weight: normal; margin: 15px; color: #666;"> 
-                    <a href="https://sketchfab.com/3d-models/robot-nook-09-b1a6d5d6cdab4e3995eac3d922e8ccef" target="_blank" rel="nofollow" style="font-weight: bold; color: #bb86fc;"> Robot Nook 09 </a> by FXPEAR on Sketchfab
-                </p>
             </div>
 
             <div class="robot-detailed-info" style="max-width: 1000px; margin: 4rem auto 0; text-align: justify; line-height: 2.4; font-size: 1.1rem; color: #333;">
@@ -58,7 +53,7 @@
                     <span id="fav-icon-robot-09" onclick="window.favoriKontrol('robot-09', 'Robot Nook')" style="font-size: 2.5rem; cursor: pointer; color: #e74c3c; line-height: 1;">♡</span>
                 </div>
                 <p>
-                    Robot Nook 09, modern endüstriyel tasarımın sınırlarını zorlayan, dijital sanatçı FXPEAR tarafından fütüristik bir vizyonla hayal edilmiş kapsamlı bir mekanik mühendislik ve sanat çalışmasıdır. Tasarımın kökenleri, 21. yüzyılın başındaki ağır sanayi robotlarının hantal yapısından kurtulup, yapay zekanın esnekliğiyle birleşen yeni bir mobilite çağına geçiş yapma arzusuna dayanmaktadır... (Uzun metnin tamamı burada kalacak)
+                    Robot Nook 09, modern endüstriyel tasarımın sınırlarını zorlayan, dijital sanatçı FXPEAR tarafından fütüristik bir vizyonla hayal edilmiş kapsamlı bir mekanik mühendislik ve sanat çalışmasıdır. (Metnin geri kalanı...)
                 </p>
             </div>
         </section>
@@ -71,8 +66,8 @@
     <script src="../assests/js/main.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            if (typeof favoriIkonlariniGuncelle === "function") {
-                favoriIkonlariniGuncelle();
+            if (typeof window.favoriIkonlariniGuncelle === "function") {
+                window.favoriIkonlariniGuncelle();
             }
         });
     </script>
