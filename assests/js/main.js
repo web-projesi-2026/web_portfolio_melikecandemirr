@@ -1,17 +1,15 @@
 /* Tech-Timeline Dijital Müze Projesi 
    Geliştirici: Melike Candemir
-   Görev: Dinamik Kategori Yönlendirmesi ve Kalp İkonlu Favori Yönetimi
+   Görev: Dinamik Kategori Yönlendirmesi ve Gelişmiş Favori Sistemi
 */
 
 document.addEventListener('DOMContentLoaded', () => {
     // --- KOYU TEMA SİSTEMİ ---
     const themeBtn = document.getElementById("theme-toggle");
-    
     if (localStorage.getItem("theme") === "dark") {
         document.body.classList.add("dark-mode");
         if (themeBtn) themeBtn.innerText = "☀️ Açık Tema";
     }
-
     if (themeBtn) {
         themeBtn.addEventListener("click", () => {
             document.body.classList.toggle("dark-mode");
@@ -42,10 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- VERİ ÇEKME VE KATEGORİLERİ LİSTELEME ---
     kategorileriGetir();
-    
-    // Alt sayfalarda kalp ikonunu başlangıçta kontrol et
+    // Sayfa açıldığında kalp durumunu kontrol et
     favoriIkonlariniGuncelle();
 });
 
@@ -72,7 +68,6 @@ async function kategorileriGetir() {
         const yanit = await fetch('data.json');
         const veriler = await yanit.json();
         const konteynir = document.getElementById('koleksiyon-konteynir');
-        
         if (konteynir && veriler.kategoriler) {
             konteynir.innerHTML = ""; 
             veriler.kategoriler.forEach(kategori => {
@@ -92,23 +87,36 @@ async function kategorileriGetir() {
     } catch (e) { console.error("Kategoriler yüklenirken hata:", e); }
 }
 
-// Kalp İkonlu Favori Kontrolü
+// Kalp İkonlu Favori Kontrolü (Alert Kaldırıldı, Anında Toast Eklendi)
 window.favoriKontrol = function(id, baslik) {
     let favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
     const index = favoriler.findIndex(item => item.id === id);
+    const toast = document.getElementById('toast-favourite');
     
     if (index === -1) {
+        // Favoriye EKLE
         favoriler.push({ id, baslik });
-        alert(`${baslik} favorilerinize eklendi! ❤️`);
+        if (toast) {
+            toast.innerText = `${baslik} favorilerinize eklendi! ❤️`;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 4000);
+        }
     } else {
+        // Favoriden ÇIKAR
         favoriler.splice(index, 1);
-        alert(`${baslik} favorilerinizden çıkarıldı. 😊`);
+        if (toast) {
+            toast.innerText = `${baslik} favorilerinizden çıkarıldı. 😊`;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 4000);
+        }
     }
+    
     localStorage.setItem('techFavs', JSON.stringify(favoriler));
+    // Kalbi ve mesajı anında güncelle
     favoriIkonlariniGuncelle();
 };
 
-// Kalp İkonlarını Güncelleyen Fonksiyon
+// Kalp İkonlarını Güncelleyen Fonksiyon (♡ -> ♥)
 window.favoriIkonlariniGuncelle = function() {
     const favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
     const kalpIkoni = document.getElementById('fav-icon-robot-09');
