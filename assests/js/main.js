@@ -1,13 +1,12 @@
 /* Tech-Timeline Dijital Müze Projesi 
    Geliştirici: Melike Candemir
-   Görev: Veri Okuma (JSON) ve Kullanıcı Etkileşimi (LocalStorage)
+   Görev: Dinamik Kategori Yönlendirmesi ve Alt Model Yönetimi
 */
 
 document.addEventListener('DOMContentLoaded', () => {
     // --- KOYU TEMA SİSTEMİ ---
     const themeBtn = document.getElementById("theme-toggle");
     
-    // Hafızadaki temayı kontrol et
     if (localStorage.getItem("theme") === "dark") {
         document.body.classList.add("dark-mode");
         if (themeBtn) themeBtn.innerText = "☀️ Açık Tema";
@@ -22,45 +21,32 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- FORM GÖNDERİMİ VE 4 SANİYELİK MESAJ SİSTEMİ ---
+    // --- FORM GÖNDERİMİ ---
     const formIds = ['contact-form', 'visitor-form', 'suggest-form'];
-    
     formIds.forEach(id => {
         const form = document.getElementById(id);
         if (form) {
             form.addEventListener('submit', (e) => {
-                e.preventDefault(); // Sayfanın yenilenmesini engelle
-
-                // Başarı mesajını (Toast) göster
+                e.preventDefault();
                 const toast = document.getElementById('toast-message');
                 if (toast) {
                     toast.style.display = 'block';
-                    
-                    // 4 saniye sonra mesajı gizle
-                    setTimeout(() => {
-                        toast.style.display = 'none';
-                    }, 4000);
+                    setTimeout(() => { toast.style.display = 'none'; }, 4000);
                 }
-
-                // Formu temizle
                 form.reset();
-
-                // Modalı kapat (Hangi formun içindeyse o modalı bulur ve kapatır)
                 const modal = form.closest('.modal');
                 if (modal) {
-                    setTimeout(() => {
-                        window.closeModal(modal.id);
-                    }, 500); // Kullanıcı mesajı görmeye başlasın diye yarım saniye bekletip kapatır
+                    setTimeout(() => { window.closeModal(modal.id); }, 500);
                 }
             });
         }
     });
 
-    // --- VERİ ÇEKME ---
-    verileriGetir();
+    // --- VERİ ÇEKME VE KATEGORİLERİ LİSTELEME ---
+    kategorileriGetir();
 });
 
-// Modal Açma Kapama (Dışarıdan erişim için window'a bağladık)
+// Modal Yönetimi
 window.openModal = function(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
@@ -77,52 +63,46 @@ window.closeModal = function(modalId) {
     }
 };
 
-// JSON Çekme ve Favori Fonksiyonları
-async function verileriGetir() {
+// Ana Sayfa Kategori Kartlarını Oluşturma (Favori Özelliği Kaldırıldı)
+async function kategorileriGetir() {
     try {
         const yanit = await fetch('data.json');
         const veriler = await yanit.json();
         const konteynir = document.getElementById('koleksiyon-konteynir');
-        if (konteynir) {
+        
+        if (konteynir && veriler.kategoriler) {
             konteynir.innerHTML = ""; 
-            veriler.forEach(teknoloji => {
+            veriler.kategoriler.forEach(kategori => {
                 konteynir.innerHTML += `
-                    <div class="card" onclick="favoriKontrol(${teknoloji.id}, '${teknoloji.baslik}')">
-                        <div class="card-image"><img src="${teknoloji.resim}"></div>
+                    <div class="card" onclick="location.href='${kategori.link}'" style="cursor: pointer;">
+                        <div class="card-image"><img src="${kategori.resim}" alt="${kategori.baslik}"></div>
                         <div class="card-body">
-                            <h3>${teknoloji.baslik}</h3>
-                            <p>${teknoloji.aciklama}</p>
+                            <h3>${kategori.baslik}</h3>
+                            <p>${kategori.aciklama}</p>
                             <div class="card-footer">
-                                <span>Yıl: ${teknoloji.yil}</span>
-                                <span id="fav-icon-${teknoloji.id}" class="fav-star">☆</span>
+                                <span>Kategori Yılı: ${kategori.yil}</span>
+                                <!-- Favori yıldızı buradan kaldırıldı -->
                             </div>
                         </div>
                     </div>`;
             });
-            favoriIkonlariniGuncelle();
         }
-    } catch (e) { console.error(e); }
+    } catch (e) { console.error("Kategoriler yüklenirken hata:", e); }
 }
 
+// Alt Modeller İçin Favori Kontrolü (Robot Nook 09 vb. için kullanılacak)
 window.favoriKontrol = function(id, baslik) {
     let favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
     const index = favoriler.findIndex(item => item.id === id);
+    
     if (index === -1) {
         favoriler.push({ id, baslik });
-        alert(`${baslik} eklendi! ✨`);
+        alert(`${baslik} favorilerinize eklendi! ✨`);
     } else {
         favoriler.splice(index, 1);
-        alert(`${baslik} çıkarıldı. 😊`);
+        alert(`${baslik} favorilerinizden çıkarıldı. 😊`);
     }
     localStorage.setItem('techFavs', JSON.stringify(favoriler));
-    favoriIkonlariniGuncelle();
+    // Eğer sayfada favori ikonları varsa güncelle
+    if (typeof favoriIkonlariniGuncelle === "function") favoriIkonlariniGuncelle();
 };
-
-function favoriIkonlariniGuncelle() {
-    const favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
-    document.querySelectorAll('.fav-star').forEach(s => s.innerText = "☆");
-    favoriler.forEach(f => {
-        const el = document.getElementById(`fav-icon-${f.id}`);
-        if (el) el.innerText = "⭐";
-    });
-}
