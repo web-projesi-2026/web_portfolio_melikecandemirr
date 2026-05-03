@@ -22,6 +22,40 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- FORM GÖNDERİMİ VE 4 SANİYELİK MESAJ SİSTEMİ ---
+    const formIds = ['contact-form', 'visitor-form', 'suggest-form'];
+    
+    formIds.forEach(id => {
+        const form = document.getElementById(id);
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault(); // Sayfanın yenilenmesini engelle
+
+                // Başarı mesajını (Toast) göster
+                const toast = document.getElementById('toast-message');
+                if (toast) {
+                    toast.style.display = 'block';
+                    
+                    // 4 saniye sonra mesajı gizle
+                    setTimeout(() => {
+                        toast.style.display = 'none';
+                    }, 4000);
+                }
+
+                // Formu temizle
+                form.reset();
+
+                // Modalı kapat (Hangi formun içindeyse o modalı bulur ve kapatır)
+                const modal = form.closest('.modal');
+                if (modal) {
+                    setTimeout(() => {
+                        window.closeModal(modal.id);
+                    }, 500); // Kullanıcı mesajı görmeye başlasın diye yarım saniye bekletip kapatır
+                }
+            });
+        }
+    });
+
     // --- VERİ ÇEKME ---
     verileriGetir();
 });
@@ -43,7 +77,7 @@ window.closeModal = function(modalId) {
     }
 };
 
-// JSON Çekme ve Favori Fonksiyonları (Senin verdiğin haliyle kalıyor)
+// JSON Çekme ve Favori Fonksiyonları
 async function verileriGetir() {
     try {
         const yanit = await fetch('data.json');
