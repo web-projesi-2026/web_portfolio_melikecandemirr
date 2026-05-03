@@ -4,91 +4,91 @@
 */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Mevcut Menü ve Dark Mode kodların burada kalmaya devam etsin...
+    // --- KOYU TEMA SİSTEMİ ---
+    const themeBtn = document.getElementById("theme-toggle");
     
-    // --- 4. DİNAMİK VERİ ÇEKME VE ETKİLEŞİMLİ KARTLAR ---
+    // Hafızadaki temayı kontrol et
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark-mode");
+        if (themeBtn) themeBtn.innerText = "☀️ Açık Tema";
+    }
+
+    if (themeBtn) {
+        themeBtn.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+            const isDark = document.body.classList.contains("dark-mode");
+            themeBtn.innerText = isDark ? "☀️ Açık Tema" : "🌙 Koyu Tema";
+            localStorage.setItem("theme", isDark ? "dark" : "light");
+        });
+    }
+
+    // --- VERİ ÇEKME ---
     verileriGetir();
 });
 
+// Modal Açma Kapama (Dışarıdan erişim için window'a bağladık)
+window.openModal = function(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+};
+
+window.closeModal = function(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+};
+
+// JSON Çekme ve Favori Fonksiyonları (Senin verdiğin haliyle kalıyor)
 async function verileriGetir() {
     try {
         const yanit = await fetch('data.json');
         const veriler = await yanit.json();
         const konteynir = document.getElementById('koleksiyon-konteynir');
-
         if (konteynir) {
             konteynir.innerHTML = ""; 
             veriler.forEach(teknoloji => {
-                const kartHtml = `
-                    <div class="card" style="cursor: pointer;" onclick="favoriKontrol(${teknoloji.id}, '${teknoloji.baslik}')">
-                        <div class="card-image">
-                            <img src="${teknoloji.resim}" alt="${teknoloji.baslik}" class="gallery-img">
-                        </div>
+                konteynir.innerHTML += `
+                    <div class="card" onclick="favoriKontrol(${teknoloji.id}, '${teknoloji.baslik}')">
+                        <div class="card-image"><img src="${teknoloji.resim}"></div>
                         <div class="card-body">
                             <h3>${teknoloji.baslik}</h3>
                             <p>${teknoloji.aciklama}</p>
                             <div class="card-footer">
-                                <span><strong>Yıl:</strong> ${teknoloji.yil}</span>
+                                <span>Yıl: ${teknoloji.yil}</span>
                                 <span id="fav-icon-${teknoloji.id}" class="fav-star">☆</span>
                             </div>
                         </div>
-                    </div>
-                `;
-                konteynir.innerHTML += kartHtml;
+                    </div>`;
             });
-            // Sayfa açıldığında daha önce favoriye eklenenleri işaretle
             favoriIkonlariniGuncelle();
         }
-    } catch (hata) {
-        console.error("Kartlar oluşturulurken hata:", hata);
-    }
+    } catch (e) { console.error(e); }
 }
 
-// Favori işlemini yöneten ana fonksiyon (LocalStorage kullanımı)
 window.favoriKontrol = function(id, baslik) {
     let favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
     const index = favoriler.findIndex(item => item.id === id);
-
     if (index === -1) {
-        // Favorilerde yoksa EKLE
         favoriler.push({ id, baslik });
-        localStorage.setItem('techFavs', JSON.stringify(favoriler));
-        alert(`${baslik} favorilerinize eklendi! ✨`);
+        alert(`${baslik} eklendi! ✨`);
     } else {
-        // Favorilerde varsa ÇIKAR (Tıklayınca vazgeçme özelliği)
         favoriler.splice(index, 1);
-        localStorage.setItem('techFavs', JSON.stringify(favoriler));
-        alert(`${baslik} favorilerinizden çıkarıldı. 😊`);
+        alert(`${baslik} çıkarıldı. 😊`);
     }
+    localStorage.setItem('techFavs', JSON.stringify(favoriler));
     favoriIkonlariniGuncelle();
 };
 
-// Favori yıldızlarını LocalStorage'a göre güncelleyen fonksiyon
 function favoriIkonlariniGuncelle() {
     const favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
-    const tumYildizlar = document.querySelectorAll('.fav-star');
-    
-    // Önce hepsini boşalt
-    tumYildizlar.forEach(yildiz => yildiz.innerText = "☆");
-    
-    // Favori olanları dolu yıldız yap
-    favoriler.forEach(fav => {
-        const yildiz = document.getElementById(`fav-icon-${fav.id}`);
-        if (yildiz) yildiz.innerText = "⭐";
+    document.querySelectorAll('.fav-star').forEach(s => s.innerText = "☆");
+    favoriler.forEach(f => {
+        const el = document.getElementById(`fav-icon-${f.id}`);
+        if (el) el.innerText = "⭐";
     });
-}
-// --- MODAL YÖNETİMİ ---
-window.openModal = function(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) modal.style.display = 'flex';
-};
-
-window.closeModal = function(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) modal.style.display = 'none';
-};
-
-// Toast bildirim sistemi için
-function showToast(mesaj) {
-    alert(mesaj); // Şimdilik alert, istersen toast CSS'ine bağlayabiliriz
 }
