@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorilerim | Tech-Timeline</title>
+    <link rel="stylesheet" href="../assests/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">⚙️</span>
+                <div class="logo-text">
+                    <h1>TECH-TIMELINE</h1>
+                    <p>Dijital Müze</p>
+                </div>
+            </div>
+            <nav class="navigation">
+                <ul class="nav-menu">
+                    <li><a href="../index.html" class="nav-link">Ana Sayfa</a></li>
+                    <li><a href="about.html" class="nav-link">Hakkımda</a></li>
+                    <li><a href="project.html" class="nav-link">Projeler</a></li>
+                    <li>
+                        <a href="favorites.html" class="nav-link" style="display: flex; align-items: center; gap: 8px;">
+                            <span style="color: #e74c3c;">❤️</span> Favorilerim
+                        </a>
+                    </li>
+                </ul>
+                <button id="theme-toggle" class="theme-btn">🌙 Koyu Tema</button>
+            </nav>
+        </div>
+    </header>
+
+    <main style="padding: 3rem 10%; min-height: 70vh;">
+        <h2 style="color: var(--dark-green); text-align: center; margin-bottom: 2rem;">❤️ Favori Teknolojilerim</h2>
+        
+        <!-- Favori kartlarının dinamik olarak geleceği yer -->
+        <div id="favorites-container" class="card-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            <!-- main.js burayı dolduracak -->
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Melike Candemir | Ahi Evran Üniversitesi</p>
+    </footer>
+
+    <script src="../assests/js/main.js"></script>
+    <script>
+        // Sayfa yüklendiğinde favorileri listelemesi için main.js'deki fonksiyonu çağırıyoruz
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof window.favorileriGoster === "function") {
+                window.favorileriGoster();
+            }
+        });
+    </script>
+</body>
+</html>
