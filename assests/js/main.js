@@ -86,3 +86,39 @@ window.favoriIkonlariniGuncelle = function() {
         kalpIkoni.innerText = isFavorited ? "♥" : "♡";
     }
 };
+
+// Favoriler Sayfasındaki Kartları Oluşturan Fonksiyon
+window.favorileriGoster = function() {
+    const konteynir = document.getElementById('favorites-container');
+    if (!konteynir) return; // Eğer favoriler sayfasında değilsek kodu durdur
+
+    // LocalStorage'dan verileri çekiyoruz
+    const favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
+    
+    if (favoriler.length === 0) {
+        konteynir.innerHTML = `
+            <div style="text-align:center; grid-column: 1/-1; padding: 50px;">
+                <p style="font-size: 1.2rem; color: #666;">Henüz favori listeniz boş. 😊</p>
+                <a href="../index.html" class="btn" style="display:inline-block; margin-top:20px; background:var(--dark-green); color:white; padding:10px 20px; text-decoration:none; border-radius:5px;">Keşfetmeye Başla</a>
+            </div>`;
+        return;
+    }
+
+    konteynir.innerHTML = ""; // İçini temizle
+    favoriler.forEach(item => {
+        // Her favori için bir kart oluşturuyoruz
+        konteynir.innerHTML += `
+            <div class="card" style="border-left: 5px solid #e74c3c; padding: 20px; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-radius: 10px;">
+                <div class="card-body">
+                    <h3 style="margin-top: 0;">${item.baslik}</h3>
+                    <p style="color: #666; font-size: 0.9rem;">Bu teknoloji favorilerinize eklendi.</p>
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        <button onclick="window.favoriKontrol('${item.id}', '${item.baslik}'); location.reload();" 
+                                style="background:#ff7675; color:white; border:none; padding:8px 12px; cursor:pointer; border-radius:5px; font-weight:bold;">
+                            Kaldır 🗑️
+                        </button>
+                    </div>
+                </div>
+            </div>`;
+    });
+};
