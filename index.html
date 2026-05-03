@@ -42,20 +42,34 @@
             </nav>
         </div>
     </header>
-
-    <main>
-        <!-- ANA SAYFA HERO BÖLÜMÜ -->
-        <section class="hero" style="padding: 4rem 10%; text-align: center; background: var(--light-gray);">
-            <h1 style="color: var(--dark-green); font-size: 2.5rem; margin-bottom: 1rem;">Teknoloji Tarihine Yolculuk</h1>
-            <p style="font-size: 1.2rem; color: #555;">Geçmişten geleceğe dünyayı değiştiren en önemli icatları ve dijital devrimleri keşfedin.</p>
-        </section>
-
-        <!-- DİNAMİK KARTLARIN YÜKLENECEĞİ ALAN -->
-        <!-- Robot Nook yerine burada kartların (ENIAC, PC Devrimi vb.) listelenmesi gerekir -->
-        <div id="koleksiyon-konteynir" class="card-grid" style="padding: 3rem 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-            <!-- Kartlar main.js aracılığıyla data.json'dan buraya dolacak -->
+<main>
+    <!-- HERO BÖLÜMÜ (İkon ve Butonlar Geri Geldi) -->
+    <section class="hero" style="padding: 5rem 10%; display: flex; align-items: center; justify-content: center; gap: 40px; transition: var(--transition);">
+        <!-- Sarı-Yeşil Çark İkonu -->
+        <div class="hero-icon" style="font-size: 6rem; background: var(--gold); color: var(--dark-green); width: 150px; height: 150px; display: flex; align-items: center; justify-content: center; border-radius: 50%; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+            ⚙️
         </div>
-    </main>
+
+        <div class="hero-text" style="text-align: left;">
+            <h1 style="color: var(--dark-green); font-size: 3rem; margin-bottom: 1rem; line-height: 1.2;">Teknoloji Tarihine <br>Yolculuk</h1>
+            <p style="font-size: 1.2rem; color: #666; margin-bottom: 2rem; max-width: 500px;">
+                Geçmişten geleceğe dünyayı değiştiren en önemli icatları ve dijital devrimleri keşfedin.
+            </p>
+            
+            <!-- Butonlar -->
+            <div class="hero-btns" style="display: flex; gap: 15px;">
+                <a href="#koleksiyon-konteynir" class="btn btn-primary" style="padding: 12px 25px; background: var(--dark-green); color: white; border-radius: 5px; text-decoration: none; font-weight: bold;">Keşfetmeye Başlayın 🚀</a>
+                <button onclick="window.openModal('contact-modal')" class="btn btn-outline" style="padding: 12px 25px; border: 2px solid var(--dark-green); color: var(--dark-green); background: transparent; border-radius: 5px; font-weight: bold; cursor: pointer;">Bize Ulaşın 📞</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- KARTLARIN YÜKLENECEĞİ ALAN -->
+    <div id="koleksiyon-konteynir" class="card-grid" style="padding: 3rem 5%;">
+        <!-- Kartlar main.js aracılığıyla data.json'dan buraya dolacak -->
+    </div>
+</main>
+
 
     <!-- FORM MODALLARI (Dokunulmadı) -->
     <div id="contact-modal" class="modal">
