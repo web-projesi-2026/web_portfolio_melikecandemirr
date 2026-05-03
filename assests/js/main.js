@@ -1,92 +1,94 @@
 /* Tech-Timeline Dijital Müze Projesi 
    Geliştirici: Melike Candemir
-   Görev: Etkileşim Kontrolleri (Menu, Dark Mode, Lightbox)
+   Görev: Veri Okuma (JSON) ve Kullanıcı Etkileşimi (LocalStorage)
 */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // --- 1. MOBİL MENÜ KONTROLÜ ---
-    const menuToggle = document.querySelector('#mobile-menu');
-    const navigation = document.querySelector('.navigation');
-    const navLinks = document.querySelectorAll('.nav-link');
-
-    if (menuToggle) {
-        menuToggle.addEventListener('click', () => {
-            navigation.classList.toggle('active');
-            document.body.style.overflow = navigation.classList.contains('active') ? 'hidden' : 'auto';
-        });
-    }
-
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            navigation.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-    });
-
-    // --- 2. DARK MODE (HAFIZALI SİSTEM) ---
-    const themeBtn = document.getElementById("theme-toggle");
+    // Mevcut Menü ve Dark Mode kodların burada kalmaya devam etsin...
     
-    const currentTheme = localStorage.getItem("theme");
-    if (currentTheme === "dark") {
-        document.body.classList.add("dark-mode");
-        if (themeBtn) themeBtn.innerText = "☀️ Açık Tema";
-    }
-
-    if (themeBtn) {
-        themeBtn.addEventListener("click", function() {
-            document.body.classList.toggle("dark-mode");
-            
-            let theme = "light";
-            if (document.body.classList.contains("dark-mode")) {
-                theme = "dark";
-                themeBtn.innerText = "☀️ Açık Tema";
-            } else {
-                themeBtn.innerText = "🌙 Koyu Tema";
-            }
-            localStorage.setItem("theme", theme);
-        });
-    }
-
-    // --- 3. RESİM GALERİSİ (LIGHTBOX) ---
-    // GÜNCELLEME: Sadece 'gallery-img' sınıfına sahip <img> etiketlerini hedef alır.
-    // project.html içinde bu sınıfı sildiğin için büyüteç orada çalışmayacaktır.
-    const galleryImages = document.querySelectorAll('img.gallery-img');
-
-    galleryImages.forEach(img => {
-        img.addEventListener('click', (e) => {
-            e.preventDefault(); 
-            
-            const modal = document.createElement('div');
-            modal.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background: rgba(0,0,0,0.9); display: flex; align-items: center;
-                justify-content: center; z-index: 9999; cursor: zoom-out;
-                animation: fadeIn 0.3s ease;
-            `;
-            
-            const fullImg = document.createElement('img');
-            fullImg.src = img.src;
-            fullImg.style.cssText = `
-                max-width: 90%; max-height: 90%; border-radius: 10px;
-                box-shadow: 0 0 30px rgba(0,0,0,0.5); transform: scale(0.9);
-                transition: transform 0.3s ease;
-            `;
-            
-            modal.appendChild(fullImg);
-            document.body.appendChild(modal);
-            
-            setTimeout(() => { fullImg.style.transform = 'scale(1)'; }, 10);
-            
-            modal.onclick = () => {
-                modal.style.opacity = '0';
-                setTimeout(() => modal.remove(), 300);
-            };
-        });
-    });
+    // --- 4. DİNAMİK VERİ ÇEKME VE ETKİLEŞİMLİ KARTLAR ---
+    verileriGetir();
 });
 
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-`;
-document.head.appendChild(style);
+async function verileriGetir() {
+    try {
+        const yanit = await fetch('data.json');
+        const veriler = await yanit.json();
+        const konteynir = document.getElementById('koleksiyon-konteynir');
+
+        if (konteynir) {
+            konteynir.innerHTML = ""; 
+            veriler.forEach(teknoloji => {
+                const kartHtml = `
+                    <div class="card" style="cursor: pointer;" onclick="favoriKontrol(${teknoloji.id}, '${teknoloji.baslik}')">
+                        <div class="card-image">
+                            <img src="${teknoloji.resim}" alt="${teknoloji.baslik}" class="gallery-img">
+                        </div>
+                        <div class="card-body">
+                            <h3>${teknoloji.baslik}</h3>
+                            <p>${teknoloji.aciklama}</p>
+                            <div class="card-footer">
+                                <span><strong>Yıl:</strong> ${teknoloji.yil}</span>
+                                <span id="fav-icon-${teknoloji.id}" class="fav-star">☆</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                konteynir.innerHTML += kartHtml;
+            });
+            // Sayfa açıldığında daha önce favoriye eklenenleri işaretle
+            favoriIkonlariniGuncelle();
+        }
+    } catch (hata) {
+        console.error("Kartlar oluşturulurken hata:", hata);
+    }
+}
+
+// Favori işlemini yöneten ana fonksiyon (LocalStorage kullanımı)
+window.favoriKontrol = function(id, baslik) {
+    let favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
+    const index = favoriler.findIndex(item => item.id === id);
+
+    if (index === -1) {
+        // Favorilerde yoksa EKLE
+        favoriler.push({ id, baslik });
+        localStorage.setItem('techFavs', JSON.stringify(favoriler));
+        alert(`${baslik} favorilerinize eklendi! ✨`);
+    } else {
+        // Favorilerde varsa ÇIKAR (Tıklayınca vazgeçme özelliği)
+        favoriler.splice(index, 1);
+        localStorage.setItem('techFavs', JSON.stringify(favoriler));
+        alert(`${baslik} favorilerinizden çıkarıldı. 😊`);
+    }
+    favoriIkonlariniGuncelle();
+};
+
+// Favori yıldızlarını LocalStorage'a göre güncelleyen fonksiyon
+function favoriIkonlariniGuncelle() {
+    const favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
+    const tumYildizlar = document.querySelectorAll('.fav-star');
+    
+    // Önce hepsini boşalt
+    tumYildizlar.forEach(yildiz => yildiz.innerText = "☆");
+    
+    // Favori olanları dolu yıldız yap
+    favoriler.forEach(fav => {
+        const yildiz = document.getElementById(`fav-icon-${fav.id}`);
+        if (yildiz) yildiz.innerText = "⭐";
+    });
+}
+// --- MODAL YÖNETİMİ ---
+window.openModal = function(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) modal.style.display = 'flex';
+};
+
+window.closeModal = function(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) modal.style.display = 'none';
+};
+
+// Toast bildirim sistemi için
+function showToast(mesaj) {
+    alert(mesaj); // Şimdilik alert, istersen toast CSS'ine bağlayabiliriz
+}

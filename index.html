@@ -32,6 +32,12 @@
                 <button id="theme-toggle" style="cursor:pointer; padding: 8px 15px; border-radius: 20px; margin: 10px; border: 1px solid #ccc;">🌙 Koyu Tema</button>
             </nav>
         </div>
+        <!-- Hızlı Erişim Form İkonları -->
+    <div class="form-icons-bar" style="display: flex; justify-content: center; gap: 20px; padding: 15px; background: #f4f4f4;">
+        <button onclick="window.openModal('contact-modal')" style="font-size: 24px; cursor: pointer; border: none; background: none;">📞</button>
+        <button onclick="window.openModal('visitor-modal')" style="font-size: 24px; cursor: pointer; border: none; background: none;">📖</button>
+        <button onclick="window.openModal('suggest-modal')" style="font-size: 24px; cursor: pointer; border: none; background: none;">💡</button>
+    </div>
     </header>
 
     <main>
@@ -62,36 +68,9 @@
                 <p>İnsanlık tarihini değiştiren dönüm noktaları</p>
             </div>
             
-            <div class="cards-grid">
-                <a href="pages/project.html" class="card-link">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200" alt="Bilgisayar">
-                        </div>
-                        <h3>💻 Bilgisayarın Doğuşu</h3>
-                        <p>1950'lerden bugüne dijital evrimin temeli.</p>
-                    </div>
-                </a>
-
-                <a href="pages/project.html" class="card-link">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200" alt="Yapay Zeka">
-                        </div>
-                        <h3>🤖 Yapay Zeka (AI)</h3>
-                        <p>3D model deneyimi ve derin öğrenme süreci.</p>
-                    </div>
-                </a>
-
-                <a href="pages/project.html" class="card-link">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=1200" alt="Bulut Bilişim">
-                        </div>
-                        <h3>☁️ Bulut Bilişim</h3>
-                        <p>Verilerin fiziksel sınırlardan kurtulduğu yeni çağ.</p>
-                    </div>
-                </a>
+            <!-- JavaScript verileri bu ID'ye sahip div'in içine basacak -->
+            <div class="cards-grid" id="koleksiyon-konteynir">
+                <!-- Burası başlangıçta boş kalacak, JS otomatik dolduracak -->
             </div>
         </section>
     </main>
