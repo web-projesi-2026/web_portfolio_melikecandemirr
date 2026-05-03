@@ -1,141 +1,121 @@
-/* 1. TEMEL AYARLAR */
-:root { 
-    --dark-green: #00592D; 
-    --gold: #FFC107; 
-    --white: #FFFFFF; 
-    --transition: all 0.3s ease;
-}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech-Timeline | Dijital Müze</title>
+    <link rel="stylesheet" href="assests/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">⚙️</span>
+                <div class="logo-text">
+                    <h1>TECH-TIMELINE</h1>
+                    <p>Dijital Müze</p>
+                </div>
+            </div>
+            <nav class="navigation">
+                <div class="menu-toggle" id="mobile-menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Ana Sayfa</a></li>
+                    <li><a href="pages/about.html" class="nav-link">Hakkımda</a></li>
+                    <li><a href="pages/project.html" class="nav-link">Projeler</a></li>
+                    <li class="nav-icons">
+                        <button onclick="window.openModal('contact-modal')" class="icon-btn" title="İletişim">📞</button>
+                        <button onclick="window.openModal('visitor-modal')" class="icon-btn" title="Ziyaretçi Defteri">📖</button>
+                        <button onclick="window.openModal('suggest-modal')" class="icon-btn" title="Yeni Teknoloji Önerisi">💡</button>
+                    </li>
+                </ul>
+                <button id="theme-toggle" class="theme-btn">🌙 Koyu Tema</button>
+            </nav>
+        </div>
+    </header>
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { 
-    max-width: 100%; 
-    overflow-x: hidden; 
-    font-family: 'Montserrat', sans-serif; 
-}
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h2 class="hero-title">Teknoloji Tarihine Hoş Geldiniz</h2>
+                    <p class="hero-subtitle">Geçmişten geleceğe dijital bir yolculuk. İnsanlığın en büyük buluşlarını keşfedin.</p>
+                    <div class="hero-buttons">
+                        <a href="pages/project.html" class="btn btn-primary">💻 Keşfetmeye Başla</a>
+                        <button onclick="window.openModal('contact-modal')" class="btn btn-secondary" style="margin-top: 10px;">✨ Bize Ulaşın 🤗</button>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <!-- İstediğin o Mavi-Yeşil Görsel (SVG) buraya eklendi -->
+                    <div class="floating-element">
+                        <svg width="350" height="350" viewBox="0 0 120 120">
+                            <circle cx="60" cy="60" r="55" fill="none" stroke="#00592D" stroke-width="3"/>
+                            <path d="M30 60 Q60 30 90 60 Q60 90 30 60" fill="none" stroke="#007BFF" stroke-width="3"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-/* 2. HEADER & NAVİGASYON */
-.header { background: var(--dark-green); padding: 1rem 5%; position: sticky; top: 0; z-index: 1000; }
-.header-content { 
-    max-width: 1400px; margin: 0 auto; 
-    display: flex; justify-content: space-between; align-items: center;
-}
-.logo { color: white; display: flex; align-items: center; gap: 10px; }
-.logo h1 { font-size: 1.5rem; }
+        <section class="innovations">
+            <div class="section-header">
+                <h2>Teknoloji Koleksiyonu</h2>
+            </div>
+            <div class="cards-grid" id="koleksiyon-konteynir"></div>
+        </section>
+    </main>
 
-.nav-menu { display: flex; list-style: none; gap: 20px; align-items: center; }
-.nav-link { color: white; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
-.menu-toggle { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
-.menu-toggle .bar { width: 25px; height: 3px; background: white; border-radius: 2px; }
+    <!-- FORM MODALLARI -->
+    <div id="contact-modal" class="modal">
+        <div class="modal-content">
+            <span onclick="window.closeModal('contact-modal')" class="close">&times;</span>
+            <h2>📞 İletişim Formu</h2>
+            <form action="#">
+                <label>Ad Soyad:</label>
+                <input type="text" placeholder="Adınız..">
+                <label>Mesajınız:</label>
+                <textarea placeholder="Size nasıl yardımcı olabiliriz?"></textarea>
+                <button type="submit" class="btn btn-primary" style="margin-top:10px; width:100%;">Gönder 🚀</button>
+            </form>
+        </div>
+    </div>
 
-/* Menü İçi İkon Butonları */
-.nav-icons {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    margin-left: 10px;
-    padding-left: 15px;
-    border-left: 1px solid rgba(255,255,255,0.2);
-}
+    <div id="visitor-modal" class="modal">
+        <div class="modal-content">
+            <span onclick="window.closeModal('visitor-modal')" class="close">&times;</span>
+            <h2>✍️ Müze Ziyaretçi Defteri</h2>
+            <form action="#">
+                <label>Ziyaretçi Adı:</label>
+                <input type="text" placeholder="İsminiz..">
+                <label>Deneyiminiz:</label>
+                <textarea placeholder="Müzemizi nasıl buldunuz?"></textarea>
+                <button type="submit" class="btn btn-primary" style="margin-top:10px; width:100%;">İmzala ✍️</button>
+            </form>
+        </div>
+    </div>
 
-.icon-btn {
-    background: none;
-    border: none;
-    font-size: 1.4rem;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-    padding: 5px;
-}
+    <div id="suggest-modal" class="modal">
+        <div class="modal-content">
+            <span onclick="window.closeModal('suggest-modal')" class="close">&times;</span>
+            <h2>💡 Yeni Teknoloji Önerisi</h2>
+            <form action="#">
+                <label>Teknoloji Adı:</label>
+                <input type="text" placeholder="Örn: Enigma Makinesi">
+                <label>Neden Sergilenmeli?:</label>
+                <textarea placeholder="Bu teknolojinin önemi nedir?"></textarea>
+                <button type="submit" class="btn btn-primary" style="margin-top:10px; width:100%;">Öner 💡</button>
+            </form>
+        </div>
+    </div>
 
-.icon-btn:hover {
-    transform: scale(1.3);
-}
+    <footer class="footer">
+        <p>&copy; 2026 Melike Candemir | Ahi Evran Üniversitesi</p>
+    </footer>
 
-/* 3. HERO & INNOVATIONS (KARTLAR) */
-.hero { padding: 4rem 10%; background: #f9f9f9; min-height: 70vh; display: flex; align-items: center; transition: var(--transition); }
-.hero-content { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 1200px; margin: 0 auto; }
-.hero-title { font-size: 3rem; color: var(--dark-green); margin-bottom: 20px; }
-.hero-subtitle { color: #555; margin-bottom: 20px; }
-.btn { padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: bold; min-width: 250px; text-align: center; cursor: pointer; transition: var(--transition); border: none; }
-.btn-primary { background: var(--dark-green); color: white; }
-.btn-secondary { border: 2px solid var(--dark-green); color: var(--dark-green); }
-
-.innovations { padding: 4rem 10%; text-align: center; transition: var(--transition); }
-.cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 3rem; }
-
-.card { 
-    padding: 20px; background: white; border-radius: 15px; 
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 5px solid var(--gold);
-    cursor: pointer; transition: var(--transition); height: 100%;
-    position: relative; text-align: left;
-}
-.card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
-.card-image img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; }
-
-.card-footer {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-top: 15px; padding-top: 10px; border-top: 1px solid #eee;
-}
-.fav-star { font-size: 1.5rem; color: #FFB81C; transition: transform 0.2s; }
-
-/* 4. MODAL & FORM TASARIMI */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.85);
-    z-index: 2000;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(5px);
-}
-
-.modal-content {
-    background: white;
-    padding: 40px;
-    border-radius: 20px;
-    width: 90%;
-    max-width: 550px;
-    position: relative;
-    max-height: 90vh;
-    overflow-y: auto;
-    color: #333;
-}
-
-.modal-content h2 {
-    color: var(--dark-green);
-    margin-bottom: 20px;
-    border-bottom: 2px solid var(--gold);
-    padding-bottom: 10px;
-}
-
-/* Form Elemanları */
-.modal-content label { display: block; margin-top: 15px; font-weight: bold; }
-.modal-content input, .modal-content textarea {
-    width: 100%;
-    padding: 12px;
-    margin-top: 5px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-}
-
-/* 5. FOOTER */
-.footer { background-color: var(--dark-green) !important; color: white !important; padding: 2rem; text-align: center; width: 100%; margin-top: 4rem; }
-
-/* 6. RESPONSIVE */
-@media (max-width: 950px) {
-    .menu-toggle { display: flex; }
-    .nav-menu { 
-        display: none; flex-direction: column; position: absolute; 
-        top: 100%; left: 0; width: 100%; background: var(--dark-green); 
-        padding: 20px; gap: 15px; 
-    }
-    .navigation.active .nav-menu { display: flex; }
-    .nav-icons { border-left: none; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px; margin-left: 0; }
-}
-
-/* 7. DARK MODE */
-body.dark-mode { background-color: #0f0f0f !important; color: #ffffff !important; }
-body.dark-mode .modal-content { background-color: #1a1a1a; color: white; border: 1px solid #333; }
-body.dark-mode .modal-content input, body.dark-mode .modal-content textarea { background: #333; border: 1px solid #444; color: white; }
-body.dark-mode .nav-link { color: #bb86fc !important; }
-body.dark-mode #theme-toggle { color: #bb86fc; border-color: #bb86fc; }
+    <script src="assests/js/main.js"></script>
+</body>
+</html>
