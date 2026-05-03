@@ -1,124 +1,143 @@
 /* Tech-Timeline Dijital Müze Projesi 
    Geliştirici: Melike Candemir
+   Görev: Etkileşim Kontrolleri, Dinamik Veri ve Veri Saklama
 */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // --- KOYU TEMA SİSTEMİ ---
+    // --- 1. MOBİL MENÜ KONTROLÜ ---
+    const menuToggle = document.querySelector('#mobile-menu');
+    const navigation = document.querySelector('.navigation');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            navigation.classList.toggle('active');
+            document.body.style.overflow = navigation.classList.contains('active') ? 'hidden' : 'auto';
+        });
+    }
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navigation.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+    });
+
+    // --- 2. DARK MODE (HAFIZALI SİSTEM) ---
     const themeBtn = document.getElementById("theme-toggle");
-    if (localStorage.getItem("theme") === "dark") {
+    const currentTheme = localStorage.getItem("theme");
+
+    if (currentTheme === "dark") {
         document.body.classList.add("dark-mode");
         if (themeBtn) themeBtn.innerText = "☀️ Açık Tema";
     }
 
     if (themeBtn) {
-        themeBtn.addEventListener("click", () => {
+        themeBtn.addEventListener("click", function() {
             document.body.classList.toggle("dark-mode");
-            const isDark = document.body.classList.contains("dark-mode");
-            themeBtn.innerText = isDark ? "☀️ Açık Tema" : "🌙 Koyu Tema";
-            localStorage.setItem("theme", isDark ? "dark" : "light");
+            let theme = document.body.classList.contains("dark-mode") ? "dark" : "light";
+            themeBtn.innerText = theme === "dark" ? "☀️ Açık Tema" : "🌙 Koyu Tema";
+            localStorage.setItem("theme", theme);
         });
     }
 
-    // --- VERİ ÇEKME VE KATEGORİLERİ LİSTELEME ---
-    // Sadece ana sayfadaysak (koleksiyon-konteynir varsa) çalıştır
+    // --- 3. DİNAMİK VERİ VE FAVORİ SİSTEMİ ---
     if (document.getElementById('koleksiyon-konteynir')) {
         kategorileriGetir();
     }
-    
-    // Kalp durumunu kontrol et
+
+    if (document.getElementById('favorites-container')) {
+        window.favorileriGoster();
+    }
+
     favoriIkonlariniGuncelle();
 });
 
-// Kategori Getirme (Yol Hatası Giderildi)
+// JSON'dan Veri Çekme
 async function kategorileriGetir() {
     try {
         const yanit = await fetch('data.json');
         const veriler = await yanit.json();
         const konteynir = document.getElementById('koleksiyon-konteynir');
         if (konteynir && veriler.kategoriler) {
-            konteynir.innerHTML = ""; 
-            veriler.kategoriler.forEach(kategori => {
-                konteynir.innerHTML += `
-                    <div class="card" onclick="location.href='${kategori.link}'" style="cursor: pointer;">
-                        <div class="card-image"><img src="${kategori.resim}"></div>
-                        <div class="card-body">
-                            <h3>${kategori.baslik}</h3>
-                            <p>${kategori.aciklama}</p>
-                            <div class="card-footer"><span>Yıl: ${kategori.yil}</span></div>
-                        </div>
-                    </div>`;
-            });
+            konteynir.innerHTML = veriler.kategoriler.map(kategori => `
+                <div class="card" onclick="location.href='${kategori.link}'" style="cursor: pointer;">
+                    <div class="card-image"><img src="${kategori.resim}"></div>
+                    <div class="card-body">
+                        <h3>${kategori.baslik}</h3>
+                        <p>${kategori.aciklama}</p>
+                        <div class="card-footer"><span>Yıl: ${kategori.yil}</span></div>
+                    </div>
+                </div>`).join('');
         }
     } catch (e) { console.error("Veri yüklenemedi:", e); }
 }
 
-// Favori Kontrolü (Hata Giderilmiş)
+// Favori Kontrolü (Ekleme/Çıkarma Mantığı Düzeltildi)
 window.favoriKontrol = function(id, baslik) {
     let favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
     const index = favoriler.findIndex(item => item.id === id);
-    const toast = document.getElementById('toast-favourite'); // Doğru ID kullanıldı
+    const toast = document.getElementById('toast-favourite');
 
     if (index === -1) {
         favoriler.push({ id, baslik });
-        if (toast) {
-            toast.innerText = `${baslik} eklendi! ❤️`;
-            toast.style.display = 'block';
-            setTimeout(() => { toast.style.display = 'none'; }, 4000);
-        }
+        if (toast) gosterToast(`${baslik} eklendi! ❤️`);
     } else {
         favoriler.splice(index, 1);
-        if (toast) {
-            toast.innerText = `${baslik} çıkarıldı. 😊`;
-            toast.style.display = 'block';
-            setTimeout(() => { toast.style.display = 'none'; }, 4000);
-        }
+        if (toast) gosterToast(`${baslik} çıkarıldı. 😊`);
     }
     
     localStorage.setItem('techFavs', JSON.stringify(favoriler));
+    
+    // Favoriler sayfasındaysak anlık güncelle
+    if (document.getElementById('favorites-container')) {
+        window.favorileriGoster();
+    }
     favoriIkonlariniGuncelle();
 };
 
-window.favoriIkonlariniGuncelle = function() {
-    const favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
-    const kalpIkoni = document.getElementById('fav-icon-robot-09');
-    if (kalpIkoni) {
-        const isFavorited = favoriler.some(fav => fav.id === 'robot-09');
-        kalpIkoni.innerText = isFavorited ? "♥" : "♡";
-    }
-};
-
-// Favoriler Sayfasındaki Kartları Oluşturan Fonksiyon
+// Favorileri Listeleme (Boş Liste Mesajı Dahil)
 window.favorileriGoster = function() {
     const konteynir = document.getElementById('favorites-container');
-    if (!konteynir) return; // Eğer favoriler sayfasında değilsek kodu durdur
+    if (!konteynir) return;
 
-    // LocalStorage'dan verileri çekiyoruz
     const favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
     
     if (favoriler.length === 0) {
         konteynir.innerHTML = `
             <div style="text-align:center; grid-column: 1/-1; padding: 50px;">
-                <p style="font-size: 1.2rem; color: #666;">Henüz favori listeniz boş. 😊</p>
-                <a href="../index.html" class="btn" style="display:inline-block; margin-top:20px; background:var(--dark-green); color:white; padding:10px 20px; text-decoration:none; border-radius:5px;">Keşfetmeye Başla</a>
+                <p style="font-size: 1.2rem; color: #666;">Favorilere herhangi bir şey eklemediniz. 😊</p>
+                <a href="../index.html" class="btn" style="display:inline-block; margin-top:20px; background:var(--dark-green); color:white; padding:10px 20px; text-decoration:none; border-radius:5px;">Keşfetmeye Başla 🚀</a>
             </div>`;
         return;
     }
 
-    konteynir.innerHTML = ""; // İçini temizle
-    favoriler.forEach(item => {
-        // Her favori için bir kart oluşturuyoruz
-        konteynir.innerHTML += `
-            <div class="card" style="border-left: 5px solid #e74c3c; padding: 20px; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-radius: 10px;">
-                <div class="card-body">
-                    <h3 style="margin-top: 0;">${item.baslik}</h3>
-                    <p style="color: #666; font-size: 0.9rem;">Bu teknoloji favorilerinize eklendi.</p>
-                    <div style="display: flex; gap: 10px; margin-top: 15px;">
-                        <button onclick="window.favoriKontrol('${item.id}', '${item.baslik}'); location.reload();" 
-                                style="background:#ff7675; color:white; border:none; padding:8px 12px; cursor:pointer; border-radius:5px; font-weight:bold;">
-                            Kaldır 🗑️
-                        </button>
-                    </div>
-                </div>
-            </div>`;
-    });
+    konteynir.innerHTML = favoriler.map(item => `
+        <div class="card" style="border-left: 5px solid #e74c3c; padding: 20px; background: white; border-radius: 10px;">
+            <div class="card-body">
+                <h3>${item.baslik}</h3>
+                <p style="color: #666;">Bu teknoloji favorilerinize eklendi.</p>
+                <button onclick="window.favoriKontrol('${item.id}', '${item.baslik}')" 
+                        style="background:#ff7675; color:white; border:none; padding:8px 12px; cursor:pointer; border-radius:5px; margin-top:10px;">
+                    Kaldır 🗑️
+                </button>
+            </div>
+        </div>`).join('');
 };
+
+function favoriIkonlariniGuncelle() {
+    const favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
+    const kalpIkoni = document.getElementById('fav-icon-robot-09');
+    if (kalpIkoni) {
+        kalpIkoni.innerText = favoriler.some(fav => fav.id === 'robot-09') ? "♥" : "♡";
+    }
+}
+
+function gosterToast(mesaj) {
+    const toast = document.getElementById('toast-favourite');
+    if (toast) {
+        toast.innerText = mesaj;
+        toast.style.display = 'block';
+        setTimeout(() => { toast.style.display = 'none'; }, 3000);
+    }
+}
