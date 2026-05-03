@@ -8,6 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Başarılı gönderim mesajı için Toast alanı -->
+    <div id="toast-message" style="display: none; position: fixed; bottom: 20px; right: 20px; background: #00592D; color: white; padding: 15px 25px; border-radius: 8px; z-index: 10000; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+        Yanıtınız geliştiricimize iletilmek üzere kaydedildi! ✨
+    </div>
+
     <header class="header">
         <div class="header-content">
             <div class="logo">
@@ -50,7 +55,6 @@
                     </div>
                 </div>
                 <div class="hero-visual">
-                    <!-- İstediğin o Mavi-Yeşil Görsel (SVG) buraya eklendi -->
                     <div class="floating-element">
                         <svg width="350" height="350" viewBox="0 0 120 120">
                             <circle cx="60" cy="60" r="55" fill="none" stroke="#00592D" stroke-width="3"/>
@@ -74,11 +78,13 @@
         <div class="modal-content">
             <span onclick="window.closeModal('contact-modal')" class="close">&times;</span>
             <h2>📞 İletişim Formu</h2>
-            <form action="#">
-                <label>Ad Soyad:</label>
-                <input type="text" placeholder="Adınız..">
-                <label>Mesajınız:</label>
-                <textarea placeholder="Size nasıl yardımcı olabiliriz?"></textarea>
+            <form id="contact-form">
+                <label>Ad Soyad *</label>
+                <input type="text" placeholder="Adınız.." required>
+                <label>E-posta *</label>
+                <input type="email" placeholder="ornek@mail.com" required>
+                <label>Mesajınız *</label>
+                <textarea placeholder="Size nasıl yardımcı olabiliriz?" required></textarea>
                 <button type="submit" class="btn btn-primary" style="margin-top:10px; width:100%;">Gönder 🚀</button>
             </form>
         </div>
@@ -88,11 +94,13 @@
         <div class="modal-content">
             <span onclick="window.closeModal('visitor-modal')" class="close">&times;</span>
             <h2>✍️ Müze Ziyaretçi Defteri</h2>
-            <form action="#">
-                <label>Ziyaretçi Adı:</label>
-                <input type="text" placeholder="İsminiz..">
-                <label>Deneyiminiz:</label>
-                <textarea placeholder="Müzemizi nasıl buldunuz?"></textarea>
+            <form id="visitor-form">
+                <label>Ziyaretçi Adı *</label>
+                <input type="text" placeholder="İsminiz.." required>
+                <label>E-posta *</label>
+                <input type="email" placeholder="ornek@mail.com" required>
+                <label>Deneyiminiz *</label>
+                <textarea placeholder="Müzemizi nasıl buldunuz?" required></textarea>
                 <button type="submit" class="btn btn-primary" style="margin-top:10px; width:100%;">İmzala ✍️</button>
             </form>
         </div>
@@ -102,11 +110,13 @@
         <div class="modal-content">
             <span onclick="window.closeModal('suggest-modal')" class="close">&times;</span>
             <h2>💡 Yeni Teknoloji Önerisi</h2>
-            <form action="#">
-                <label>Teknoloji Adı:</label>
-                <input type="text" placeholder="Örn: Enigma Makinesi">
-                <label>Neden Sergilenmeli?:</label>
-                <textarea placeholder="Bu teknolojinin önemi nedir?"></textarea>
+            <form id="suggest-form">
+                <label>Teknoloji Adı *</label>
+                <input type="text" placeholder="Örn: Enigma Makinesi" required>
+                <label>E-posta *</label>
+                <input type="email" placeholder="ornek@mail.com" required>
+                <label>Neden Sergilenmeli? *</label>
+                <textarea placeholder="Bu teknolojinin önemi nedir?" required></textarea>
                 <button type="submit" class="btn btn-primary" style="margin-top:10px; width:100%;">Öner 💡</button>
             </form>
         </div>
