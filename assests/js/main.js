@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     kategorileriGetir();
-    // Sayfa açıldığında kalp durumunu kontrol et
+    // Sayfa açıldığında ikon durumunu kontrol et
     favoriIkonlariniGuncelle();
 });
 
@@ -87,12 +87,17 @@ async function kategorileriGetir() {
     } catch (e) { console.error("Kategoriler yüklenirken hata:", e); }
 }
 
-// Kalp İkonlu Favori Kontrolü (Alert Kaldırıldı, Anında Toast Eklendi)
+// Kalp İkonlu Favori Kontrolü (Kesin Çözüm)
 window.favoriKontrol = function(id, baslik) {
     let favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
     const index = favoriler.findIndex(item => item.id === id);
     const toast = document.getElementById('toast-favourite');
     
+    // Mesaj kutusu varsa önceki zamanlayıcıları temizle ve gizle (üst üste binmemesi için)
+    if (toast) {
+        toast.style.display = 'none';
+    }
+
     if (index === -1) {
         // Favoriye EKLE
         favoriler.push({ id, baslik });
@@ -111,8 +116,8 @@ window.favoriKontrol = function(id, baslik) {
         }
     }
     
+    // Veriyi kaydet ve ikonu anında güncelle
     localStorage.setItem('techFavs', JSON.stringify(favoriler));
-    // Kalbi ve mesajı anında güncelle
     favoriIkonlariniGuncelle();
 };
 
