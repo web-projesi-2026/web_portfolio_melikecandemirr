@@ -1,6 +1,6 @@
 /* Tech-Timeline Dijital Müze Projesi 
    Geliştirici: Melike Candemir
-   Görev: Dinamik Kategori Yönlendirmesi ve Alt Model Yönetimi
+   Görev: Dinamik Kategori Yönlendirmesi ve Kalp İkonlu Favori Yönetimi
 */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -44,6 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- VERİ ÇEKME VE KATEGORİLERİ LİSTELEME ---
     kategorileriGetir();
+    
+    // Alt sayfalarda kalp ikonunu başlangıçta kontrol et
+    favoriIkonlariniGuncelle();
 });
 
 // Modal Yönetimi
@@ -63,7 +66,7 @@ window.closeModal = function(modalId) {
     }
 };
 
-// Ana Sayfa Kategori Kartlarını Oluşturma (Favori Özelliği Kaldırıldı)
+// Ana Sayfa Kategorileri
 async function kategorileriGetir() {
     try {
         const yanit = await fetch('data.json');
@@ -81,7 +84,6 @@ async function kategorileriGetir() {
                             <p>${kategori.aciklama}</p>
                             <div class="card-footer">
                                 <span>Kategori Yılı: ${kategori.yil}</span>
-                                <!-- Favori yıldızı buradan kaldırıldı -->
                             </div>
                         </div>
                     </div>`;
@@ -90,19 +92,29 @@ async function kategorileriGetir() {
     } catch (e) { console.error("Kategoriler yüklenirken hata:", e); }
 }
 
-// Alt Modeller İçin Favori Kontrolü (Robot Nook 09 vb. için kullanılacak)
+// Kalp İkonlu Favori Kontrolü
 window.favoriKontrol = function(id, baslik) {
     let favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
     const index = favoriler.findIndex(item => item.id === id);
     
     if (index === -1) {
         favoriler.push({ id, baslik });
-        alert(`${baslik} favorilerinize eklendi! ✨`);
+        alert(`${baslik} favorilerinize eklendi! ❤️`);
     } else {
         favoriler.splice(index, 1);
         alert(`${baslik} favorilerinizden çıkarıldı. 😊`);
     }
     localStorage.setItem('techFavs', JSON.stringify(favoriler));
-    // Eğer sayfada favori ikonları varsa güncelle
-    if (typeof favoriIkonlariniGuncelle === "function") favoriIkonlariniGuncelle();
+    favoriIkonlariniGuncelle();
+};
+
+// Kalp İkonlarını Güncelleyen Fonksiyon
+window.favoriIkonlariniGuncelle = function() {
+    const favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
+    const kalpIkoni = document.getElementById('fav-icon-robot-09');
+    
+    if (kalpIkoni) {
+        const isFavorited = favoriler.some(fav => fav.id === 'robot-09');
+        kalpIkoni.innerText = isFavorited ? "♥" : "♡";
+    }
 };
