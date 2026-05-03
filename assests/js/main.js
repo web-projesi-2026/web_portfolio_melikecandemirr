@@ -1,6 +1,5 @@
 /* Tech-Timeline Dijital Müze Projesi 
    Geliştirici: Melike Candemir
-   Görev: Dinamik Kategori Yönlendirmesi ve Gelişmiş Favori Sistemi
 */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add("dark-mode");
         if (themeBtn) themeBtn.innerText = "☀️ Açık Tema";
     }
+
     if (themeBtn) {
         themeBtn.addEventListener("click", () => {
             document.body.classList.toggle("dark-mode");
@@ -19,50 +19,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- FORM GÖNDERİMİ ---
-    const formIds = ['contact-form', 'visitor-form', 'suggest-form'];
-    formIds.forEach(id => {
-        const form = document.getElementById(id);
-        if (form) {
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const toast = document.getElementById('toast-message');
-                if (toast) {
-                    toast.style.display = 'block';
-                    setTimeout(() => { toast.style.display = 'none'; }, 4000);
-                }
-                form.reset();
-                const modal = form.closest('.modal');
-                if (modal) {
-                    setTimeout(() => { window.closeModal(modal.id); }, 500);
-                }
-            });
-        }
-    });
-
-    kategorileriGetir();
-    // Sayfa açıldığında ikon durumunu kontrol et
+    // --- VERİ ÇEKME VE KATEGORİLERİ LİSTELEME ---
+    // Sadece ana sayfadaysak (koleksiyon-konteynir varsa) çalıştır
+    if (document.getElementById('koleksiyon-konteynir')) {
+        kategorileriGetir();
+    }
+    
+    // Kalp durumunu kontrol et
     favoriIkonlariniGuncelle();
 });
 
-// Modal Yönetimi
-window.openModal = function(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-    }
-};
-
-window.closeModal = function(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
-};
-
-// Ana Sayfa Kategorileri
+// Kategori Getirme (Yol Hatası Giderildi)
 async function kategorileriGetir() {
     try {
         const yanit = await fetch('data.json');
@@ -73,59 +40,47 @@ async function kategorileriGetir() {
             veriler.kategoriler.forEach(kategori => {
                 konteynir.innerHTML += `
                     <div class="card" onclick="location.href='${kategori.link}'" style="cursor: pointer;">
-                        <div class="card-image"><img src="${kategori.resim}" alt="${kategori.baslik}"></div>
+                        <div class="card-image"><img src="${kategori.resim}"></div>
                         <div class="card-body">
                             <h3>${kategori.baslik}</h3>
                             <p>${kategori.aciklama}</p>
-                            <div class="card-footer">
-                                <span>Kategori Yılı: ${kategori.yil}</span>
-                            </div>
+                            <div class="card-footer"><span>Yıl: ${kategori.yil}</span></div>
                         </div>
                     </div>`;
             });
         }
-    } catch (e) { console.error("Kategoriler yüklenirken hata:", e); }
+    } catch (e) { console.error("Veri yüklenemedi:", e); }
 }
 
-// Kalp İkonlu Favori Kontrolü (Kesin Çözüm)
+// Favori Kontrolü (Hata Giderilmiş)
 window.favoriKontrol = function(id, baslik) {
     let favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
     const index = favoriler.findIndex(item => item.id === id);
-    const toast = document.getElementById('toast-favourite');
-    
-    // Mesaj kutusu varsa önceki zamanlayıcıları temizle ve gizle (üst üste binmemesi için)
-    if (toast) {
-        toast.style.display = 'none';
-    }
+    const toast = document.getElementById('toast-favourite'); // Doğru ID kullanıldı
 
     if (index === -1) {
-        // Favoriye EKLE
         favoriler.push({ id, baslik });
         if (toast) {
-            toast.innerText = `${baslik} favorilerinize eklendi! ❤️`;
+            toast.innerText = `${baslik} eklendi! ❤️`;
             toast.style.display = 'block';
             setTimeout(() => { toast.style.display = 'none'; }, 4000);
         }
     } else {
-        // Favoriden ÇIKAR
         favoriler.splice(index, 1);
         if (toast) {
-            toast.innerText = `${baslik} favorilerinizden çıkarıldı. 😊`;
+            toast.innerText = `${baslik} çıkarıldı. 😊`;
             toast.style.display = 'block';
             setTimeout(() => { toast.style.display = 'none'; }, 4000);
         }
     }
     
-    // Veriyi kaydet ve ikonu anında güncelle
     localStorage.setItem('techFavs', JSON.stringify(favoriler));
     favoriIkonlariniGuncelle();
 };
 
-// Kalp İkonlarını Güncelleyen Fonksiyon (♡ -> ♥)
 window.favoriIkonlariniGuncelle = function() {
     const favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
     const kalpIkoni = document.getElementById('fav-icon-robot-09');
-    
     if (kalpIkoni) {
         const isFavorited = favoriler.some(fav => fav.id === 'robot-09');
         kalpIkoni.innerText = isFavorited ? "♥" : "♡";
