@@ -20,18 +20,24 @@
                     <p>Dijital Müze</p>
                 </div>
             </div>
-            <nav class="navigation">
-                <div class="menu-toggle" id="mobile-menu">
-                    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-                </div>
-                <ul class="nav-menu">
-                    <li><a href="../index.html" class="nav-link">Ana Sayfa</a></li>
-                    <li><a href="about.html" class="nav-link">Hakkımda</a></li>
-                    <li><a href="project.html" class="nav-link">Projeler</a></li>
-                    <li><a href="contact.html" class="nav-link">İletişim</a></li>
-                </ul>
-                <button id="theme-toggle" class="theme-btn">🌙 Koyu Tema</button>
-            </nav>
+<nav class="navigation">
+    <div class="menu-toggle" id="mobile-menu">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </div>
+    <ul class="nav-menu">
+        <!-- Ana dizine çıkmak için ../ kullanıyoruz -->
+        <li><a href="../index.html" class="nav-link">Ana Sayfa</a></li>
+        <li><a href="about.html" class="nav-link">Hakkımda</a></li>
+        <li><a href="project.html" class="nav-link">Projeler</a></li>
+        <!-- Favorilerim Sekmesi -->
+        <li>
+            <a href="favorites.html" class="nav-link" style="display: flex; align-items: center; gap: 8px;">
+                <span style="color: #e74c3c;">❤️</span> Favorilerim
+            </a>
+        </li>
+    </ul>
+    <button id="theme-toggle" class="theme-btn">🌙 Koyu Tema</button>
+</nav>
         </div>
     </header>
 
