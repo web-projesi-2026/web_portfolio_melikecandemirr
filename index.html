@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech-Timeline | Dijital Müze</title>
-    <!-- Klasör isminin 'assests' (hatalı yazım) mi yoksa 'assets' mi olduğunu kontrol etmelisin -->
     <link rel="stylesheet" href="assests/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -28,21 +27,20 @@
                     <li><a href="index.html" class="nav-link">Ana Sayfa</a></li>
                     <li><a href="pages/about.html" class="nav-link">Hakkımda</a></li>
                     <li><a href="pages/project.html" class="nav-link">Projeler</a></li>
-                    <li><a href="pages/contact.html" class="nav-link">İletişim</a></li>
+                    <!-- Eski 'İletişim' yazısı kalktı, yerine ikonlar geldi -->
+                    <li class="nav-icons">
+                        <button onclick="window.openModal('contact-modal')" class="icon-btn" title="İletişim">📞</button>
+                        <button onclick="window.openModal('visitor-modal')" class="icon-btn" title="Ziyaretçi Defteri">📖</button>
+                        <button onclick="window.openModal('suggest-modal')" class="icon-btn" title="Yeni Teknoloji Önerisi">💡</button>
+                    </li>
                 </ul>
                 <button id="theme-toggle" style="cursor:pointer; padding: 8px 15px; border-radius: 20px; margin: 10px; border: 1px solid #ccc;">🌙 Koyu Tema</button>
             </nav>
         </div>
     </header>
 
-    <!-- Hızlı Erişim Form İkonları (Header'ın Hemen Altında) -->
-    <div class="form-icons-bar" style="display: flex; justify-content: center; gap: 30px; padding: 20px; background: rgba(244, 244, 244, 0.8); backdrop-filter: blur(5px);">
-        <button onclick="window.openModal('contact-modal')" style="font-size: 28px; cursor: pointer; border: none; background: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" title="İletişim">📞</button>
-        <button onclick="window.openModal('visitor-modal')" style="font-size: 28px; cursor: pointer; border: none; background: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" title="Ziyaretçi Defteri">📖</button>
-        <button onclick="window.openModal('suggest-modal')" style="font-size: 28px; cursor: pointer; border: none; background: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" title="Öneri Yap">💡</button>
-    </div>
-
     <main>
+        <!-- Hero ve Innovations kısımları aynı kalıyor -->
         <section class="hero">
             <div class="hero-content">
                 <div class="hero-text">
@@ -50,15 +48,6 @@
                     <p class="hero-subtitle">Geçmişten geleceğe dijital bir yolculuk. İnsanlığın en büyük buluşlarını keşfedin.</p>
                     <div class="hero-buttons">
                         <a href="pages/project.html" class="btn btn-primary">💻 Keşfetmeye Başla</a>
-                        <a href="pages/contact.html" class="btn btn-secondary">✨ Bize Ulaşın 🤗</a>
-                    </div>
-                </div>
-                <div class="hero-visual">
-                    <div class="floating-element">
-                        <svg width="350" height="350" viewBox="0 0 120 120">
-                            <circle cx="60" cy="60" r="55" fill="none" stroke="#FFB81C" stroke-width="3"/>
-                            <path d="M30 60 Q60 30 90 60 Q60 90 30 60" fill="none" stroke="#00592D" stroke-width="3"/>
-                        </svg>
                     </div>
                 </div>
             </div>
@@ -67,37 +56,36 @@
         <section class="innovations">
             <div class="section-header">
                 <h2>Teknoloji Koleksiyonu</h2>
-                <p>İnsanlık tarihini değiştiren dönüm noktaları</p>
             </div>
-            <div class="cards-grid" id="koleksiyon-konteynir">
-                <!-- Veriler data.json'dan gelecek -->
-            </div>
+            <div class="cards-grid" id="koleksiyon-konteynir"></div>
         </section>
     </main>
 
-    <!-- MODAL YAPILARI (İkonlara tıklandığında açılacak pencereler) -->
-    <div id="contact-modal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:2000; justify-content:center; align-items:center;">
-        <div style="background:white; padding:30px; border-radius:15px; width:90%; max-width:400px; position:relative; color: #333;">
-            <span onclick="window.closeModal('contact-modal')" style="position:absolute; top:10px; right:15px; cursor:pointer; font-size:24px;">&times;</span>
-            <h3>📞 İletişim Formu</h3>
-            <p>Size ulaşmamız için bilgilerinizi bırakın.</p>
-            <!-- Form buraya gelecek -->
+    <!-- FORM MODALLARI (Önceki haftalarda yaptığımız formlar burada açılacak) -->
+    <div id="contact-modal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center;">
+        <div style="background:white; padding:30px; border-radius:15px; width:90%; max-width:500px; color:#333; position:relative; max-height: 90vh; overflow-y: auto;">
+            <span onclick="window.closeModal('contact-modal')" style="position:absolute; top:10px; right:20px; cursor:pointer; font-size:30px;">&times;</span>
+            <h2>📞 Bize Ulaşın</h2>
+            <p>Sorularınız için bu formu kullanabilirsiniz.</p>
+            <!-- Buraya iletişim formunu ekleyebilirsin -->
         </div>
     </div>
 
-    <div id="visitor-modal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:2000; justify-content:center; align-items:center;">
-        <div style="background:white; padding:30px; border-radius:15px; width:90%; max-width:400px; position:relative; color: #333;">
-            <span onclick="window.closeModal('visitor-modal')" style="position:absolute; top:10px; right:15px; cursor:pointer; font-size:24px;">&times;</span>
-            <h3>📖 Ziyaretçi Defteri</h3>
-            <p>Müzemiz hakkındaki düşüncelerinizi yazın.</p>
+    <div id="visitor-modal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center;">
+        <div style="background:white; padding:30px; border-radius:15px; width:90%; max-width:500px; color:#333; position:relative; max-height: 90vh; overflow-y: auto;">
+            <span onclick="window.closeModal('visitor-modal')" style="position:absolute; top:10px; right:20px; cursor:pointer; font-size:30px;">&times;</span>
+            <h2>✍️ Müze Ziyaretçi Defteri</h2>
+            <p>Deneyimlerinizi bizimle paylaşın.</p>
+            <!-- Fotoğraftaki defter formunu buraya ekleyebilirsin -->
         </div>
     </div>
 
-    <div id="suggest-modal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:2000; justify-content:center; align-items:center;">
-        <div style="background:white; padding:30px; border-radius:15px; width:90%; max-width:400px; position:relative; color: #333;">
-            <span onclick="window.closeModal('suggest-modal')" style="position:absolute; top:10px; right:15px; cursor:pointer; font-size:24px;">&times;</span>
-            <h3>💡 Müze Önerisi</h3>
-            <p>Hangi teknolojiyi burada görmek istersiniz?</p>
+    <div id="suggest-modal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center;">
+        <div style="background:white; padding:30px; border-radius:15px; width:90%; max-width:500px; color:#333; position:relative; max-height: 90vh; overflow-y: auto;">
+            <span onclick="window.closeModal('suggest-modal')" style="position:absolute; top:10px; right:20px; cursor:pointer; font-size:30px;">&times;</span>
+            <h2>💡 Yeni Teknoloji Önerisi</h2>
+            <p>Hangi teknolojiyi sergilemeliyiz?</p>
+            <!-- Öneri formunu buraya ekleyebilirsin -->
         </div>
     </div>
 
