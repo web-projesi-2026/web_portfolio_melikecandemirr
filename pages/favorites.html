@@ -8,6 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div id="toast-favourite" style="display: none; position: fixed; bottom: 20px; right: 20px; background: #00592D; color: white; padding: 15px 25px; border-radius: 8px; z-index: 99999; box-shadow: 0 4px 12px rgba(0,0,0,0.3); font-weight: bold; transition: opacity 0.5s ease;">
+    </div>
+
     <header class="header">
         <div class="header-content">
             <div class="logo">
@@ -17,13 +20,18 @@
                     <p>Dijital Müze</p>
                 </div>
             </div>
+            
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </div>
+
             <nav class="navigation">
                 <ul class="nav-menu">
                     <li><a href="../index.html" class="nav-link">Ana Sayfa</a></li>
                     <li><a href="about.html" class="nav-link">Hakkımda</a></li>
                     <li><a href="project.html" class="nav-link">Projeler</a></li>
                     <li>
-                        <a href="favorites.html" class="nav-link" style="display: flex; align-items: center; gap: 8px;">
+                        <a href="favorites.html" class="nav-link active" style="display: flex; align-items: center; gap: 8px;">
                             <span style="color: #e74c3c;">❤️</span> Favorilerim
                         </a>
                     </li>
@@ -36,10 +44,8 @@
     <main style="padding: 3rem 10%; min-height: 70vh;">
         <h2 style="color: var(--dark-green); text-align: center; margin-bottom: 2rem;">❤️ Favori Teknolojilerim</h2>
         
-        <!-- Favori kartlarının dinamik olarak geleceği yer -->
         <div id="favorites-container" class="card-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-            <!-- main.js burayı dolduracak -->
-        </div>
+            </div>
     </main>
 
     <footer class="footer">
@@ -48,7 +54,7 @@
 
     <script src="../assests/js/main.js"></script>
     <script>
-        // Sayfa yüklendiğinde favorileri listelemesi için main.js'deki fonksiyonu çağırıyoruz
+        // Sayfa yüklendiğinde favorileri listelemesi için
         document.addEventListener('DOMContentLoaded', () => {
             if (typeof window.favorileriGoster === "function") {
                 window.favorileriGoster();
