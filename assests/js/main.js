@@ -1,6 +1,6 @@
 /* Tech-Timeline Dijital Müze Projesi 
    Geliştirici: Melike Candemir
-   Görev: Gelişmiş Favori Sistemi, Dark Mode ve Navigasyon
+   Görev: Gelişmiş Favori Sistemi, Dinamik Kart Yükleme, Dark Mode ve Navigasyon
 */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -41,8 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 3. FAVORİ SİSTEMİ BAŞLATICI ---
-    // Eğer favoriler sayfasındaysak listeyi göster
+    // --- 3. DİNAMİK VERİ YÜKLEME (Ana Sayfa Kartları) ---
+    if (document.getElementById('koleksiyon-konteynir')) {
+        kategorileriGetir();
+    }
+
+    // --- 4. FAVORİ SİSTEMİ BAŞLATICI ---
     if (document.getElementById('favorites-container')) {
         window.favorileriGoster();
     }
@@ -51,25 +55,47 @@ document.addEventListener('DOMContentLoaded', () => {
     favoriIkonlariniGuncelle();
 });
 
-// --- 4. FAVORİ SİSTEMİ ÇEKİRDEK FONKSİYONLARI ---
+// --- 5. JSON'DAN KATEGORİLERİ GETİRME ---
+async function kategorileriGetir() {
+    try {
+        const yanit = await fetch('data.json'); 
+        const veriler = await yanit.json();
+        const konteynir = document.getElementById('koleksiyon-konteynir');
+        
+        if (konteynir && veriler.kategoriler) {
+            konteynir.innerHTML = veriler.kategoriler.map(kategori => `
+                <div class="card" onclick="location.href='${kategori.link}'" style="cursor: pointer;">
+                    <div class="card-image">
+                        <img src="${kategori.resim}" alt="${kategori.baslik}" style="width:100%; height:200px; object-fit:cover; border-radius:15px 15px 0 0;">
+                    </div>
+                    <div class="card-body" style="padding: 20px;">
+                        <h3 style="color: var(--dark-green); margin-bottom: 10px;">${kategori.baslik}</h3>
+                        <p style="color: #666; font-size: 0.95rem; line-height: 1.6;">${kategori.aciklama}</p>
+                        <div class="card-footer" style="margin-top: 15px; font-weight: bold; color: var(--gold);">
+                            <span>📅 Yıl: ${kategori.yil}</span>
+                        </div>
+                    </div>
+                </div>`).join('');
+        }
+    } catch (e) { 
+        console.error("Veri yüklenemedi, data.json dosyasını kontrol edin:", e); 
+    }
+}
 
+// --- 6. FAVORİ SİSTEMİ ÇEKİRDEK FONKSİYONLARI ---
 window.favoriKontrol = function(id, baslik) {
     let favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
     const index = favoriler.findIndex(item => item.id === id);
 
     if (index === -1) {
-        // Favorilere Ekle
         favoriler.push({ id, baslik });
         gosterToast(`${baslik} favorilere eklendi! ❤️`);
     } else {
-        // Favorilerden Çıkar
         favoriler.splice(index, 1);
         gosterToast(`${baslik} favorilerden çıkarıldı. 🗑️`);
     }
     
     localStorage.setItem('techFavs', JSON.stringify(favoriler));
-    
-    // Değişiklikleri anlık olarak sayfa üzerinde yansıt
     favoriIkonlariniGuncelle();
     
     if (document.getElementById('favorites-container')) {
@@ -77,28 +103,18 @@ window.favoriKontrol = function(id, baslik) {
     }
 };
 
-// Sayfadaki tüm kalpleri (robot-01'den robot-20'ye kadar) tarayan fonksiyon
 function favoriIkonlariniGuncelle() {
     const favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
-    
-    // Sayfadaki "fav-icon-robot-" ile başlayan tüm span'ları seç
     const tumKalpler = document.querySelectorAll('span[id^="fav-icon-robot-"]');
     
     tumKalpler.forEach(kalp => {
-        const robotId = kalp.id.replace('fav-icon-', ''); // Örn: robot-03
+        const robotId = kalp.id.replace('fav-icon-', '');
         const favorideMi = favoriler.some(fav => fav.id === robotId);
-        
-        if (favorideMi) {
-            kalp.innerText = "♥"; // Dolu Kalp
-            kalp.style.color = "#e74c3c";
-        } else {
-            kalp.innerText = "♡"; // Boş Kalp
-            kalp.style.color = "#e74c3c";
-        }
+        kalp.innerText = favorideMi ? "♥" : "♡";
+        kalp.style.color = "#e74c3c";
     });
 }
 
-// Favoriler Sayfasında Listeleme
 window.favorileriGoster = function() {
     const konteynir = document.getElementById('favorites-container');
     if (!konteynir) return;
@@ -109,7 +125,7 @@ window.favorileriGoster = function() {
         konteynir.innerHTML = `
             <div style="text-align:center; grid-column: 1/-1; padding: 50px;">
                 <p style="font-size: 1.2rem; color: #666;">Henüz favori listeniz boş. 😊</p>
-                <a href="project.html" class="btn" style="display:inline-block; margin-top:20px; background:#00592D; color:white; padding:10px 20px; text-decoration:none; border-radius:5px;">Robotları İncele 🤖</a>
+                <a href="project.html" class="btn" style="display:inline-block; margin-top:20px; background:#00592D; color:white; padding:10px 20px; text-decoration:none; border-radius:5px;">Keşfetmeye Başla 🤖</a>
             </div>`;
         return;
     }
@@ -120,21 +136,46 @@ window.favorileriGoster = function() {
                 <h3 style="color: var(--dark-green); margin-bottom: 10px;">${item.baslik}</h3>
                 <p style="color: #666; font-size: 0.9rem;">Bu robot interaktif müzenizde favori olarak işaretlendi.</p>
                 <button onclick="window.favoriKontrol('${item.id}', '${item.baslik}')" 
-                        style="background:#ff7675; color:white; border:none; padding:10px 15px; cursor:pointer; border-radius:5px; margin-top:15px; font-weight: bold; transition: 0.3s;">
+                        style="background:#ff7675; color:white; border:none; padding:10px 15px; cursor:pointer; border-radius:5px; margin-top:15px; font-weight: bold;">
                     Listeden Kaldır 🗑️
                 </button>
             </div>
         </div>`).join('');
 };
 
-// Dinamik Toast Mesajı (4 Saniye)
+// --- 7. MODAL VE FORM KONTROLLERİ ---
+window.openModal = function(id) {
+    const modal = document.getElementById(id);
+    if (modal) modal.style.display = "block";
+};
+
+window.closeModal = function(id) {
+    const modal = document.getElementById(id);
+    if (modal) modal.style.display = "none";
+};
+
+// Form gönderim simülasyonu
+['contact-form', 'visitor-form', 'suggest-form'].forEach(formId => {
+    const form = document.getElementById(formId);
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const modal = form.closest('.modal');
+            if (modal) closeModal(modal.id);
+            gosterToast("Talebiniz başarıyla iletildi! ✨");
+            form.reset();
+        });
+    }
+});
+
+// --- 8. TOAST MESAJI (4 Saniye) ---
 function gosterToast(mesaj) {
-    let toast = document.getElementById('toast-favourite');
+    let toast = document.getElementById('toast-message') || document.getElementById('toast-favourite');
     
-    // Eğer toast div'i yoksa oluştur (güvenlik önlemi)
     if (!toast) {
         toast = document.createElement('div');
         toast.id = 'toast-favourite';
+        toast.style.cssText = "position:fixed; bottom:20px; right:20px; background:#00592D; color:white; padding:15px 25px; border-radius:8px; z-index:99999;";
         document.body.appendChild(toast);
     }
 
@@ -142,7 +183,6 @@ function gosterToast(mesaj) {
     toast.style.display = 'block';
     toast.style.opacity = '1';
 
-    // 4 Saniye sonra gizle
     setTimeout(() => {
         toast.style.opacity = '0';
         setTimeout(() => { toast.style.display = 'none'; }, 500);
