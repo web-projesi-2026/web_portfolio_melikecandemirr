@@ -6,7 +6,7 @@
       "aciklama": "1945'te tamamlanan ENIAC, 167 metrekare alan kaplıyordu. İnsanlık tarihinin ilk genel amaçlı dijital bilgisayarıdır.",
       "resim": "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200",
       "yil": "1945",
-      "link": "pages/eniac-detay.html"
+      "link": "pages/project.html"
     },
     {
       "id": 2,
@@ -14,7 +14,7 @@
       "aciklama": "1980'lerde IBM ve Apple'ın hamleleriyle bilgisayarlar devasa odalardan çıkıp masalarımızın üzerine konuk olmaya başladı.",
       "resim": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200",
       "yil": "1981",
-      "link": "pages/pc-devrimi.html"
+      "link": "pages/project.html"
     },
     {
       "id": 3,
@@ -30,7 +30,7 @@
       "aciklama": "Bulut bilişim üzerinden erişilebilen kuantum işlemciler, klasik bilgisayarların milyonlarca yılda yapacağı işlemleri saniyeler içinde çözüyor.",
       "resim": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1200",
       "yil": "2026",
-      "link": "pages/kuantum-bilgisayarlar.html"
+      "link": "pages/project.html"
     }
   ],
   "insansi_robotlar_modelleri": [
