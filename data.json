@@ -35,10 +35,18 @@
   ],
   "insansi_robotlar_modelleri": [
     {
-      "id": "robot-09",
+      "id": "robot-01",
       "baslik": "Robot Nook 09",
-      "aciklama": "Gelişmiş denge sensörleri ve yapay zeka entegrasyonu ile donatılmış, insan benzeri hareket kabiliyetine sahip model.",
+      "aciklama": "Gelişmiş denge sensörleri ve yapay zeka entegrasyonu ile donatılmış, fütüristik bir model.",
       "resim": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=1200",
+      "yil": "2025",
+      "favorilenebilir": true
+    },
+    {
+      "id": "robot-09-v2",
+      "baslik": "Scarab-V9 All-Terrain",
+      "aciklama": "Biyomimikri sanatının ve ağır sanayi mühendisliğinin sarsıcı birleşimi.",
+      "resim": "https://images.unsplash.com/photo-1546776310-eef45dd6d63c?q=80&w=1200",
       "yil": "2025",
       "favorilenebilir": true
     }
