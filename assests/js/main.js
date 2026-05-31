@@ -167,3 +167,6 @@ function gosterToast(mesaj) {
         setTimeout(() => { toast.style.display = 'none'; }, 500);
     }, 3000);
 }
+
+
+
