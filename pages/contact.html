@@ -3,41 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İletişim | Tech-Timeline</title>
+    <title>Müze Projeleri | Tech-Timeline</title>
     <link rel="stylesheet" href="../assests/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div id="toast-favourite" style="display: none; position: fixed; bottom: 25px; right: 25px; background: #00592D; color: white; padding: 16px 28px; border-radius: 10px; z-index: 99999; font-weight: bold; box-shadow: 0 5px 20px rgba(0,0,0,0.3); border-left: 5px solid #d4af37;"></div>
     <header class="header">
         <div class="header-content">
-            <div class="logo">
-                <span class="logo-icon">⚙️</span>
-                <div class="logo-text"><h1>TECH-TIMELINE</h1><p>Dijital Müze</p></div>
-            </div>
+            <div class="logo"><span class="logo-icon">⚙️</span><div class="logo-text"><h1>TECH-TIMELINE</h1><p>Dijital Müze</p></div></div>
             <nav class="navigation">
                 <div class="menu-toggle" id="mobile-menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
                 <ul class="nav-menu">
-                    <li><a href="../index.html" class="nav-link">Ana Sayfa</a></li>
+                    <li><a href="../index.php" class="nav-link">Ana Sayfa</a></li>
                     <li><a href="about.html" class="nav-link">Hakkımda</a></li>
-                    <li><a href="project.html" class="nav-link">Projeler</a></li>
-                    <li><a href="contact.html" class="nav-link active">İletişim</a></li>
+                    <li><a href="project.html" class="nav-link active">Projeler</a></li>
+                    <li><a href="favorites.html" class="nav-link">❤️ Favorilerim</a></li>
                 </ul>
+                <button id="theme-toggle" class="theme-btn">🌙 Koyu Tema</button>
             </nav>
         </div>
     </header>
-
-    <main style="padding: 3rem 15%;">
-        <div class="form-box" style="border-top: 5px solid var(--dark-green);">
-            <h2 style="color: var(--dark-green); text-align: center; margin-bottom: 2rem;">📬 Dijital Müze İletişim Formu</h2>
-            <form onsubmit="event.preventDefault(); alert('Mesajınız başarıyla iletildi! 🤗');" style="display: flex; flex-direction: column; gap: 10px;">
-                <div class="form-group"><span>👤</span><input type="text" placeholder="Adınız Soyadınız" required></div>
-                <div class="form-group"><span>📧</span><input type="email" placeholder="E-posta Adresiniz" required></div>
-                <div class="form-group"><span>📝</span><textarea placeholder="Mesajınız..." required style="height: 120px;"></textarea></div>
-                <button type="submit" style="background: var(--dark-green); color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; cursor: pointer;">Gönder 🚀</button>
-            </form>
-        </div>
+    <main style="padding: 2rem 10%;">
+        <section class="form-box" style="text-align: center;">
+            <h2>🔍 Canlı Arama & Kategori Filtreleme (15 Model)</h2>
+            <div class="form-group" style="max-width: 500px; margin: 15px auto;"><span>🔍</span><input type="text" id="search-input" placeholder="Robot adı veya yılı yazın..."></div>
+            <div class="form-group" style="max-width: 500px; margin: 0 auto;"><span>📂</span>
+                <select id="category-filter">
+                    <option value="all">🌐 Tüm Kategoriler (15 Model)</option>
+                    <option value="Yaygın Yapay Zeka">Yaygın Yapay Zeka</option>
+                    <option value="İnsansı Robotlar">İnsansı Robotlar</option>
+                    <option value="Otonom Araçlar">Otonom Araçlar</option>
+                    <option value="Askeri Mekanik">Askeri Mekanik</option>
+                    <option value="Elektrikli Mobilite">Elektrikli Mobilite</option>
+                    <option value="Siber Estetik">Siber Estetik</option>
+                    <option value="Sibernetik">Sibernetik</option>
+                    <option value="Modüler Mimari">Modüler Mimari</option>
+                    <option value="Biyomimikri">Biyomimikri</option>
+                    <option value="Sosyal Asistan">Sosyal Asistan</option>
+                    <option value="Taktik Güvenlik">Taktik Güvenlik</option>
+                    <option value="Havacılık">Havacılık</option>
+                    <option value="Ağır Sanayi">Ağır Sanayi</option>
+                    <option value="Medikal Med">Medikal Med</option>
+                    <option value="Derin Uzay">Derin Uzay</option>
+                </select>
+            </div>
+        </section>
+        <div id="koleksiyon-konteynir" class="card-grid" style="margin-top:2rem;"></div>
     </main>
-
     <footer class="footer"><p>&copy; 2026 Melike Candemir | Ahi Evran Üniversitesi</p></footer>
     <script src="../assests/js/main.js"></script>
 </body>
