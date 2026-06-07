@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorilerim | Tech-Timeline</title>
+    <link rel="stylesheet" href="../assests/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="toast-favourite" style="display: none; position: fixed; bottom: 25px; right: 25px; background: #00592D; color: white; padding: 16px 28px; border-radius: 10px; z-index: 99999; font-weight: bold; box-shadow: 0 5px 20px rgba(0,0,0,0.3); border-left: 5px solid #d4af37;"></div>
+
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">⚙️</span>
+                <div class="logo-text"><h1>TECH-TIMELINE</h1><p>Dijital Müze</p></div>
+            </div>
+            <nav class="navigation">
+                <div class="menu-toggle" id="mobile-menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html" class="nav-link">Ana Sayfa</a></li>
+                    <li><a href="about.html" class="nav-link">Hakkımda</a></li>
+                    <li><a href="project.html" class="nav-link">Projeler</a></li>
+                    <li><a href="favorites.html" class="nav-link active">❤️ Favorilerim</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main style="padding: 3rem 10%;">
+        <h2 style="color: var(--dark-green); text-align: center; margin-bottom: 2rem;">❤️ Favori Teknolojilerim</h2>
+        <div id="favorites-container" class="card-grid"></div>
+    </main>
+
+    <footer class="footer"><p>&copy; 2026 Melike Candemir | Ahi Evran Üniversitesi</p></footer>
+    <script src="../assests/js/main.js"></script>
+</body>
+</html>
