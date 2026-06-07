@@ -1,18 +1,18 @@
-/* Tech-Timeline Dijital Müze Ana JavaScript Motoru */
+/* Tech-Timeline Ana JavaScript Motoru */
 let tumTeknolojiler = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     const isSubPage = window.location.pathname.includes('/pages/');
     const dataPath = isSubPage ? '../data.json' : 'data.json';
 
-    // 1. Hamburger Menü Kontrolü
+    // Hamburger Mobil Menü
     const menuToggle = document.querySelector('#mobile-menu');
     const navigation = document.querySelector('.navigation');
     if (menuToggle && navigation) {
         menuToggle.addEventListener('click', () => { navigation.classList.toggle('active'); });
     }
 
-    // 2. Hafızalı Karanlık Mod Sistemi
+    // Hafızalı Karanlık Mod
     const themeBtn = document.getElementById("theme-toggle");
     if (localStorage.getItem("theme") === "dark") {
         document.body.classList.add("dark-mode");
@@ -27,13 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. Modülleri Başlatma
     if (document.getElementById('koleksiyon-konteynir')) müzeVerileriniYukle(dataPath);
     if (document.getElementById('favorites-container')) window.favorileriGoster();
     if (document.getElementById('weather-section')) havaDurumuGetir();
 });
 
-// 4. Harici OpenWeatherMap API Entegrasyonu (Afşin)
+// HARICI APIDEN VERI CEKME (Hava Durumu API Entegrasyonu)
 async function havaDurumuGetir() {
     try {
         const apiKey = "b1b15e88fa797225412429c1c50c122a1";
@@ -42,17 +41,17 @@ async function havaDurumuGetir() {
             const data = await response.json();
             document.getElementById('weather-temp').innerText = `${Math.round(data.main.temp)}°C`;
             document.getElementById('weather-desc').innerText = `Müze Atmosferi: ${data.weather[0].description.toUpperCase()} | Nem: %${data.main.humidity}`;
-        } else { yedekHavaDurumu(); }
-    } catch (e) { yedekHavaDurumu(); }
+        } else { fallbackWeather(); }
+    } catch (e) { fallbackWeather(); }
 }
-function yedekHavaDurumu() {
+function fallbackWeather() {
     if(document.getElementById('weather-temp')) {
         document.getElementById('weather-temp').innerText = "24°C";
-        document.getElementById('weather-desc').innerText = "Müze Bölgesi: Hava Koşulları Dijital Olarak Dengelendi.";
+        document.getElementById('weather-desc').innerText = "Müze Bölgesi: Hava Koşulları Optimize Edildi.";
     }
 }
 
-// 5. 4.5 Saniyelik Şık Yumuşak Geçişli Toast Bildirim Motoru
+// 4-5 SANIYELIK ANLASILIR TOAST BILDIRIM MOTORU
 window.gosterToast = function(mesaj) {
     const toast = document.getElementById('toast-favourite');
     if (!toast) return;
@@ -64,10 +63,10 @@ window.gosterToast = function(mesaj) {
         toast.style.opacity = '0';
         toast.style.transform = 'translateY(20px)';
         setTimeout(() => { toast.style.display = 'none'; }, 400);
-    }, 4500); // 4-5 Saniye aralığı optimize edildi
+    }, 4500); // 4.5 saniye boyunca görünür kalır
 };
 
-// 6. Projeler Sayfası Canlı Arama ve 15 Kategori Algoritması
+// Kategori Filtreleme & Arama Algoritması
 async function müzeVerileriniYukle(path) {
     try {
         const yanit = await fetch(path);
@@ -97,7 +96,7 @@ function kartlariEkranaBas(veriler) {
     const konteynir = document.getElementById('koleksiyon-konteynir');
     if (!konteynir) return;
     if (veriler.length === 0) {
-        konteynir.innerHTML = `<p style="grid-column:1/-1; text-align:center; padding:30px;">Eşleşen robot modeli bulunamadı. 🔍</p>`;
+        konteynir.innerHTML = `<p style="grid-column:1/-1; text-align:center; padding:20px;">Robot modeli bulunamadı. 🔍</p>`;
         return;
     }
     const favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
@@ -109,14 +108,14 @@ function kartlariEkranaBas(veriler) {
                 <img src="${item.resim}" style="width:100%; height:100%; object-fit:cover;">
                 <span id="fav-icon-${item.id}" onclick="event.stopPropagation(); window.favoriKontrol('${item.id}', '${item.baslik}')" style="position:absolute; top:15px; right:15px; font-size:1.8rem; cursor:pointer; color:#e74c3c; user-select:none;">${isFav ? "♥" : "♡"}</span>
             </div>
-            <div style="padding:20px; flex-grow:1; display:flex; flex-direction:column; justify-content:between;">
+            <div style="padding:20px; flex-grow:1; display:flex; flex-direction:column; justify-content:space-between;">
                 <div>
                     <span style="background:var(--gold); font-size:0.75rem; padding:4px 8px; border-radius:4px; font-weight:bold; color:black;">${item.kategori}</span>
                     <h3 style="margin:10px 0; color:var(--dark-green);">${item.baslik}</h3>
                     <p style="color:#666; font-size:0.88rem; line-height:1.5;">${item.aciklama}</p>
                 </div>
                 <div style="margin-top:15px; padding-top:10px; border-top:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
-                    <span style="font-weight:bold;">📅 Yıl: ${item.yil}</span>
+                    <span>📅 Yıl: ${item.yil}</span>
                     <button onclick="location.href='${item.link}'" style="background:var(--dark-green); color:white; border:none; padding:6px 12px; border-radius:4px; cursor:pointer;">İncele 🔍</button>
                 </div>
             </div>
@@ -124,7 +123,6 @@ function kartlariEkranaBas(veriler) {
     }).join('');
 }
 
-// 7. LocalStorage Tabanlı Güvenli Favori Fonksiyonu
 window.favoriKontrol = function(id, baslik) {
     let favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
     const varMi = favoriler.some(item => item.id === id);
@@ -150,7 +148,7 @@ window.favorileriGoster = function() {
         return;
     }
     container.innerHTML = favoriler.map(item => `
-        <div class="card" style="border-left:5px solid #e74c3c; padding:20px; background:var(--white);">
+        <div class="card" style="border-left:5px solid #e74c3c; padding:20px; background:white; border-radius:8px;">
             <h3>${item.baslik}</h3>
             <button onclick="window.favoriKontrol('${item.id}', '${item.baslik}')" style="background:#ff7675; color:white; border:none; padding:8px 12px; border-radius:5px; cursor:pointer; margin-top:10px; font-weight:bold;">Kaldır 🗑️</button>
         </div>`).join('');
