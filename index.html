@@ -18,10 +18,10 @@
         }
         .muze-modal-content {
             background-color: #fff;
-            margin: 10% auto;
+            margin: 5% auto;
             padding: 30px;
             border-radius: 12px;
-            width: 90%; max-width: 400px;
+            width: 90%; max-width: 420px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             position: relative;
         }
@@ -30,7 +30,7 @@
             font-size: 1.5rem; cursor: pointer; color: #666;
         }
         .muze-input {
-            width: 100%; padding: 10px; margin: 10px 0;
+            width: 100%; padding: 10px; margin: 8px 0;
             border: 1px solid #ccc; border-radius: 8px;
             font-family: 'Montserrat'; outline: none; box-sizing: border-box;
         }
@@ -45,6 +45,25 @@
             transition: color 0.3s;
         }
         .nav-auth-btn:hover { color: #FFB81C; }
+        
+        /* Profil Menü Alanı */
+        #trigger-profile-modal {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: #FFB81C;
+            font-weight: 700;
+            margin-right: 15px;
+            font-size: 0.95rem;
+        }
+        .nav-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1.5px solid #FFB81C;
+        }
     </style>
 </head>
 <body>
@@ -76,7 +95,11 @@
                         <span id="trigger-register-modal" class="nav-auth-btn" style="background: #FFB81C; color: #00592D; padding: 6px 12px; border-radius: 20px;">Kayıt Ol</span>
                     </div>
                     <div id="nav-auth-logged-in" style="display: none; align-items: center;">
-                        <span id="nav-welcome-text" style="color: #FFB81C; font-weight: 700; margin-right: 15px; font-size: 0.95rem;"></span>
+                        <div id="trigger-profile-modal">
+                            <img id="nav-user-avatar" src="" class="nav-avatar" style="display: none;">
+                            <span id="nav-user-avatar-placeholder">👤</span>
+                            <span id="nav-welcome-text"></span>
+                        </div>
                         <span id="btn-logout" class="nav-auth-btn" style="background: #e74c3c; padding: 6px 12px; border-radius: 20px;">Çıkış 🚪</span>
                     </div>
                 </div>
@@ -139,7 +162,7 @@
                             <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200" alt="Yapay Zeka">
                         </div>
                         <h3>🤖 Yapay Zeka (AI)</h3>
-                        <p>3D model deneyimi og derin öğrenme süreci.</p>
+                        <p>3D model deneyimi ve derin öğrenme süreci.</p>
                     </div>
                 </a>
 
@@ -178,11 +201,32 @@
         </div>
     </div>
 
-    <div id="custom-toast" style="display: none; position: fixed; bottom: 30px; right: 30px; background: #004d26; color: white; padding: 16px 28px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 2px solid #d4af37; font-family: 'Montserrat'; font-weight: 600; z-index: 9999; animation: slideIn 0.4s ease;"></div>
+    <div id="profile-modal" class="muze-modal">
+        <div class="muze-modal-content">
+            <span id="close-profile" class="muze-modal-close">&times;</span>
+            <h3 style="color: #00592D; margin-top: 0; border-bottom: 2px solid #FFB81C; padding-bottom: 8px;">⚙️ Profil & Bilgi Yönetimi</h3>
+            
+            <div style="text-align: center; margin: 15px 0;">
+                <img id="profile-modal-preview" src="" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; display: none; margin: 0 auto 10px; border: 2px solid #00592D;">
+                <label style="background: rgba(0,89,45,0.1); color: #00592D; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; cursor: pointer;">
+                    📸 Profil Fotoğrafı Seç
+                    <input type="file" id="profile-photo-input" accept="image/*" style="display: none;">
+                </label>
+            </div>
 
-    <style>
-        @keyframes slideIn { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    </style>
+            <h4 style="color: #FFB81C; margin: 10px 0 5px; font-size: 0.85rem; text-transform: uppercase;">🔒 Üyelik Bilgilerim</h4>
+            <input type="text" id="profile-fullname" class="muze-input" placeholder="Ad Soyad">
+            <input type="email" id="profile-email" class="muze-input" placeholder="E-posta Adresi">
+            
+            <h4 style="color: #FFB81C; margin: 15px 0 5px; font-size: 0.85rem; text-transform: uppercase;">🌤️ Manüel İklim Değiştirici (Veritabanı)</h4>
+            <input type="number" id="profile-weather-temp" class="muze-input" placeholder="Derece (°C) Örn: 24">
+            <input type="text" id="profile-weather-desc" class="muze-input" placeholder="Hava Durumu Örn: Güneşli ve Açık">
+
+            <button id="btn-submit-profile" class="muze-btn-submit" style="margin-top: 15px; background: #FFB81C; color: #00592D;">Değişiklikleri Kaydet</button>
+        </div>
+    </div>
+
+    <div id="custom-toast" style="display: none;"></div>
 
     <footer class="footer">
         <p>&copy; 2026 Melike Candemir | Ahi Evran Üniversitesi</p>
