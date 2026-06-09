@@ -172,7 +172,7 @@ function müzeGirisYap() {
     const passInp = document.getElementById('login-password').value.trim();
 
     if (!userInp || !passInp) {
-        müzeToastAtesle("Lütfen kullanıcı adı ve şifrenizi girin! ⚠️");
+        müzeToastAtesle("Lütfen kullanıcı adı og şifrenizi girin! ⚠️");
         return;
     }
 
@@ -339,17 +339,29 @@ function müzeToastAtesle(mesaj) {
 }
 
 // ==========================================
-// 🌤️ HAVA DURUMU API MOTORU (ORİJİNAL)
+// 🌤️ HAVA DURUMU API MOTORU (DİNAMİK ŞEHİR KONTROLLÜ)
 // ==========================================
 async function havaDurumuGetir() {
     const aktifUser = JSON.parse(localStorage.getItem('muzeAktifKullanıcı'));
+    // Giriş yapılmışsa seçtiği şehri, yoksa varsayılan olarak Afşin'i getir
     let sehirKodu = (aktifUser && aktifUser.customCity) ? aktifUser.customCity : "Afsin,TR";
-    const sehirBaslikMap = { "Afsin,TR": "Afşin", "Elbistan,TR": "Elbistan", "Kahramanmaras,TR": "Kahramanmaraş", "Kirsehir,TR": "Kırşehir", "Ankara,TR": "Ankara" };
-    if (document.getElementById('weather-city-title')) { document.getElementById('weather-city-title').innerText = sehirBaslikMap[sehirKodu] || "Afşin"; }
+    
+    // Arayüzdeki başlık alanını güncelle
+    const sehirBaslikMap = {
+        "Afsin,TR": "Afşin",
+        "Elbistan,TR": "Elbistan",
+        "Kahramanmaras,TR": "Kahramanmaraş",
+        "Kirsehir,TR": "Kırşehir",
+        "Ankara,TR": "Ankara"
+    };
+    if (document.getElementById('weather-city-title')) {
+        document.getElementById('weather-city-title').innerText = sehirBaslikMap[sehirKodu] || "Afşin";
+    }
 
     try {
         const apiKey = "b1b15e88fa797225412429c1c50c122a1";
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${sehirKodu}&units=metric&lang=tr&appid=${apiKey}`);
+        
         if (response.ok) {
             const data = await response.json();
             document.getElementById('weather-temp').innerText = `${Math.round(data.main.temp)}°C`;
@@ -367,7 +379,7 @@ function shadowWeather() {
 window.yedekHavaDurumu = shadowWeather;
 
 // ==========================================
-// 📂 JSON VERİ VE FAVORİ SİSTEMİ (ORİJİNAL)
+// 📂 JSON VERİ VE FAVORİ SİSTEMİ (ORİJİNAL KORUNDU)
 // ==========================================
 async function kategorileriGetir() {
     try {
