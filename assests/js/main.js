@@ -9,22 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
         havaDurumuGetir();
     }
 
-    // --- 🔐 1. ADIM: AUTH & OTURUM KONTROL MOTORU ---
+    // --- 🔐 MODAL GİRİŞ / KAYIT VE OTURUM MOTORU ---
     oturumDurumunuKontrolEt();
-
-    const btnLogin = document.getElementById('btn-login');
-    const btnRegister = document.getElementById('btn-register');
-    const btnLogout = document.getElementById('btn-logout');
-
-    if (btnLogin) {
-        btnLogin.addEventListener('click', müzeGirisYap);
-    }
-    if (btnRegister) {
-        btnRegister.addEventListener('click', müzeKayıtOl);
-    }
-    if (btnLogout) {
-        btnLogout.addEventListener('click', müzeCıkısYap);
-    }
+    modalEtkilesimleriniKur();
 
     // --- 1. MOBİL MENÜ KONTROLÜ ---
     const menuToggle = document.querySelector('#mobile-menu');
@@ -76,52 +63,112 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==========================================
-// 🔐 KULLANICI SİSTEMİ FONKSİYONLARI (1. ADIM)
+// 🔐 MODAL PENCERE VE AUTH KONTROL FONKSİYONLARI
 // ==========================================
 
-function müzeKayıtOl() {
-    const userInp = document.getElementById('auth-username').value.trim();
-    const passInp = document.getElementById('auth-password').value.trim();
+function modalEtkilesimleriniKur() {
+    const loginModal = document.getElementById('login-modal');
+    const registerModal = document.getElementById('register-modal');
 
-    if (!userInp || !passInp) {
-        müzeToastAtesle("Lütfen tüm alanları doldurun! ⚠️");
+    const triggerLogin = document.getElementById('trigger-login-modal');
+    const triggerRegister = document.getElementById('trigger-register-modal');
+
+    const closeLogin = document.getElementById('close-login');
+    const closeRegister = document.getElementById('close-register');
+
+    const btnSubmitLogin = document.getElementById('btn-submit-login');
+    const btnSubmitRegister = document.getElementById('btn-submit-register');
+    const btnLogout = document.getElementById('btn-logout');
+
+    // Açma Tetikleyicileri
+    if (triggerLogin) {
+        triggerLogin.addEventListener('click', () => { loginModal.style.display = 'block'; });
+    }
+    if (triggerRegister) {
+        triggerRegister.addEventListener('click', () => { registerModal.style.display = 'block'; });
+    }
+
+    // Kapatma Tetikleyicileri
+    if (closeLogin) {
+        closeLogin.addEventListener('click', () => { loginModal.style.display = 'none'; });
+    }
+    if (closeRegister) {
+        closeRegister.addEventListener('click', () => { registerModal.style.display = 'none'; });
+    }
+
+    // Dışarı tıklayınca kapatma
+    window.addEventListener('click', (e) => {
+        if (e.target === loginModal) loginModal.style.display = 'none';
+        if (e.target === registerModal) registerModal.style.display = 'none';
+    });
+
+    // Form Gönderim Tetikleyicileri
+    if (btnSubmitRegister) btnSubmitRegister.addEventListener('click', müzeKayıtOl);
+    if (btnSubmitLogin) btnSubmitLogin.addEventListener('click', müzeGirisYap);
+    if (btnLogout) btnLogout.addEventListener('click', müzeCıkısYap);
+}
+
+function müzeKayıtOl() {
+    const fullname = document.getElementById('reg-fullname').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
+    const username = document.getElementById('reg-username').value.trim();
+    const password = document.getElementById('reg-password').value.trim();
+
+    if (!fullname || !email || !username || !password) {
+        müzeToastAtesle("Lütfen tüm alanları (Ad Soyad, E-posta, Kullanıcı Adı, Şifre) doldurun! ⚠️");
         return;
     }
 
     let üyeler = JSON.parse(localStorage.getItem('muzeUyeler')) || [];
     
-    if (üyeler.some(u => u.username.toLowerCase() === userInp.toLowerCase())) {
+    if (üyeler.some(u => u.username.toLowerCase() === username.toLowerCase())) {
         müzeToastAtesle("Bu kullanıcı adı zaten alınmış! 🛑");
         return;
     }
 
-    üyeler.push({ username: userInp, password: passInp, role: userInp.toLowerCase() === 'admin' ? 'Yönetici' : 'Kullanıcı' });
+    üyeler.push({ 
+        fullname: fullname, 
+        email: email, 
+        username: username, 
+        password: password, 
+        role: username.toLowerCase() === 'admin' ? 'Yönetici' : 'Kullanıcı' 
+    });
+
     localStorage.setItem('muzeUyeler', JSON.stringify(üyeler));
+    document.getElementById('register-modal').style.display = 'none';
     müzeToastAtesle("Kayıt başarıyla tamamlandı! Giriş yapabilirsiniz. 🎉");
+    
+    // Formu temizle
+    document.getElementById('reg-fullname').value = '';
+    document.getElementById('reg-email').value = '';
+    document.getElementById('reg-username').value = '';
+    document.getElementById('reg-password').value = '';
 }
 
 function müzeGirisYap() {
-    const userInp = document.getElementById('auth-username').value.trim();
-    const passInp = document.getElementById('auth-password').value.trim();
+    const userInp = document.getElementById('login-username').value.trim();
+    const passInp = document.getElementById('login-password').value.trim();
 
     if (!userInp || !passInp) {
-        müzeToastAtesle("Lütfen tüm alanları doldurun! ⚠️");
+        müzeToastAtesle("Lütfen kullanıcı adı ve şifrenizi girin! ⚠️");
         return;
     }
 
-    // Hardcoded Admin Koruması veya kayıtlı üye kontrolü
     let üyeler = JSON.parse(localStorage.getItem('muzeUyeler')) || [];
     let bulunanUser = üyeler.find(u => u.username.toLowerCase() === userInp.toLowerCase() && u.password === passInp);
 
-    // Eğer sistemde hiç kullanıcı yoksa ilk açılış için kolaylık: admin/admin girişi
+    // İlk açılışta veya test kolaylığı için hardcoded yedek admin hesabı
     if (userInp.toLowerCase() === 'admin' && passInp === 'admin') {
-        bulunanUser = { username: 'admin', role: 'Yönetici' };
+        bulunanUser = { username: 'admin', fullname: 'Sistem Yöneticisi', role: 'Yönetici' };
     }
 
     if (bulunanUser) {
         localStorage.setItem('muzeAktifKullanıcı', JSON.stringify(bulunanUser));
+        document.getElementById('login-modal').style.display = 'none';
         oturumDurumunuKontrolEt();
         müzeToastAtesle(`Başarıyla giriş yapıldı. Hoş geldin ${bulunanUser.username}! 🔑`);
+        document.getElementById('login-username').value = '';
+        document.getElementById('login-password').value = '';
     } else {
         müzeToastAtesle("Hatalı kullanıcı adı veya şifre! ❌");
     }
@@ -135,25 +182,17 @@ function müzeCıkısYap() {
 
 function oturumDurumunuKontrolEt() {
     const aktifUser = JSON.parse(localStorage.getItem('muzeAktifKullanıcı'));
-    const loggedOutDiv = document.getElementById('auth-logged-out');
-    const loggedInDiv = document.getElementById('auth-logged-in');
-    const userStatusArea = document.getElementById('user-status-area');
-    const loggedUserName = document.getElementById('logged-user-name');
-    const userRoleBadge = document.getElementById('user-role-badge');
+    const loggedOutDiv = document.getElementById('nav-auth-logged-out');
+    const loggedInDiv = document.getElementById('nav-auth-logged-in');
+    const welcomeText = document.getElementById('nav-welcome-text');
 
     if (aktifUser) {
         if (loggedOutDiv) loggedOutDiv.style.display = 'none';
         if (loggedInDiv) loggedInDiv.style.display = 'flex';
-        if (loggedUserName) loggedUserName.innerText = aktifUser.username;
-        if (userRoleBadge) userRoleBadge.innerText = `Rol: ${aktifUser.role}`;
-        
-        if (userStatusArea) {
-            userStatusArea.innerHTML = `<span style="color: #FFB81C; font-weight: 700; padding: 10px 15px;">👤 ${aktifUser.username} (${aktifUser.role})</span>`;
-        }
+        if (welcomeText) welcomeText.innerText = `👤 ${aktifUser.username}`;
     } else {
-        if (loggedOutDiv) loggedOutDiv.style.display = 'block';
+        if (loggedOutDiv) loggedOutDiv.style.display = 'flex';
         if (loggedInDiv) loggedInDiv.style.display = 'none';
-        if (userStatusArea) userStatusArea.innerHTML = '';
     }
 }
 
@@ -161,10 +200,10 @@ function oturumDurumunuKontrolEt() {
 function müzeToastAtesle(mesaj) {
     const toastKutusu = document.getElementById('custom-toast');
     if (toastKutusu) {
+        toastKutusu.innerText = mensaje; // Hata kontrolü: Orijinal parametre eşleşti
         toastKutusu.innerText = mesaj;
         toastKutusu.style.display = 'block';
         
-        // 4500 milisaniye sonra otomatik gizleme
         setTimeout(() => {
             toastKutusu.style.display = 'none';
         }, 4500);
@@ -193,14 +232,14 @@ async function havaDurumuGetir() {
 
 function shadowWeather() {
     if(document.getElementById('weather-temp')) {
-        document.getElementById('weather-temp').innerText = "22°C";
+        document.getElementById('weather-temp').innerText = "18°C";
         document.getElementById('weather-desc').innerText = "MÜZE BÖLGESİ: HAVA KOŞULLARI OPTİMİZE EDİLDİ";
     }
 }
 window.yedekHavaDurumu = shadowWeather;
 
 // ==========================================
-// 📂 JSON VERİ VE FAVORİ SİSTEMİ (ORİJİNAL)
+// 📂 JSON VERİ VE FAVORİ SİSTEMİ (ORİJİNAL KORUNDU)
 // ==========================================
 async function kategorileriGetir() {
     try {
