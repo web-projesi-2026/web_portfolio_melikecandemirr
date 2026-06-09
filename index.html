@@ -112,7 +112,7 @@
     <main>
         <div id="weather-section" style="background: rgba(0, 89, 45, 0.06); padding: 15px 25px; border-radius: 12px; margin: 10px auto 30px; max-width: 100%; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid #00592D; font-family: 'Montserrat', sans-serif;">
             <div>
-                <h4 style="margin: 0; color: #00592D; font-size: 0.95rem; font-weight: 700;">🌤️ Müze Bölgesi Canlı Hava Durumu (<span id="weather-city-title">Afşin</span>)</h4>
+                <h4 style="margin: 0; color: #00592D; font-size: 0.95rem; font-weight: 700;">🌤 Müze Bölgesi Canlı Hava Durumu (<span id="weather-city-title">Afşin</span>)</h4>
                 <p id="weather-desc" style="margin: 4px 0 0; color: #555; font-size: 0.85rem; font-weight: 500;">Canlı iklim verileri senkronize ediliyor...</p>
             </div>
             <h1 id="weather-temp" style="margin: 0; color: #00592D; font-size: 1.8rem; font-weight: 700;">--°C</h1>
@@ -202,32 +202,41 @@
     </div>
 
     <div id="profile-modal" class="muze-modal">
-        <div class="muze-modal-content">
+        <div class="muze-modal-content" style="max-width: 460px;">
             <span id="close-profile" class="muze-modal-close">&times;</span>
-            <h3 style="color: #00592D; margin-top: 0; border-bottom: 2px solid #FFB81C; padding-bottom: 8px;">⚙️ Profil Bilgilerim</h3>
+            <h3 style="color: #00592D; margin-top: 0; border-bottom: 2px solid #FFB81C; padding-bottom: 8px;">⚙️ Profil & Küratör Yönetimi</h3>
             
-            <div style="text-align: center; margin: 15px 0;">
-                <img id="profile-modal-preview" src="" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; display: none; margin: 0 auto 10px; border: 2px solid #00592D;">
-                <label style="background: rgba(0,89,45,0.1); color: #00592D; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; cursor: pointer;">
-                    📸 Fotoğraf Değiştir
-                    <input type="file" id="profile-photo-input" accept="image/*" style="display: none;">
-                </label>
+            <div style="display: flex; gap: 10px; margin: 15px 0;">
+                <button id="tab-btn-profile" style="flex: 1; padding: 8px; background: #00592D; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Montserrat';">👤 Bilgilerim</button>
+                <button id="tab-btn-favorites" style="flex: 1; padding: 8px; background: #f0f0f0; color: #333; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-family: 'Montserrat';">❤️ Favorilerim (<span id="profile-fav-count">0</span>)</button>
             </div>
 
-            <h4 style="color: #FFB81C; margin: 10px 0 5px; font-size: 0.85rem; text-transform: uppercase;">🔒 Kişisel Detaylar</h4>
-            <input type="text" id="profile-fullname" class="muze-input" placeholder="Ad Soyad">
-            <input type="email" id="profile-email" class="muze-input" placeholder="E-posta Adresi">
-            
-            <h4 style="color: #FFB81C; margin: 15px 0 5px; font-size: 0.85rem; text-transform: uppercase;">🌤️ Müze Canlı İklim Bölgesi Seçimi</h4>
-            <select id="profile-weather-city" class="muze-input" style="cursor: pointer; background: white;">
-                <option value="Afsin,TR">Kahramanmaraş - Afşin 🌤️</option>
-                <option value="Elbistan,TR">Kahramanmaraş - Elbistan ❄️</option>
-                <option value="Kahramanmaras,TR">Kahramanmaraş - Merkez 🔥</option>
-                <option value="Kirsehir,TR">Kırşehir - Merkez 🌾</option>
-                <option value="Ankara,TR">Ankara - Elmadağ 🏔️</option>
-            </select>
+            <div id="tab-content-profile">
+                <div style="text-align: center; margin: 15px 0;">
+                    <img id="profile-modal-preview" src="" style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover; display: none; margin: 0 auto 10px; border: 2px solid #00592D;">
+                    <label style="background: rgba(0,89,45,0.1); color: #00592D; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; cursor: pointer;">
+                        📸 Fotoğraf Değiştir
+                        <input type="file" id="profile-photo-input" accept="image/*" style="display: none;">
+                    </label>
+                </div>
+                <input type="text" id="profile-fullname" class="muze-input" placeholder="Ad Soyad">
+                <input type="email" id="profile-email" class="muze-input" placeholder="E-posta Adresi">
+                <h4 style="color: #FFB81C; margin: 15px 0 5px; font-size: 0.85rem; text-transform: uppercase;">🌤️ Müze Canlı İklim Bölgesi</h4>
+                <select id="profile-weather-city" class="muze-input" style="cursor: pointer; background: white;">
+                    <option value="Afsin,TR">Kahramanmaraş - Afşin 🌤️</option>
+                    <option value="Elbistan,TR">Kahramanmaraş - Elbistan ❄️</option>
+                    <option value="Kahramanmaras,TR">Kahramanmaraş - Merkez 🔥</option>
+                    <option value="Kirsehir,TR">Kırşehir - Merkez 🌾</option>
+                    <option value="Ankara,TR">Ankara - Elmadağ 🏔️</option>
+                </select>
+                <button id="btn-submit-profile" class="muze-btn-submit" style="margin-top: 15px; background: #FFB81C; color: #00592D;">Değişiklikleri Kaydet 💾</button>
+            </div>
 
-            <button id="btn-submit-profile" class="muze-btn-submit" style="margin-top: 20px; background: #FFB81C; color: #00592D;">Değişiklikleri Kaydet 💾</button>
+            <div id="tab-content-favorites" style="display: none;">
+                <h4 style="color: #00592D; margin: 10px 0; font-size: 0.95rem;">📌 Favoriye Eklemiş Olduğunuz Başlıklar</h4>
+                <div id="profile-favorites-list" style="max-height: 240px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 5px;">
+                    </div>
+            </div>
         </div>
     </div>
 
