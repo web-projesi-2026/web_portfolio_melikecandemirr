@@ -102,7 +102,7 @@ function modalEtkilesimleriniKur() {
         if (e.target === profileModal) profileModal.style.display = 'none';
     });
 
-    // Profil Fotoğrafı Önizleme Motoru
+    // Profil Fotoğrafı Base64 Dönüştürücü ve Önizleme
     if (profilePhotoInput) {
         profilePhotoInput.addEventListener('change', function() {
             const file = this.files[0];
@@ -151,6 +151,7 @@ function müzeKayıtOl() {
         username: username, 
         password: password,
         avatar: "", 
+        customCity: "Afsin,TR",
         role: username.toLowerCase() === 'admin' ? 'Yönetici' : 'Kullanıcı' 
     });
 
@@ -169,7 +170,7 @@ function müzeGirisYap() {
     const passInp = document.getElementById('login-password').value.trim();
 
     if (!userInp || !passInp) {
-        müzeToastAtesle("Lütfen kullanıcı adı ve şifrenizi girin! ⚠️");
+        müzeToastAtesle("Lütfen kullanıcı adı og şifrenizi girin! ⚠️");
         return;
     }
 
@@ -177,21 +178,14 @@ function müzeGirisYap() {
     let bulunanUser = üyeler.find(u => u.username.toLowerCase() === userInp.toLowerCase() && u.password === passInp);
 
     if (userInp.toLowerCase() === 'admin' && passInp === 'admin') {
-        bulunanUser = { username: 'admin', fullname: 'Sistem Yöneticisi', email: 'admin@muze.com', avatar: "", role: 'Yönetici' };
+        bulunanUser = { username: 'admin', fullname: 'Sistem Yöneticisi', email: 'admin@muze.com', avatar: "", customCity: "Afsin,TR", role: 'Yönetici' };
     }
 
     if (bulunanUser) {
         localStorage.setItem('muzeAktifKullanıcı', JSON.stringify(bulunanUser));
         document.getElementById('login-modal').style.display = 'none';
         oturumDurumunuKontrolEt();
-        
-        // Eğer bu kullanıcının özel hava durumu ayarı varsa yansıt
-        if (bulunanUser.customTemp && bulunanUser.customDesc) {
-            ezHavaDurumuArayuzu(bulunanUser.customTemp, bulunanUser.customDesc);
-        } else {
-            havaDurumuGetir();
-        }
-
+        havaDurumuGetir(); // Seçtiği şehre göre hava durumunu anında yükle
         müzeToastAtesle(`Başarıyla giriş yapıldı. Hoş geldin ${bulunanUser.username}! 🔑`);
         document.getElementById('login-username').value = '';
         document.getElementById('login-password').value = '';
@@ -206,8 +200,7 @@ function profilPaneliniAc() {
 
     document.getElementById('profile-fullname').value = aktifUser.fullname || "";
     document.getElementById('profile-email').value = aktifUser.email || "";
-    document.getElementById('profile-weather-temp').value = aktifUser.customTemp || "";
-    document.getElementById('profile-weather-desc').value = aktifUser.customDesc || "";
+    document.getElementById('profile-weather-city').value = aktifUser.customCity || "Afsin,TR";
 
     const previewImg = document.getElementById('profile-modal-preview');
     if (aktifUser.avatar) {
@@ -228,8 +221,7 @@ function profilBilgileriniGuncelle() {
 
     const newFullname = document.getElementById('profile-fullname').value.trim();
     const newEmail = document.getElementById('profile-email').value.trim();
-    const newTemp = document.getElementById('profile-weather-temp').value.trim();
-    const newDesc = document.getElementById('profile-weather-desc').value.trim();
+    const newCity = document.getElementById('profile-weather-city').value;
     const previewImg = document.getElementById('profile-modal-preview');
 
     if (!newFullname || !newEmail) {
@@ -240,18 +232,13 @@ function profilBilgileriniGuncelle() {
     // Bilgileri Güncelle
     aktifUser.fullname = newFullname;
     aktifUser.email = newEmail;
+    aktifUser.customCity = newCity;
     
     if (previewImg && previewImg.src.startsWith('data:image')) {
         aktifUser.avatar = previewImg.src;
     }
 
-    if (newTemp && newDesc) {
-        aktifUser.customTemp = newTemp;
-        aktifUser.customDesc = newDesc;
-        ezHavaDurumuArayuzu(newTemp, newDesc);
-    }
-
-    // Ana veritabanındaki (üyeler dizisindeki) kaydı da güncelle
+    // Veritabanı ve Aktif Oturum Senkronizasyonu
     let uIndex = üyeler.findIndex(u => u.username.toLowerCase() === aktifUser.username.toLowerCase());
     if (uIndex !== -1) {
         üyeler[uIndex] = aktifUser;
@@ -259,23 +246,19 @@ function profilBilgileriniGuncelle() {
     }
 
     localStorage.setItem('muzeAktifKullanıcı', JSON.stringify(aktifUser));
-    oturumDurumunuKontrolEt();
     
-    document.getElementById('profile-modal').style.display = 'none';
-    müzeToastAtesle("Profil bilgileriniz ve iklim tercihiniz başarıyla güncellendi! ⚙️🎉");
-}
+    // Arayüzü anlık tazele
+    oturumDurumunuKontrolEt();
+    havaDurumuGetir();
 
-function ezHavaDurumuArayuzu(temp, desc) {
-    const tElem = document.getElementById('weather-temp');
-    const dElem = document.getElementById('weather-desc');
-    if (tElem) tElem.innerText = `${temp}°C`;
-    if (dElem) dElem.innerText = `Atmosfer: ${desc.toUpperCase()} (Kullanıcı Özelleştirmesi Veritabanı)`;
+    document.getElementById('profile-modal').style.display = 'none';
+    müzeToastAtesle("Profil bilgileriniz ve canlı iklim bölgesiniz başarıyla kaydedildi! 💾🎉");
 }
 
 function müzeCıkısYap() {
     localStorage.removeItem('muzeAktifKullanıcı');
     oturumDurumunuKontrolEt();
-    havaDurumuGetir(); // Orijinal hava durumuna geri dön
+    havaDurumuGetir(); // Varsayılan hava durumuna dön
     müzeToastAtesle("Güvenli çıkış yapıldı. Tekrar bekleriz! 🚪");
 }
 
@@ -299,10 +282,6 @@ function oturumDurumunuKontrolEt() {
             if (navAvatar) navAvatar.style.display = 'none';
             if (navAvatarPlaceholder) navAvatarPlaceholder.style.display = 'block';
         }
-
-        if (aktifUser.customTemp && aktifUser.customDesc) {
-            ezHavaDurumuArayuzu(aktifUser.customTemp, aktifUser.customDesc);
-        }
     } else {
         if (loggedOutDiv) loggedOutDiv.style.display = 'flex';
         if (loggedInDiv) loggedInDiv.style.display = 'none';
@@ -319,17 +298,28 @@ function müzeToastAtesle(mesaj) {
 }
 
 // ==========================================
-// 🌤️ HAVA DURUMU API MOTORU (ORİJİNAL)
+// 🌤️ HAVA DURUMU API MOTORU (DİNAMİK ŞEHİR KONTROLLÜ)
 // ==========================================
 async function havaDurumuGetir() {
     const aktifUser = JSON.parse(localStorage.getItem('muzeAktifKullanıcı'));
-    if (aktifUser && aktifUser.customTemp && aktifUser.customDesc) {
-        ezHavaDurumuArayuzu(aktifUser.customTemp, aktifUser.customDesc);
-        return;
+    // Giriş yapılmışsa seçtiği şehri, yoksa varsayılan olarak Afşin'i getir
+    let sehirKodu = (aktifUser && aktifUser.customCity) ? aktifUser.customCity : "Afsin,TR";
+    
+    // Arayüzdeki başlık alanını güncelle
+    const sehirBaslikMap = {
+        "Afsin,TR": "Afşin",
+        "Elbistan,TR": "Elbistan",
+        "Kahramanmaras,TR": "Kahramanmaraş",
+        "Kirsehir,TR": "Kırşehir",
+        "Ankara,TR": "Ankara"
+    };
+    if (document.getElementById('weather-city-title')) {
+        document.getElementById('weather-city-title').innerText = sehirBaslikMap[sehirKodu] || "Afşin";
     }
+
     try {
         const apiKey = "b1b15e88fa797225412429c1c50c122a1";
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Afsin,TR&units=metric&lang=tr&appid=${apiKey}`);
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${sehirKodu}&units=metric&lang=tr&appid=${apiKey}`);
         
         if (response.ok) {
             const data = await response.json();
@@ -340,11 +330,9 @@ async function havaDurumuGetir() {
 }
 
 function shadowWeather() {
-    const aktifUser = JSON.parse(localStorage.getItem('muzeAktifKullanıcı'));
-    if (aktifUser && aktifUser.customTemp && aktifUser.customDesc) return;
     if(document.getElementById('weather-temp')) {
-        document.getElementById('weather-temp').innerText = "18°C";
-        document.getElementById('weather-desc').innerText = "MÜZE BÖLGESİ: HAVA KOŞULLARI OPTİMİZE EDİLDİ";
+        document.getElementById('weather-temp').innerText = "20°C";
+        document.getElementById('weather-desc').innerText = "MÜZE BÖLGESİ: HAVA KOŞULLARI SEÇİME GÖRE GÜNCELLENDİ";
     }
 }
 window.yedekHavaDurumu = shadowWeather;
