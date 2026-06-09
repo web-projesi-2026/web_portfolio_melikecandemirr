@@ -196,14 +196,15 @@ function oturumDurumunuKontrolEt() {
     }
 }
 
+
 // TAM 4.5 SANİYELİK (4500 MS) PREMIUM TOAST BİLDİRİM ATEŞLEYİCİSİ
 function müzeToastAtesle(mesaj) {
     const toastKutusu = document.getElementById('custom-toast');
     if (toastKutusu) {
-        toastKutusu.innerText = mensaje; // Hata kontrolü: Orijinal parametre eşleşti
         toastKutusu.innerText = mesaj;
         toastKutusu.style.display = 'block';
         
+        // 4500 milisaniye (4.5 saniye) sonra otomatik gizleme
         setTimeout(() => {
             toastKutusu.style.display = 'none';
         }, 4500);
