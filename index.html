@@ -8,41 +8,48 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div id="toast-favourite" style="display: none; position: fixed; bottom: 25px; right: 25px; background: #00592D; color: white; padding: 16px 28px; border-radius: 10px; z-index: 99999; font-weight: bold; box-shadow: 0 5px 20px rgba(0,0,0,0.3); border-left: 5px solid #d4af37; transition: all 0.4s ease-in-out; opacity: 0; transform: translateY(20px);"></div>
+
     <header class="header">
         <div class="header-content">
             <div class="logo">
                 <span class="logo-icon">⚙️</span>
-                <div class="logo-text">
-                    <h1>TECH-TIMELINE</h1>
-                    <p>Dijital Müze</p>
-                </div>
+                <div class="logo-text"><h1>TECH-TIMELINE</h1><p>Dijital Müze</p></div>
             </div>
-            <nav class="navigation">
-                <div class="menu-toggle" id="mobile-menu">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </div>
+            <nav class="navigation" id="nav-layer">
+                <div class="menu-toggle" id="mobile-menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
                 <ul class="nav-menu">
-                    <li><a href="index.html" class="nav-link">Ana Sayfa</a></li>
-                    <li><a href="pages/about.html" class="nav-link">Hakkımda</a></li>
-                    <li><a href="pages/project.html" class="nav-link">Projeler</a></li>
-                    <li><a href="pages/contact.html" class="nav-link">İletişim</a></li>
+                    <li><a href="index.html" class="nav-link active">Ana Sayfa</a></li>
+                    <li><a href="about.html" class="nav-link">Hakkımda</a></li>
+                    <li><a href="project.html" class="nav-link">Projeler</a></li>
+                    <li><a href="timeline.html" class="nav-link">⏳ Zaman Çizgisi</a></li>
+                    <li><a href="contact.html" class="nav-link">İletişim</a></li>
+                    <li id="nav-fav" style="display:none;"><a href="favorites.html" class="nav-link">❤️ Favorilerim</a></li>
+                    <li id="nav-crud" style="display:none;"><a href="icat.html" class="nav-link" style="background:#d4af37; color:black; border-radius:4px; font-weight:bold;">🛠️ Envanter (CRUD)</a></li>
+                    <li id="nav-logout" style="display:none;"><a href="#" onclick="kullaniciCikis()" class="nav-link" style="color:#ff7675;">🚪 Çıkış</a></li>
                 </ul>
-                <button id="theme-toggle" style="cursor:pointer; padding: 8px 15px; border-radius: 20px; margin: 10px; border: 1px solid #ccc;">🌙 Koyu Tema</button>
+                <button id="theme-toggle" class="theme-btn">🌙 Koyu Tema</button>
             </nav>
         </div>
     </header>
 
     <main>
+        <section id="weather-section" class="weather-card" style="background: linear-gradient(135deg, #00592D, #008943); color: white; padding: 20px; margin: 2rem 10% 0; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 6px 18px rgba(0,0,0,0.1);">
+            <div>
+                <h3 style="font-size: 1.1rem; font-weight: 700;">🌤️ Kahramanmaraş Afşin Hava Durumu</h3>
+                <p id="weather-desc" style="font-size: 0.9rem; opacity: 0.9; margin-top: 4px;">Müze iklim verileri çekiliyor...</p>
+            </div>
+            <h1 id="weather-temp" style="font-size: 2.3rem; font-weight: 700; margin: 0;">--°C</h1>
+        </section>
+
         <section class="hero">
             <div class="hero-content">
                 <div class="hero-text">
                     <h2 class="hero-title">Teknoloji Tarihine Hoş Geldiniz</h2>
                     <p class="hero-subtitle">Geçmişten geleceğe dijital bir yolculuk. İnsanlığın en büyük buluşlarını keşfedin.</p>
                     <div class="hero-buttons">
-                        <a href="pages/project.html" class="btn btn-primary">💻 Keşfetmeye Başla</a>
-                        <a href="pages/contact.html" class="btn btn-secondary">✨ Bize Ulaşın 🤗</a>
+                        <a href="project.html" class="btn btn-primary">💻 Keşfetmeye Başla</a>
+                        <a href="contact.html" class="btn btn-secondary">✨ Bize Ulaşın 🤗</a>
                     </div>
                 </div>
                 <div class="hero-visual">
@@ -56,50 +63,42 @@
             </div>
         </section>
 
-        <section class="innovations">
-            <div class="section-header">
-                <h2>Teknoloji Koleksiyonu</h2>
-                <p>İnsanlık tarihini değiştiren dönüm noktaları</p>
+        <section id="auth-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin: 0 10% 3rem;">
+            <div class="form-box" style="border-top: 5px solid var(--dark-green);">
+                <h3>🔐 Üye Girişi</h3>
+                <form id="loginForm" style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px;">
+                    <div class="form-group"><span>📧</span><input type="email" id="loginEmail" placeholder="E-posta Adresi" required></div>
+                    <div class="form-group"><span>🔑</span><input type="password" id="loginPassword" placeholder="Şifre" required></div>
+                    <button type="submit" style="background:#00592D; color:white; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer;">Müzeye Giriş Yap 🚀</button>
+                </form>
             </div>
-            
+            <div class="form-box" style="border-top: 5px solid var(--gold);">
+                <h3>📝 Yeni Üye Kaydı</h3>
+                <form id="registerForm" style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px;">
+                    <div class="form-group"><span>👤</span><input type="text" id="regName" placeholder="Tam Adınız" required></div>
+                    <div class="form-group"><span>📧</span><input type="email" id="regEmail" placeholder="E-posta Adresi" required></div>
+                    <div class="form-group"><span>🔑</span><input type="password" id="regPassword" placeholder="Şifre" required></div>
+                    <button type="submit" style="background:#d4af37; color:black; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer;">Kayıt Ol ve Katıl ✨</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="welcome-container" class="form-box" style="display:none; margin: 0 10% 3rem; text-align: center; border-left: 6px solid #2ecc71;">
+            <h3 style="color: #2ecc71; font-weight: 700;">✓ Oturum Başarıyla Doğrulandı</h3>
+            <p style="margin-top: 8px; color: #666;">Hoş geldin <strong id="user-display-name"></strong>! Yukarıdaki menüden **Envanter (CRUD)** sekmesine giderek müze veritabanını dilediğin gibi yönetebilirsin.</p>
+        </section>
+
+        <section class="innovations">
+            <div class="section-header"><h2>Teknoloji Koleksiyonu</h2><p>İnsanlık tarihini değiştiren dönüm noktaları</p></div>
             <div class="cards-grid">
-                <a href="pages/project.html" class="card-link">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200" alt="Bilgisayar">
-                        </div>
-                        <h3>💻 Bilgisayarın Doğuşu</h3>
-                        <p>1950'lerden bugüne dijital evrimin temeli.</p>
-                    </div>
-                </a>
-
-                <a href="pages/project.html" class="card-link">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200" alt="Yapay Zeka">
-                        </div>
-                        <h3>🤖 Yapay Zeka (AI)</h3>
-                        <p>3D model deneyimi ve derin öğrenme süreci.</p>
-                    </div>
-                </a>
-
-                <a href="pages/project.html" class="card-link">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=1200" alt="Bulut Bilişim">
-                        </div>
-                        <h3>☁️ Bulut Bilişim</h3>
-                        <p>Verilerin fiziksel sınırlardan kurtulduğu yeni çağ.</p>
-                    </div>
-                </a>
+                <a href="project.html" class="card-link"><div class="card"><div class="card-image"><img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200" alt="PC"></div><h3>💻 Bilgisayarın Doğuşu</h3><p>1950'lerden bugüne dijital evrimin temeli.</p></div></a>
+                <a href="project.html" class="card-link"><div class="card"><div class="card-image"><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200" alt="AI"></div><h3>🤖 Yapay Zeka (AI)</h3><p>3D model deneyimi ve derin öğrenme süreci.</p></div></a>
+                <a href="project.html" class="card-link"><div class="card"><div class="card-image"><img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=1200" alt="Cloud"></div><h3>☁️ Bulut Bilişim</h3><p>Verilerin fiziksel sınırlardan kurtulduğu yeni çağ.</p></div></a>
             </div>
         </section>
     </main>
 
-    <footer class="footer">
-        <p>&copy; 2026 Melike Candemir | Ahi Evran Üniversitesi</p>
-    </footer>
-
+    <footer class="footer"><p>&copy; 2026 Melike Candemir | Ahi Evran Üniversitesi</p></footer>
     <script src="assests/js/main.js"></script>
 </body>
 </html>
