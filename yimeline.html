@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Teknoloji Zaman Çizelgesi | Kronoloji</title>
+    <link rel="stylesheet" href="assests/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>TECH-TIMELINE</h1>
+            <nav class="navigation">
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Ana Sayfa</a></li>
+                    <li><a href="project.html" class="nav-link">Projeler</a></li>
+                    <li><a href="timeline.html" class="nav-link active">⏳ Zaman Çizgisi</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main style="padding: 3rem 15%;">
+        <h2 style="text-align: center; color: var(--dark-green); margin-bottom: 3rem;">⏳ Teknolojinin Tarihsel Gelişim Çizgisi</h2>
+        <div style="position: relative; border-left: 4px solid var(--dark-green); padding-left: 30px; margin-left: 20px;" id="timeline-flow"></div>
+    </main>
+
+    <script src="assests/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Statik veriler ve CRUD panelinden eklenen dinamik veriler birleşip kronolojik sıralanır
+            let dinamikVeriler = JSON.parse(localStorage.getItem('müzeEnvanter')) || [];
+            let sabitVeriler = [
+                { baslik: "ENIAC Bilgisayarı", kategori: "Modüler Mimari", yil: "1945", aciklama: "Dünyanın ilk genel amaçlı dijital bilgisayarı." },
+                { baslik: "Kişisel Bilgisayar (PC)", kategori: "Yaygın Yapay Zeka", yil: "1981", aciklama: "Bilgisayarların evlere giriş hikayesinin başlangıcı." }
+            ];
+
+            let herSey = [...sabitVeriler, ...dinamikVeriler];
+            herSey.sort((a, b) => parseInt(a.yil) - parseInt(b.yil));
+
+            const flow = document.getElementById('timeline-flow');
+            if(flow) {
+                flow.innerHTML = herSey.map(olay => `
+                    <div style="position: relative; margin-bottom: 3rem;">
+                        <div style="position: absolute; left: -42px; top: 0; width: 16px; height: 16px; border-radius: 50%; background: var(--gold); border: 4px solid var(--dark-green);"></div>
+                        <div class="form-box" style="padding: 20px;">
+                            <span style="font-size: 1.2rem; font-weight: bold; color: var(--dark-green); display: block;">📅 YIL: ${olay.yil}</span>
+                            <h3 style="margin: 8px 0;">${olay.baslik}</h3>
+                            <p style="color:#666; font-size: 0.95rem; line-height: 1.5;">${olay.aciklama}</p>
+                            <span style="display:inline-block; margin-top:10px; font-size:0.8rem; background:#eee; padding:3px 8px; border-radius:4px; font-weight:bold; color:black;">📂 Kategori: ${olay.kategori}</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        });
+    </script>
+</body>
+</html>
