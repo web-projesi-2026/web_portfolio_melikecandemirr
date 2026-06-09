@@ -1,202 +1,143 @@
-/* ===================================
-   TECH-TIMELINE: JAVASCRIPT
-   Etkileşim ve Animasyon İşlevleri
-   =================================== */
+/* Tech-Timeline Dijital Müze Projesi 
+   Geliştirici: Melike Candemir
+   Görev: Etkileşim Kontrolleri, Dinamik Veri ve Veri Saklama
+*/
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Smooth scroll için aktif nav linkini güncelle
-    updateActiveNavLink();
-    
-    // Kart hover efektleri
-    initializeCardAnimations();
-    
-    // Scroll animasyonları
-    initializeScrollAnimations();
-});
-
-// ===================================
-// NAVİGASYON FONKSIYONLARI
-// ===================================
-
-function updateActiveNavLink() {
-    const currentPath = window.location.pathname;
+document.addEventListener('DOMContentLoaded', () => {
+    // --- 1. MOBİL MENÜ KONTROLÜ ---
+    const menuToggle = document.querySelector('#mobile-menu');
+    const navigation = document.querySelector('.navigation');
     const navLinks = document.querySelectorAll('.nav-link');
-    
+
+    if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            navigation.classList.toggle('active');
+            document.body.style.overflow = navigation.classList.contains('active') ? 'hidden' : 'auto';
+        });
+    }
+
     navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.href.includes(currentPath)) {
-            link.classList.add('active');
+        link.addEventListener('click', () => {
+            navigation.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+    });
+
+    // --- 2. DARK MODE (HAFIZALI SİSTEM) ---
+    const themeBtn = document.getElementById("theme-toggle");
+    const currentTheme = localStorage.getItem("theme");
+
+    if (currentTheme === "dark") {
+        document.body.classList.add("dark-mode");
+        if (themeBtn) themeBtn.innerText = "☀️ Açık Tema";
+    }
+
+    if (themeBtn) {
+        themeBtn.addEventListener("click", function() {
+            document.body.classList.toggle("dark-mode");
+            let theme = document.body.classList.contains("dark-mode") ? "dark" : "light";
+            themeBtn.innerText = theme === "dark" ? "☀️ Açık Tema" : "🌙 Koyu Tema";
+            localStorage.setItem("theme", theme);
+        });
+    }
+
+    // --- 3. DİNAMİK VERİ VE FAVORİ SİSTEMİ ---
+    if (document.getElementById('koleksiyon-konteynir')) {
+        kategorileriGetir();
+    }
+
+    if (document.getElementById('favorites-container')) {
+        window.favorileriGoster();
+    }
+
+    favoriIkonlariniGuncelle();
+});
+
+// JSON'dan Veri Çekme
+async function kategorileriGetir() {
+    try {
+        const yanit = await fetch('data.json');
+        const veriler = await yanit.json();
+        const konteynir = document.getElementById('koleksiyon-konteynir');
+        if (konteynir && veriler.kategoriler) {
+            konteynir.innerHTML = veriler.kategoriler.map(kategori => `
+                <div class="card" onclick="location.href='${kategori.link}'" style="cursor: pointer;">
+                    <div class="card-image"><img src="${kategori.resim}"></div>
+                    <div class="card-body">
+                        <h3>${kategori.baslik}</h3>
+                        <p>${kategori.aciklama}</p>
+                        <div class="card-footer"><span>Yıl: ${kategori.yil}</span></div>
+                    </div>
+                </div>`).join('');
         }
-    });
+    } catch (e) { console.error("Veri yüklenemedi:", e); }
 }
 
-// ===================================
-// KART ANİMASYONLARI
-// ===================================
+// Favori Kontrolü (Ekleme/Çıkarma Mantığı Düzeltildi)
+window.favoriKontrol = function(id, baslik) {
+    let favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
+    const index = favoriler.findIndex(item => item.id === id);
+    const toast = document.getElementById('toast-favourite');
 
-function initializeCardAnimations() {
-    const cards = document.querySelectorAll('.innovation-card');
+    if (index === -1) {
+        favoriler.push({ id, baslik });
+        if (toast) gosterToast(`${baslik} eklendi! ❤️`);
+    } else {
+        favoriler.splice(index, 1);
+        if (toast) gosterToast(`${baslik} çıkarıldı. 😊`);
+    }
     
-    cards.forEach((card, index) => {
-        // İlk yükleme animasyonu
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        
-        setTimeout(() => {
-            card.style.transition = 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-        }, index * 100);
-        
-        // Hover efektleri
-        card.addEventListener('mouseenter', function() {
-            // Diğer kartları biraz sollaştır
-            cards.forEach(c => {
-                if (c !== card) {
-                    c.style.opacity = '0.7';
-                }
-            });
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            // Tüm kartların opaklığını geri getir
-            cards.forEach(c => {
-                c.style.opacity = '1';
-            });
-        });
-    });
+    localStorage.setItem('techFavs', JSON.stringify(favoriler));
+    
+    // Favoriler sayfasındaysak anlık güncelle
+    if (document.getElementById('favorites-container')) {
+        window.favorileriGoster();
+    }
+    favoriIkonlariniGuncelle();
+};
+
+// Favorileri Listeleme (Boş Liste Mesajı Dahil)
+window.favorileriGoster = function() {
+    const konteynir = document.getElementById('favorites-container');
+    if (!konteynir) return;
+
+    const favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
+    
+    if (favoriler.length === 0) {
+        konteynir.innerHTML = `
+            <div style="text-align:center; grid-column: 1/-1; padding: 50px;">
+                <p style="font-size: 1.2rem; color: #666;">Favorilere herhangi bir şey eklemediniz. 😊</p>
+                <a href="../index.html" class="btn" style="display:inline-block; margin-top:20px; background:var(--dark-green); color:white; padding:10px 20px; text-decoration:none; border-radius:5px;">Keşfetmeye Başla 🚀</a>
+            </div>`;
+        return;
+    }
+
+    konteynir.innerHTML = favoriler.map(item => `
+        <div class="card" style="border-left: 5px solid #e74c3c; padding: 20px; background: white; border-radius: 10px;">
+            <div class="card-body">
+                <h3>${item.baslik}</h3>
+                <p style="color: #666;">Bu teknoloji favorilerinize eklendi.</p>
+                <button onclick="window.favoriKontrol('${item.id}', '${item.baslik}')" 
+                        style="background:#ff7675; color:white; border:none; padding:8px 12px; cursor:pointer; border-radius:5px; margin-top:10px;">
+                    Kaldır 🗑️
+                </button>
+            </div>
+        </div>`).join('');
+};
+
+function favoriIkonlariniGuncelle() {
+    const favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
+    const kalpIkoni = document.getElementById('fav-icon-robot-09');
+    if (kalpIkoni) {
+        kalpIkoni.innerText = favoriler.some(fav => fav.id === 'robot-09') ? "♥" : "♡";
+    }
 }
 
-// ===================================
-// SCROLL ANİMASYONLARI
-// ===================================
-
-function initializeScrollAnimations() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
-    };
-    
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-in');
-            }
-        });
-    }, observerOptions);
-    
-    // Tüm kartları ve bölümleri izle
-    document.querySelectorAll('.innovation-card, .timeline-preview').forEach(element => {
-        observer.observe(element);
-    });
+function gosterToast(mesaj) {
+    const toast = document.getElementById('toast-favourite');
+    if (toast) {
+        toast.innerText = mesaj;
+        toast.style.display = 'block';
+        setTimeout(() => { toast.style.display = 'none'; }, 3000);
+    }
 }
-
-// ===================================
-// SAYFA YÜKLEMESİ SONRASI
-// ===================================
-
-window.addEventListener('load', function() {
-    // Tüm görsel elementleri yükle
-    console.log('Tech-Timeline sayfası başarıyla yüklendi!');
-});
-
-// ===================================
-// RESPONSIVE MENU (MOBIL DESTEĞI)
-// ===================================
-
-// Mobil cihazlarda menü davranışı
-window.addEventListener('resize', function() {
-    if (window.innerWidth > 768) {
-        // Masaüstü görünümüne geri döndü
-        const nav = document.querySelector('.navigation');
-        if (nav) {
-            nav.style.display = 'flex';
-        }
-    }
-});
-
-// ===================================
-// PARALLAX EFEKTLERI
-// ===================================
-
-window.addEventListener('scroll', function() {
-    const scrollPosition = window.scrollY;
-    
-    // Orb'lara parallax efekti ekle
-    const orb1 = document.querySelector('.orb-1');
-    const orb2 = document.querySelector('.orb-2');
-    
-    if (orb1) {
-        orb1.style.transform = `translateY(${scrollPosition * 0.5}px)`;
-    }
-    if (orb2) {
-        orb2.style.transform = `translateY(${scrollPosition * 0.3}px)`;
-    }
-});
-
-// ===================================
-// ZAMAN ÇİZGİSİ NOKTA TIŞ AYARLARI
-// ===================================
-
-document.querySelectorAll('.dot').forEach(dot => {
-    dot.addEventListener('click', function() {
-        const year = this.getAttribute('data-year');
-        // Zaman çizgisi sayfasına yönlendir
-        window.location.href = 'pages/timeline.php?year=' + year;
-    });
-    
-    dot.addEventListener('mouseover', function() {
-        this.style.cursor = 'pointer';
-        this.style.boxShadow = '0 0 20px rgba(255, 184, 28, 0.5)';
-    });
-    
-    dot.addEventListener('mouseout', function() {
-        this.style.boxShadow = 'none';
-    });
-});
-
-// ===================================
-// KART LİNK TIŞ AYARLARI
-// ===================================
-
-document.querySelectorAll('.card-link').forEach(link => {
-    link.addEventListener('click', function(e) {
-        // İsteğe bağlı: Özel işlemler burada yapılabilir
-        console.log('İcat detayına gitme işleminde...');
-    });
-});
-
-// ===================================
-// DÜĞME TIŞ OYUNCULARı
-// ===================================
-
-document.querySelectorAll('.btn').forEach(button => {
-    button.addEventListener('click', function() {
-        // Ripple efekti
-        const ripple = document.createElement('span');
-        ripple.style.position = 'absolute';
-        ripple.style.borderRadius = '50%';
-        ripple.style.background = 'rgba(255, 255, 255, 0.5)';
-        ripple.style.width = '20px';
-        ripple.style.height = '20px';
-        ripple.style.animation = 'ripple-animation 0.6s ease-out';
-        
-        this.style.position = 'relative';
-        this.style.overflow = 'hidden';
-        
-        const rect = this.getBoundingClientRect();
-        ripple.style.left = (event.clientX - rect.left) + 'px';
-        ripple.style.top = (event.clientY - rect.top) + 'px';
-        
-        this.appendChild(ripple);
-        
-        setTimeout(() => ripple.remove(), 600);
-    });
-});
-
-// ===================================
-// SAYFA YÜKLEMESİ BİTTİ
-// ===================================
-
-console.log('%cTech-Timeline: Dijital Müze', 'color: #00592D; font-size: 16px; font-weight: bold;');
-console.log('%cAhi Evran Üniversitesi', 'color: #FFB81C; font-size: 12px; font-weight: bold;');
