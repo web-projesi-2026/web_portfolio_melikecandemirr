@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech-Timeline: Dijital Müze - Ahi Evran Üniversitesi</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">⚙️</span>
+                <div class="logo-text">
+                    <h1>TECH-TIMELINE</h1>
+                    <p>Dijital Müze</p>
+                </div>
+            </div>
+            
+            <nav class="navigation">
+                <ul>
+                    <li><a href="index.php" class="nav-link active">Ana Sayfa</a></li>
+                    <li><a href="pages/timeline.php" class="nav-link">Zaman Çizgisi</a></li>
+                    <li><a href="pages/icat.php" class="nav-link">İcatlar</a></li>
+                    <li><a href="pages/hakkimizda.php" class="nav-link">Hakkımızda</a></li>
+                    <li><a href="pages/iletisim.php" class="nav-link">İletişim</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background">
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+        </div>
+        
+        <div class="hero-content">
+            <div class="hero-text">
+                <h2 class="hero-title">Teknoloji Tarihinin Yolculuğuna Hoş Geldiniz</h2>
+                <p class="hero-subtitle">
+                    Geçmişten geleceğe uzanan dijital bir yolculuk. İnsanlığın en büyük buluşlarını keşfedin ve teknolojinin evrimini takip edin.
+                </p>
+                <div class="hero-buttons">
+                    <a href="pages/timeline.php" class="btn btn-primary">Keşfet</a>
+                    <a href="pages/iletisim.php" class="btn btn-secondary">Bize Ulaşın</a>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="floating-element element-1">
+                    <svg width="120" height="120" viewBox="0 0 120 120">
+                        <circle cx="60" cy="60" r="55" fill="none" stroke="#FFB81C" stroke-width="2" opacity="0.5"/>
+                        <circle cx="60" cy="60" r="45" fill="none" stroke="#00592D" stroke-width="2" opacity="0.5"/>
+                        <path d="M30 60 Q60 30 90 60 Q60 90 30 60" fill="none" stroke="#FFB81C" stroke-width="2"/>
+                    </svg>
+                </div>
+                <div class="floating-element element-2">
+                    <svg width="100" height="100" viewBox="0 0 100 100">
+                        <rect x="20" y="20" width="60" height="60" fill="none" stroke="#00592D" stroke-width="2" opacity="0.5"/>
+                        <circle cx="50" cy="50" r="30" fill="none" stroke="#FFB81C" stroke-width="2" opacity="0.5"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Innovation Cards Section -->
+    <section class="innovations">
+        <div class="section-header">
+            <h2>Tarih Boyunca Büyük İcatlar</h2>
+            <p>Teknolojinin sınırlarını genişleten buluşlar</p>
+        </div>
+
+        <div class="cards-grid">
+            <!-- Card 1 -->
+            <div class="card innovation-card">
+                <div class="card-header">
+                    <div class="card-icon">💻</div>
+                    <span class="card-year">1950s</span>
+                </div>
+                <h3>Bilgisayarların Doğuşu</h3>
+                <p>
+                    İlk elektronik bilgisayarlar büyük odaları doldururken, günümüzün sayısal çağını başlattılar. ENIAC ve UNIVAC döneminin gelişmeleri.
+                </p>
+                <div class="card-footer">
+                    <a href="pages/icat.php?id=1" class="card-link">Detaylı Bilgi →</a>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="card innovation-card">
+                <div class="card-header">
+                    <div class="card-icon">📱</div>
+                    <span class="card-year">1970s</span>
+                </div>
+                <h3>Kişisel Bilgisayar Devrimi</h3>
+                <p>
+                    Apple, Commodore ve IBM'in çıkışı, bilgisayarları herkese erişilebilir hale getirdi. Yazılım dünyasının temelleri atıldı.
+                </p>
+                <div class="card-footer">
+                    <a href="pages/icat.php?id=2" class="card-link">Detaylı Bilgi →</a>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="card innovation-card">
+                <div class="card-header">
+                    <div class="card-icon">🌐</div>
+                    <span class="card-year">1990s</span>
+                </div>
+                <h3>İnternet Çağının Başlangıcı</h3>
+                <p>
+                    World Wide Web'in icat edilmesi dünyayı değiştirdi. İletişim, ticaret ve bilgi paylaşımı tamamen dönüştürüldü.
+                </p>
+                <div class="card-footer">
+                    <a href="pages/icat.php?id=3" class="card-link">Detaylı Bilgi →</a>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="card innovation-card">
+                <div class="card-header">
+                    <div class="card-icon">📲</div>
+                    <span class="card-year">2000s</span>
+                </div>
+                <h3>Mobil İşletim Sistemleri</h3>
+                <p>
+                    iOS ve Android'in ortaya çıkışı, dünya nüfusunun eline akıllı cihazları verdi. Milyarlarca insan internet erişimine sahip oldu.
+                </p>
+                <div class="card-footer">
+                    <a href="pages/icat.php?id=4" class="card-link">Detaylı Bilgi →</a>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="card innovation-card">
+                <div class="card-header">
+                    <div class="card-icon">🤖</div>
+                    <span class="card-year">2010s</span>
+                </div>
+                <h3>Yapay Zeka ve Makine Öğrenmesi</h3>
+                <p>
+                    Derin öğrenme algoritmaları, bilgisayarları insana benzer görevleri yerine getirmeye yetkilendirdi. Yapay zeka her yerde.
+                </p>
+                <div class="card-footer">
+                    <a href="pages/icat.php?id=5" class="card-link">Detaylı Bilgi →</a>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="card innovation-card">
+                <div class="card-header">
+                    <div class="card-icon">☁️</div>
+                    <span class="card-year">2020s</span>
+                </div>
+                <h3>Bulut Bilişim & Kuantum</h3>
+                <p>
+                    Bulut hizmetleri her şeyi değiştirdi. Kuantum bilgisayarlar hesaplama sınırlarını aşıyor. Geleceğin teknolojisi bugün başlıyor.
+                </p>
+                <div class="card-footer">
+                    <a href="pages/icat.php?id=6" class="card-link">Detaylı Bilgi →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Preview -->
+    <section class="timeline-preview">
+        <div class="timeline-content">
+            <h2>Teknoloji Tarihi Zaman Çizgisi</h2>
+            <div class="timeline-dots">
+                <div class="dot dot-1" style="--year: 1950;"></div>
+                <div class="dot dot-2" style="--year: 1970;"></div>
+                <div class="dot dot-3" style="--year: 1990;"></div>
+                <div class="dot dot-4" style="--year: 2000;"></div>
+                <div class="dot dot-5" style="--year: 2010;"></div>
+                <div class="dot dot-6" style="--year: 2025;"></div>
+            </div>
+            <a href="pages/timeline.php" class="btn btn-primary" style="margin-top: 2rem;">Tam Zaman Çizgisini Gör</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Tech-Timeline</h4>
+                <p>Ahi Evran Üniversitesi'nin sunduğu dijital müze platformu</p>
+            </div>
+            <div class="footer-section">
+                <h4>Hızlı Linkler</h4>
+                <ul>
+                    <li><a href="pages/timeline.php">Zaman Çizgisi</a></li>
+                    <li><a href="pages/icat.php">İcatlar</a></li>
+                    <li><a href="pages/hakkimizda.php">Hakkımızda</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>İletişim</h4>
+                <p>
+                    Ahi Evran Üniversitesi<br>
+                    Kırşehir, Türkiye<br>
+                    <a href="mailto:info@aeu.edu.tr">info@aeu.edu.tr</a>
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Tech-Timeline: Dijital Müze. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
