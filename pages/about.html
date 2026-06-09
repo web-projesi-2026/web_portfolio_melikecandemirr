@@ -3,32 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hakkımda | Tech-Timeline</title>
+    <title>Hakkımda & Proje Detayları | Tech-Timeline</title>
     <link rel="stylesheet" href="../assests/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="header">
         <div class="header-content">
-            <div class="logo"><span class="logo-icon">⚙️</span><div class="logo-text"><h1>TECH-TIMELINE</h1><p>Dijital Müze</p></div></div>
+            <div class="logo">
+                <span class="logo-icon">⚙️</span>
+                <div class="logo-text">
+                    <h1>TECH-TIMELINE</h1>
+                    <p>Dijital Müze</p>
+                </div>
+            </div>
             <nav class="navigation">
-                <div class="menu-toggle" id="mobile-menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
-                <ul class="nav-menu">
-                    <li><a href="../index.php" class="nav-link">Ana Sayfa</a></li>
+                <ul class="nav-menu" style="display: flex;">
+                    <li><a href="../index.html" class="nav-link">Ana Sayfa</a></li>
                     <li><a href="about.html" class="nav-link active">Hakkımda</a></li>
                     <li><a href="project.html" class="nav-link">Projeler</a></li>
                     <li><a href="contact.html" class="nav-link">İletişim</a></li>
                 </ul>
-                <button id="theme-toggle" class="theme-btn">🌙 Koyu Tema</button>
             </nav>
         </div>
     </header>
-    <main style="padding: 3rem 10%;">
-        <section class="form-box" style="border-left: 5px solid var(--dark-green);">
-            <h2>Melike Candemir 👋</h2>
-            <p style="margin-top:10px; line-height:1.6;">Bilgisayar Programcılığı ve Tıbbi Dokümantasyon öğrencisi olarak dijital sistem mimarileri üzerinde çalışıyorum.</p>
-        </section>
+
+    <main style="max-width: 1100px; margin: 4rem auto; padding: 0 20px;">
+        <article style="background: var(--white); padding: 50px; border-radius: var(--radius); box-shadow: var(--card-shadow); border: 1px solid var(--glass-border);">
+            
+            <h2 style="font-size: 3rem; color: var(--dark-green); margin-bottom: 10px;">👤 Hakkımda & Küratör Detayları</h2>
+            <p style="color: var(--gold); font-weight: 600; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px;">Geliştirici Vizyonu ve Dijital Müze Mühendislik Raporu</p>
+            
+            <div style="display: flex; gap: 40px; flex-wrap: wrap; margin-bottom: 50px;">
+                <div style="flex: 1; min-width: 280px; background: rgba(0, 89, 45, 0.04); padding: 30px; border-radius: 12px; border-left: 5px solid var(--dark-green);">
+                    <h3 style="color: var(--dark-green); margin-top: 0; font-size: 1.4rem;">Melike Candemir</h3>
+                    <p style="color: var(--gold); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 20px;">Bilgisayar Programcılığı / Bilgi Yöneticisi</p>
+                    <p style="font-size: 0.95rem; line-height: 1.7; text-align: justify; color: var(--text-dark);">
+                        Teknolojinin tarihsel süreçlerini, insan zihninin mekanik çarklardan kuantum bitlerine uzanan o muazzam evrimsel yolculuğunu dijital ortama aktarmayı hedefleyen bir yazılım geliştirici adayı. Veri mimarisi, asenkron sistemler ve modern web arayüzleri üzerine odaklanarak kurumsal ve dinamik çözümler üretmektedir.
+                    </p>
+                    <div style="margin-top: 25px; font-size: 0.85rem; color: var(--text-muted);">
+                        <strong>Kurum:</strong> Ahi Evran Üniversitesi<br>
+                        <strong>Lokasyon Odak:</strong> Kırşehir & Kahramanmaraş / Ankara
+                    </div>
+                </div>
+
+                <div style="flex: 2; min-width: 300px; display: flex; flex-direction: column; justify-content: center;">
+                    <h3 style="color: var(--dark-green); font-size: 1.5rem; margin-bottom: 15px;">Akademik ve Teknolojik Vizyon</h3>
+                    <p style="font-size: 1.05rem; line-height: 1.8; text-align: justify; color: var(--text-dark);">
+                        Bu dijital müze çalışması, sadece bir ödev veya statik bir web arayüzü tasarımı olmanın ötesinde; büyük verinin (Big Data) internet ortamında sunucu maliyetlerinden ve hantal bağımlılıklardan bağımsız olarak nasıl optimize edilebileceğini kanıtlamak amacıyla geliştirilmiştir. Geliştirici olarak amacım, karmaşık veri kütüphanelerini kullanıcıların en hızlı, en sade ve en etkileşimli şekilde tüketebileceği modern yazılım standartlarını (Clean Code) hayata geçirmektir.
+                    </p>
+                </div>
+            </div>
+
+            <hr style="border: 0; height: 1px; background: #eee; margin: 40px 0;">
+
+            <h2 style="font-size: 2.2rem; color: var(--dark-green); margin-bottom: 25px;">⚙️ Tech-Timeline Teknik Altyapı Raporu</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 15fr)); gap: 25px; font-size: 0.95rem; line-height: 1.7; color: var(--text-dark);">
+                
+                <div style="background: #fafafa; padding: 25px; border-radius: 8px;">
+                    <h4 style="color: var(--gold); margin-top:0; font-size: 1.1rem;">⚡ Serverless (Sunucusuz) Mimari</h4>
+                    <p style="text-align: justify;">Projenin GitHub Pages ve bulut platformları üzerinde sıfır kurulumla, doğrudan çalışabilmesi için arka planda PHP veya ilişkisel SQL sunucu bağımlılığı olmadan kurgulanmıştır. Bu sayede platform, taşınabilir (portable) ve yüksek performanslı bir çalışma yapısına sahiptir.</p>
+                </div>
+
+                <div style="background: #fafafa; padding: 25px; border-radius: 8px;">
+                    <h4 style="color: var(--gold); margin-top:0; font-size: 1.1rem;">🗄️ NoSQL No-Server Veritabanı</h4>
+                    <p style="text-align: justify;">Kullanıcıların kayıt verileri, genişletilmiş profil detayları (Ad Soyad, E-posta) ve özel Base64 formatına dönüştürülen profil fotoğrafları tarayıcının yerel NoSQL veritabanı katmanı olan <strong>LocalStorage</strong> mimarisinde sanallaştırılmış tablolar halinde güvenle saklanmaktadır.</p>
+                </div>
+
+                <div style="background: #fafafa; padding: 25px; border-radius: 8px;">
+                    <h4 style="color: var(--gold); margin-top:0; font-size: 1.1rem;">🌤️ Asenkron Canlı API Entegrasyonu</h4>
+                    <p style="text-align: justify;">Müze ana sayfasında yer alan akıllı iklim barı, JavaScript <code>Fetch API</code> mimarisiyle <strong>OpenWeatherMap</strong> sunucularına asenkron istekler atarak canlı hava durumunu çeker. Kullanıcı profilinden ili değiştirdiği an arka planda yeni istek atılarak veritabanı anlık güncellenir.</p>
+                </div>
+
+                <div style="background: #fafafa; padding: 25px; border-radius: 8px;">
+                    <h4 style="color: var(--gold); margin-top:0; font-size: 1.1rem;">🔍 Akıllı Algoritmik Filtreleme</h4>
+                    <p style="text-align: justify;">Alt kütüphane sayfalarında yer alan 50'ye yakın devasa ansiklopedik içerik, DOM manipülasyonu tabanlı özel bir arama algoritmasıyla süzülür. Kullanıcı harf girdiğinde veya tarihsel bir çağ seçtiğinde sistem milisaniyeler içinde eşleşmeyen paragrafları filtreler.</p>
+                </div>
+
+            </div>
+
+            <div style="margin-top: 50px; background: rgba(212, 175, 55, 0.08); padding: 25px; border-radius: 12px; border: 1px solid var(--gold); text-align: center;">
+                <p style="font-weight: bold; color: var(--dark-green); margin: 0; font-size: 1.1rem;">"Geçmişin mekanik hatıralarını, geleceğin dijital kodlarıyla koruyoruz."</p>
+            </div>
+
+            <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; display: flex; justify-content: space-between;">
+                <a href="../index.html" style="text-decoration: none; color: var(--dark-green); font-weight: 600;">← Ana Sayfaya Dön</a>
+                <span style="color: var(--text-muted); font-size: 0.9rem;">Küratör & Geliştirici Belgeleri</span>
+            </div>
+
+        </article>
     </main>
-    <footer class="footer"><p>&copy; 2026 Melike Candemir | Ahi Evran Üniversitesi</p></footer>
-    <script src="../assests/js/main.js"></script>
+
+    <footer class="footer">
+        <p>&copy; 2026 Melike Candemir | Ahi Evran Üniversitesi</p>
+    </footer>
 </body>
 </html>
