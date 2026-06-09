@@ -1,143 +1,90 @@
-/* Tech-Timeline Dijital Müze Projesi 
-   Geliştirici: Melike Candemir
-   Görev: Etkileşim Kontrolleri, Dinamik Veri ve Veri Saklama
-*/
+/* Tech-Timeline Dinamik JavaScript Yönetim Altyapısı */
+let tumTeknolojiler = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-    // --- 1. MOBİL MENÜ KONTROLÜ ---
+    // Giriş Durumu Kontrolü (Sayfa her yenilendiğinde üye menüsünü günceller)
+    oturumKontrolEt();
+
+    // Hamburger Menü
     const menuToggle = document.querySelector('#mobile-menu');
     const navigation = document.querySelector('.navigation');
-    const navLinks = document.querySelectorAll('.nav-link');
-
-    if (menuToggle) {
-        menuToggle.addEventListener('click', () => {
-            navigation.classList.toggle('active');
-            document.body.style.overflow = navigation.classList.contains('active') ? 'hidden' : 'auto';
-        });
+    if (menuToggle && navigation) {
+        menuToggle.addEventListener('click', () => { navigation.classList.toggle('active'); });
     }
 
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            navigation.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-    });
-
-    // --- 2. DARK MODE (HAFIZALI SİSTEM) ---
+    // Karanlık Mod
     const themeBtn = document.getElementById("theme-toggle");
-    const currentTheme = localStorage.getItem("theme");
-
-    if (currentTheme === "dark") {
+    if (localStorage.getItem("theme") === "dark") {
         document.body.classList.add("dark-mode");
         if (themeBtn) themeBtn.innerText = "☀️ Açık Tema";
     }
-
     if (themeBtn) {
-        themeBtn.addEventListener("click", function() {
+        themeBtn.addEventListener("click", () => {
             document.body.classList.toggle("dark-mode");
-            let theme = document.body.classList.contains("dark-mode") ? "dark" : "light";
-            themeBtn.innerText = theme === "dark" ? "☀️ Açık Tema" : "🌙 Koyu Tema";
-            localStorage.setItem("theme", theme);
+            const isDark = document.body.classList.contains("dark-mode");
+            themeBtn.innerText = isDark ? "☀️ Açık Tema" : "🌙 Koyu Tema";
+            localStorage.setItem("theme", isDark ? "dark" : "light");
         });
     }
 
-    // --- 3. DİNAMİK VERİ VE FAVORİ SİSTEMİ ---
-    if (document.getElementById('koleksiyon-konteynir')) {
-        kategorileriGetir();
+    // Giriş Yapma Form Eventi
+    const lForm = document.getElementById('loginForm');
+    if(lForm) {
+        lForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            localStorage.setItem('activeUser', email.split('@')[0]); // Kullanıcı adını çıkar
+            window.gosterToast("Giriş başarılı! Müze panelleri aktif edildi. 🔐");
+            setTimeout(() => { location.reload(); }, 1500);
+        });
     }
 
-    if (document.getElementById('favorites-container')) {
-        window.favorileriGoster();
+    // Kayıt Olma Form Eventi
+    const rForm = document.getElementById('registerForm');
+    if(rForm) {
+        rForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            window.gosterToast("Kayıt başarıyla oluşturuldu! Şimdi giriş yapabilirsiniz. 🎉");
+            this.reset();
+        });
     }
-
-    favoriIkonlariniGuncelle();
 });
 
-// JSON'dan Veri Çekme
-async function kategorileriGetir() {
-    try {
-        const yanit = await fetch('data.json');
-        const veriler = await yanit.json();
-        const konteynir = document.getElementById('koleksiyon-konteynir');
-        if (konteynir && veriler.kategoriler) {
-            konteynir.innerHTML = veriler.kategoriler.map(kategori => `
-                <div class="card" onclick="location.href='${kategori.link}'" style="cursor: pointer;">
-                    <div class="card-image"><img src="${kategori.resim}"></div>
-                    <div class="card-body">
-                        <h3>${kategori.baslik}</h3>
-                        <p>${kategori.aciklama}</p>
-                        <div class="card-footer"><span>Yıl: ${kategori.yil}</span></div>
-                    </div>
-                </div>`).join('');
+// 4.5 Saniyelik Şık Toast Bildirim Motoru
+window.gosterToast = function(mesaj) {
+    const toast = document.getElementById('toast-favourite');
+    if (!toast) return;
+    toast.innerText = mesaj;
+    toast.style.display = 'block';
+    setTimeout(() => { toast.style.opacity = '1'; toast.style.transform = 'translateY(0)'; }, 50);
+
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(20px)';
+        setTimeout(() => { toast.style.display = 'none'; }, 400);
+    }, 4500);
+};
+
+function oturumKontrolEt() {
+    const user = localStorage.getItem('activeUser');
+    const authBox = document.getElementById('auth-container');
+    const welcomeBox = document.getElementById('welcome-container');
+    
+    if(user) {
+        if(authBox) authBox.style.display = 'none';
+        if(welcomeBox) {
+            welcomeBox.style.display = 'block';
+            document.getElementById('user-display-name').innerText = user.toUpperCase();
         }
-    } catch (e) { console.error("Veri yüklenemedi:", e); }
+        // Menüleri Aç
+        if(document.getElementById('nav-fav')) document.getElementById('nav-fav').style.display = 'block';
+        if(document.getElementById('nav-crud')) document.getElementById('nav-crud').style.display = 'block';
+        if(document.getElementById('nav-logout')) document.getElementById('nav-logout').style.display = 'block';
+    }
 }
 
-// Favori Kontrolü (Ekleme/Çıkarma Mantığı Düzeltildi)
-window.favoriKontrol = function(id, baslik) {
-    let favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
-    const index = favoriler.findIndex(item => item.id === id);
-    const toast = document.getElementById('toast-favourite');
-
-    if (index === -1) {
-        favoriler.push({ id, baslik });
-        if (toast) gosterToast(`${baslik} eklendi! ❤️`);
-    } else {
-        favoriler.splice(index, 1);
-        if (toast) gosterToast(`${baslik} çıkarıldı. 😊`);
-    }
-    
-    localStorage.setItem('techFavs', JSON.stringify(favoriler));
-    
-    // Favoriler sayfasındaysak anlık güncelle
-    if (document.getElementById('favorites-container')) {
-        window.favorileriGoster();
-    }
-    favoriIkonlariniGuncelle();
+window.kullaniciCikis = function() {
+    localStorage.removeItem('activeUser');
+    window.gosterToast("Oturum güvenle kapatıldı. Yine bekleriz! 🚪");
+    setTimeout(() => { location.href = 'index.html'; }, 1500);
 };
-
-// Favorileri Listeleme (Boş Liste Mesajı Dahil)
-window.favorileriGoster = function() {
-    const konteynir = document.getElementById('favorites-container');
-    if (!konteynir) return;
-
-    const favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
-    
-    if (favoriler.length === 0) {
-        konteynir.innerHTML = `
-            <div style="text-align:center; grid-column: 1/-1; padding: 50px;">
-                <p style="font-size: 1.2rem; color: #666;">Favorilere herhangi bir şey eklemediniz. 😊</p>
-                <a href="../index.html" class="btn" style="display:inline-block; margin-top:20px; background:var(--dark-green); color:white; padding:10px 20px; text-decoration:none; border-radius:5px;">Keşfetmeye Başla 🚀</a>
-            </div>`;
-        return;
-    }
-
-    konteynir.innerHTML = favoriler.map(item => `
-        <div class="card" style="border-left: 5px solid #e74c3c; padding: 20px; background: white; border-radius: 10px;">
-            <div class="card-body">
-                <h3>${item.baslik}</h3>
-                <p style="color: #666;">Bu teknoloji favorilerinize eklendi.</p>
-                <button onclick="window.favoriKontrol('${item.id}', '${item.baslik}')" 
-                        style="background:#ff7675; color:white; border:none; padding:8px 12px; cursor:pointer; border-radius:5px; margin-top:10px;">
-                    Kaldır 🗑️
-                </button>
-            </div>
-        </div>`).join('');
-};
-
-function favoriIkonlariniGuncelle() {
-    const favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
-    const kalpIkoni = document.getElementById('fav-icon-robot-09');
-    if (kalpIkoni) {
-        kalpIkoni.innerText = favoriler.some(fav => fav.id === 'robot-09') ? "♥" : "♡";
-    }
-}
-
-function gosterToast(mesaj) {
-    const toast = document.getElementById('toast-favourite');
-    if (toast) {
-        toast.innerText = mesaj;
-        toast.style.display = 'block';
-        setTimeout(() => { toast.style.display = 'none'; }, 3000);
-    }
-}
