@@ -28,6 +28,7 @@
                     <li><a href="pages/about.html" class="nav-link">Hakkımda</a></li>
                     <li><a href="pages/project.html" class="nav-link">Projeler</a></li>
                     <li><a href="pages/contact.html" class="nav-link">İletişim</a></li>
+                    <li id="user-status-area"></li>
                 </ul>
                 <button id="theme-toggle" class="theme-btn">🌙 Koyu Tema</button>
             </nav>
@@ -35,6 +36,26 @@
     </header>
 
     <main>
+        <div id="auth-container" style="background: var(--white); padding: 30px; border-radius: var(--radius); box-shadow: var(--card-shadow); border: 1px solid var(--glass-border); margin-bottom: 30px; font-family: 'Montserrat', sans-serif;">
+            <div id="auth-logged-out">
+                <h3 style="color: var(--dark-green); margin-bottom: 15px; font-size: 1.2rem;">🔐 Dijital Müze Üye Paneli</h3>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <input type="text" id="auth-username" placeholder="Kullanıcı Adı" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc; outline: none; font-family: 'Montserrat';">
+                    <input type="password" id="auth-password" placeholder="Şifre" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc; outline: none; font-family: 'Montserrat';">
+                    <button id="btn-login" style="background: var(--dark-green); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer;">Giriş Yap</button>
+                    <button id="btn-register" style="background: transparent; color: var(--dark-green); border: 2px solid var(--dark-green); padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer;">Kayıt Ol</button>
+                </div>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 8px;">*Yönetici girişi için kullanıcı adını <strong>admin</strong> yapın.</p>
+            </div>
+            <div id="auth-logged-in" style="display: none; justify-content: space-between; align-items: center;">
+                <div>
+                    <h3 style="color: var(--dark-green); margin: 0;">👋 Hoş Geldiniz, <span id="logged-user-name" style="color: var(--gold);">Misafir</span>!</h3>
+                    <p id="user-role-badge" style="margin: 4px 0 0; font-size: 0.85rem; font-weight: 600; color: var(--text-muted);"></p>
+                </div>
+                <button id="btn-logout" style="background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer;">Güvenli Çıkış 🚪</button>
+            </div>
+        </div>
+
         <div id="weather-section" style="background: rgba(0, 89, 45, 0.06); padding: 15px 25px; border-radius: 12px; margin: 10px auto 30px; max-width: 100%; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--dark-green); font-family: 'Montserrat', sans-serif;">
             <div>
                 <h4 style="margin: 0; color: var(--dark-green); font-size: 0.95rem; font-weight: 700;">🌤️ Müze Bölgesi Canlı Hava Durumu (Afşin)</h4>
@@ -103,6 +124,12 @@
             </div>
         </section>
     </main>
+
+    <div id="custom-toast" style="display: none; position: fixed; bottom: 30px; right: 30px; background: #004d26; color: white; padding: 16px 28px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 2px solid #d4af37; font-family: 'Montserrat'; font-weight: 600; z-index: 9999; animation: slideIn 0.4s ease;"></div>
+
+    <style>
+        @keyframes slideIn { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
 
     <footer class="footer">
         <p>&copy; 2026 Melike Candemir | Ahi Evran Üniversitesi</p>
