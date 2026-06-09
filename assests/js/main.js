@@ -1,6 +1,6 @@
 /* Tech-Timeline Dijital Müze Projesi 
    Geliştirici: Melike Candemir
-   Görev: Etkileşim Kontrolleri, Dinamik Veri, Veri Saklama ve Oturum Yönetimi
+   Görev: Etkileşim Kontrolleri, Dinamik Veri, Veri Saklama ve Gelişmiş Oturum Yönetimi
 */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -85,6 +85,12 @@ function modalEtkilesimleriniKur() {
     const btnLogout = document.getElementById('btn-logout');
     const profilePhotoInput = document.getElementById('profile-photo-input');
 
+    // Profil Modal Sekme Elementleri
+    const tabBtnProfile = document.getElementById('tab-btn-profile');
+    const tabBtnFavorites = document.getElementById('tab-btn-favorites');
+    const tabContentProfile = document.getElementById('tab-content-profile');
+    const tabContentFavorites = document.getElementById('tab-content-favorites');
+
     // Açma Tetikleyicileri
     if (triggerLogin) triggerLogin.addEventListener('click', () => { loginModal.style.display = 'block'; });
     if (triggerRegister) triggerRegister.addEventListener('click', () => { registerModal.style.display = 'block'; });
@@ -95,6 +101,21 @@ function modalEtkilesimleriniKur() {
     if (closeRegister) closeRegister.addEventListener('click', () => { registerModal.style.display = 'none'; });
     if (closeProfile) closeProfile.addEventListener('click', () => { profileModal.style.display = 'none'; });
 
+    // Sekme Geçiş Dinleyicileri
+    if (tabBtnProfile && tabBtnFavorites) {
+        tabBtnProfile.addEventListener('click', () => {
+            tabBtnProfile.style.background = "#00592D"; tabBtnProfile.style.color = "white";
+            tabBtnFavorites.style.background = "#f0f0f0"; tabBtnFavorites.style.color = "#333";
+            tabContentProfile.style.display = "block"; tabContentFavorites.style.display = "none";
+        });
+        tabBtnFavorites.addEventListener('click', () => {
+            tabBtnFavorites.style.background = "#00592D"; tabBtnFavorites.style.color = "white";
+            tabBtnProfile.style.background = "#f0f0f0"; tabBtnProfile.style.color = "#333";
+            tabContentProfile.style.display = "none"; tabContentFavorites.style.display = "block";
+            profilFavorileriniListele();
+        });
+    }
+
     // Dışarı tıklayınca kapatma
     window.addEventListener('click', (e) => {
         if (e.target === loginModal) loginModal.style.display = 'none';
@@ -102,7 +123,7 @@ function modalEtkilesimleriniKur() {
         if (e.target === profileModal) profileModal.style.display = 'none';
     });
 
-    // Profil Fotoğrafı Base64 Dönüştürücü ve Önizleme
+    // Profil Fotoğrafı Motoru
     if (profilePhotoInput) {
         profilePhotoInput.addEventListener('change', function() {
             const file = this.files[0];
@@ -110,17 +131,13 @@ function modalEtkilesimleriniKur() {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const previewImg = document.getElementById('profile-modal-preview');
-                    if (previewImg) {
-                        previewImg.src = e.target.result;
-                        previewImg.style.display = 'block';
-                    }
+                    if (previewImg) { previewImg.src = e.target.result; previewImg.style.display = 'block'; }
                 };
                 reader.readAsDataURL(file);
             }
         });
     }
 
-    // Form Gönderimleri
     if (btnSubmitRegister) btnSubmitRegister.addEventListener('click', müzeKayıtOl);
     if (btnSubmitLogin) btnSubmitLogin.addEventListener('click', müzeGirisYap);
     if (btnSubmitProfile) btnSubmitProfile.addEventListener('click', profilBilgileriniGuncelle);
@@ -139,30 +156,15 @@ function müzeKayıtOl() {
     }
 
     let üyeler = JSON.parse(localStorage.getItem('muzeUyeler')) || [];
-    
     if (üyeler.some(u => u.username.toLowerCase() === username.toLowerCase())) {
         müzeToastAtesle("Bu kullanıcı adı zaten alınmış! 🛑");
         return;
     }
 
-    üyeler.push({ 
-        fullname: fullname, 
-        email: email, 
-        username: username, 
-        password: password,
-        avatar: "", 
-        customCity: "Afsin,TR",
-        role: username.toLowerCase() === 'admin' ? 'Yönetici' : 'Kullanıcı' 
-    });
-
+    üyeler.push({ fullname, email, username, password, avatar: "", customCity: "Afsin,TR" });
     localStorage.setItem('muzeUyeler', JSON.stringify(üyeler));
     document.getElementById('register-modal').style.display = 'none';
     müzeToastAtesle("Kayıt başarıyla tamamlandı! Giriş yapabilirsiniz. 🎉");
-    
-    document.getElementById('reg-fullname').value = '';
-    document.getElementById('reg-email').value = '';
-    document.getElementById('reg-username').value = '';
-    document.getElementById('reg-password').value = '';
 }
 
 function müzeGirisYap() {
@@ -170,7 +172,7 @@ function müzeGirisYap() {
     const passInp = document.getElementById('login-password').value.trim();
 
     if (!userInp || !passInp) {
-        müzeToastAtesle("Lütfen kullanıcı adı og şifrenizi girin! ⚠️");
+        müzeToastAtesle("Lütfen kullanıcı adı ve şifrenizi girin! ⚠️");
         return;
     }
 
@@ -178,17 +180,15 @@ function müzeGirisYap() {
     let bulunanUser = üyeler.find(u => u.username.toLowerCase() === userInp.toLowerCase() && u.password === passInp);
 
     if (userInp.toLowerCase() === 'admin' && passInp === 'admin') {
-        bulunanUser = { username: 'admin', fullname: 'Sistem Yöneticisi', email: 'admin@muze.com', avatar: "", customCity: "Afsin,TR", role: 'Yönetici' };
+        bulunanUser = { username: 'admin', fullname: 'Sistem Yöneticisi', email: 'admin@muze.com', avatar: "", customCity: "Afsin,TR" };
     }
 
     if (bulunanUser) {
         localStorage.setItem('muzeAktifKullanıcı', JSON.stringify(bulunanUser));
         document.getElementById('login-modal').style.display = 'none';
         oturumDurumunuKontrolEt();
-        havaDurumuGetir(); // Seçtiği şehre göre hava durumunu anında yükle
+        havaDurumuGetir();
         müzeToastAtesle(`Başarıyla giriş yapıldı. Hoş geldin ${bulunanUser.username}! 🔑`);
-        document.getElementById('login-username').value = '';
-        document.getElementById('login-password').value = '';
     } else {
         müzeToastAtesle("Hatalı kullanıcı adı veya şifre! ❌");
     }
@@ -202,21 +202,27 @@ function profilPaneliniAc() {
     document.getElementById('profile-email').value = aktifUser.email || "";
     document.getElementById('profile-weather-city').value = aktifUser.customCity || "Afsin,TR";
 
+    // Sayaç güncelleme
+    const favoriler = JSON.parse(localStorage.getItem(`favs_${aktifUser.username}`)) || [];
+    if(document.getElementById('profile-fav-count')) {
+        document.getElementById('profile-fav-count').innerText = favoriler.length;
+    }
+
     const previewImg = document.getElementById('profile-modal-preview');
     if (aktifUser.avatar) {
-        previewImg.src = aktifUser.avatar;
-        previewImg.style.display = 'block';
+        previewImg.src = aktifUser.avatar; previewImg.style.display = 'block';
     } else {
         previewImg.style.display = 'none';
     }
 
+    // İlk sekmeyi aktif yap
+    document.getElementById('tab-btn-profile').click();
     document.getElementById('profile-modal').style.display = 'block';
 }
 
 function profilBilgileriniGuncelle() {
     let aktifUser = JSON.parse(localStorage.getItem('muzeAktifKullanıcı'));
     let üyeler = JSON.parse(localStorage.getItem('muzeUyeler')) || [];
-    
     if (!aktifUser) return;
 
     const newFullname = document.getElementById('profile-fullname').value.trim();
@@ -229,36 +235,72 @@ function profilBilgileriniGuncelle() {
         return;
     }
 
-    // Bilgileri Güncelle
-    aktifUser.fullname = newFullname;
-    aktifUser.email = newEmail;
-    aktifUser.customCity = newCity;
-    
-    if (previewImg && previewImg.src.startsWith('data:image')) {
-        aktifUser.avatar = previewImg.src;
-    }
+    aktifUser.fullname = newFullname; aktifUser.email = newEmail; aktifUser.customCity = newCity;
+    if (previewImg && previewImg.src.startsWith('data:image')) { aktifUser.avatar = previewImg.src; }
 
-    // Veritabanı ve Aktif Oturum Senkronizasyonu
     let uIndex = üyeler.findIndex(u => u.username.toLowerCase() === aktifUser.username.toLowerCase());
-    if (uIndex !== -1) {
-        üyeler[uIndex] = aktifUser;
-        localStorage.setItem('muzeUyeler', JSON.stringify(üyeler));
-    }
-
+    if (uIndex !== -1) { üyeler[uIndex] = aktifUser; localStorage.setItem('muzeUyeler', JSON.stringify(üyeler)); }
     localStorage.setItem('muzeAktifKullanıcı', JSON.stringify(aktifUser));
     
-    // Arayüzü anlık tazele
     oturumDurumunuKontrolEt();
     havaDurumuGetir();
-
     document.getElementById('profile-modal').style.display = 'none';
-    müzeToastAtesle("Profil bilgileriniz ve canlı iklim bölgesiniz başarıyla kaydedildi! 💾🎉");
+    müzeToastAtesle("Profil bilgileriniz ve iklim bölgeniz başarıyla kaydedildi! 💾🎉");
+}
+
+// 🌐 KART/BAŞLIK İÇİ GELİŞMİŞ FAVORİ YÖNETİM MOTORU (4.5 SANİYE TOAST BAĞLANTILI)
+window.muzeIcerikFavoriTetikle = function(id, baslik) {
+    const aktifUser = JSON.parse(localStorage.getItem('muzeAktifKullanıcı'));
+    if (!aktifUser) {
+        müzeToastAtesle("Favorilere eklemek için önce giriş yapmalısınız! 🔐");
+        return;
+    }
+
+    let favKey = `favs_${aktifUser.username}`;
+    let favoriler = JSON.parse(localStorage.getItem(favKey)) || [];
+    const fIndex = favoriler.findIndex(item => item.id === id);
+
+    if (fIndex === -1) {
+        favoriler.push({ id, baslik });
+        müzeToastAtesle(`"${baslik}" başarıyla favorilere eklendi! ❤️`);
+    } else {
+        favoriler.splice(fIndex, 1);
+        müzeToastAtesle(`"${baslik}" favorilerden kaldırıldı. 😊`);
+    }
+
+    localStorage.setItem(favKey, JSON.stringify(favoriler));
+    
+    // Sayaç ve listeleri anlık senkronize et
+    if(document.getElementById('profile-fav-count')) {
+        document.getElementById('profile-fav-count').innerText = favoriler.length;
+    }
+    profilFavorileriniListele();
+};
+
+function profilFavorileriniListele() {
+    const konteynir = document.getElementById('profile-favorites-list');
+    if (!konteynir) return;
+
+    const aktifUser = JSON.parse(localStorage.getItem('muzeAktifKullanıcı'));
+    const favoriler = aktifUser ? (JSON.parse(localStorage.getItem(`favs_${aktifUser.username}`)) || []) : [];
+
+    if (favoriler.length === 0) {
+        konteynir.innerHTML = `<p style="text-align:center; color:#888; font-size:0.9rem; padding:20px;">Henüz favorilere eklenmiş başlık bulunmuyor. ❤️</p>`;
+        return;
+    }
+
+    konteynir.innerHTML = favoriler.map(item => `
+        <div style="display:flex; justify-content:space-between; align-items:center; background:#f9f9f9; padding:10px 15px; border-radius:8px; border-left:4px solid #00592D;">
+            <span style="font-size:0.85rem; font-weight:600; color:#333; max-width:75%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${item.baslik}</span>
+            <button onclick="window.muzeIcerikFavoriTetikle('${item.id}', '${item.baslik}')" style="background:#e74c3c; color:white; border:none; padding:5px 10px; font-size:0.75rem; border-radius:4px; cursor:pointer; font-family:'Montserrat';">Kaldır 🗑️</button>
+        </div>
+    `).join('');
 }
 
 function müzeCıkısYap() {
     localStorage.removeItem('muzeAktifKullanıcı');
     oturumDurumunuKontrolEt();
-    havaDurumuGetir(); // Varsayılan hava durumuna dön
+    havaDurumuGetir();
     müzeToastAtesle("Güvenli çıkış yapıldı. Tekrar bekleriz! 🚪");
 }
 
@@ -291,36 +333,23 @@ function oturumDurumunuKontrolEt() {
 function müzeToastAtesle(mesaj) {
     const toastKutusu = document.getElementById('custom-toast');
     if (toastKutusu) {
-        toastKutusu.innerText = mesaj;
-        toastKutusu.style.display = 'block';
+        toastKutusu.innerText = mesaj; toastKutusu.style.display = 'block';
         setTimeout(() => { toastKutusu.style.display = 'none'; }, 4500);
     }
 }
 
 // ==========================================
-// 🌤️ HAVA DURUMU API MOTORU (DİNAMİK ŞEHİR KONTROLLÜ)
+// 🌤️ HAVA DURUMU API MOTORU (ORİJİNAL)
 // ==========================================
 async function havaDurumuGetir() {
     const aktifUser = JSON.parse(localStorage.getItem('muzeAktifKullanıcı'));
-    // Giriş yapılmışsa seçtiği şehri, yoksa varsayılan olarak Afşin'i getir
     let sehirKodu = (aktifUser && aktifUser.customCity) ? aktifUser.customCity : "Afsin,TR";
-    
-    // Arayüzdeki başlık alanını güncelle
-    const sehirBaslikMap = {
-        "Afsin,TR": "Afşin",
-        "Elbistan,TR": "Elbistan",
-        "Kahramanmaras,TR": "Kahramanmaraş",
-        "Kirsehir,TR": "Kırşehir",
-        "Ankara,TR": "Ankara"
-    };
-    if (document.getElementById('weather-city-title')) {
-        document.getElementById('weather-city-title').innerText = sehirBaslikMap[sehirKodu] || "Afşin";
-    }
+    const sehirBaslikMap = { "Afsin,TR": "Afşin", "Elbistan,TR": "Elbistan", "Kahramanmaras,TR": "Kahramanmaraş", "Kirsehir,TR": "Kırşehir", "Ankara,TR": "Ankara" };
+    if (document.getElementById('weather-city-title')) { document.getElementById('weather-city-title').innerText = sehirBaslikMap[sehirKodu] || "Afşin"; }
 
     try {
         const apiKey = "b1b15e88fa797225412429c1c50c122a1";
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${sehirKodu}&units=metric&lang=tr&appid=${apiKey}`);
-        
         if (response.ok) {
             const data = await response.json();
             document.getElementById('weather-temp').innerText = `${Math.round(data.main.temp)}°C`;
@@ -338,7 +367,7 @@ function shadowWeather() {
 window.yedekHavaDurumu = shadowWeather;
 
 // ==========================================
-// 📂 JSON VERİ VE FAVORİ SİSTEMİ (ORİJİNAL KORUNDU)
+// 📂 JSON VERİ VE FAVORİ SİSTEMİ (ORİJİNAL)
 // ==========================================
 async function kategorileriGetir() {
     try {
@@ -360,67 +389,24 @@ async function kategorileriGetir() {
 }
 
 window.favoriKontrol = function(id, baslik) {
-    let favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
-    const index = favoriler.findIndex(item => item.id === id);
-    const toast = document.getElementById('toast-favourite');
-
-    if (index === -1) {
-        favoriler.push({ id, baslik });
-        if (toast) gosterToast(`${baslik} eklendi! ❤️`);
-    } else {
-        favoriler.splice(index, 1);
-        if (toast) gosterToast(`${baslik} çıkarıldı. 😊`);
-    }
-    
-    localStorage.setItem('techFavs', JSON.stringify(favoriler));
-    
-    if (document.getElementById('favorites-container')) {
-        window.favorileriGoster();
-    }
-    favoriIkonlariniGuncelle();
+    window.muzeIcerikFavoriTetikle(id, baslik);
 };
 
 window.favorileriGoster = function() {
     const konteynir = document.getElementById('favorites-container');
     if (!konteynir) return;
-
-    const favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
+    const aktifUser = JSON.parse(localStorage.getItem('muzeAktifKullanıcı'));
+    const favoriler = aktifUser ? (JSON.parse(localStorage.getItem(`favs_${aktifUser.username}`)) || []) : [];
     
     if (favoriler.length === 0) {
-        konteynir.innerHTML = `
-            <div style="text-align:center; grid-column: 1/-1; padding: 50px;">
-                <p style="font-size: 1.2rem; color: #666;">Favorilere herhangi bir şey eklemediniz. 😊</p>
-                <a href="../index.html" class="btn" style="display:inline-block; margin-top:20px; background:var(--dark-green); color:white; padding:10px 20px; text-decoration:none; border-radius:5px;">Keşfetmeye Başla 🚀</a>
-            </div>`;
+        konteynir.innerHTML = `<div style="text-align:center; grid-column:1/-1; padding:50px;"><p style="font-size:1.2rem; color:#666;">Favorilere herhangi bir şey eklemediniz. 😊</p></div>`;
         return;
     }
-
     konteynir.innerHTML = favoriler.map(item => `
-        <div class="card" style="border-left: 5px solid #e74c3c; padding: 20px; background: white; border-radius: 10px;">
-            <div class="card-body">
-                <h3>${item.baslik}</h3>
-                <p style="color: #666;">Bu teknoloji favorilerinize eklendi.</p>
-                <button onclick="window.favoriKontrol('${item.id}', '${item.baslik}')" 
-                        style="background:#ff7675; color:white; border:none; padding:8px 12px; cursor:pointer; border-radius:5px; margin-top:10px;">
-                    Kaldır 🗑️
-                </button>
-            </div>
+        <div class="card" style="border-left:5px solid #e74c3c; padding:20px; background:white; border-radius:10px;">
+            <div class="card-body"><h3>${item.baslik}</h3><button onclick="window.muzeIcerikFavoriTetikle('${item.id}', '${item.baslik}')" style="background:#ff7675; color:white; border:none; padding:8px 12px; cursor:pointer; border-radius:5px; margin-top:10px;">Kaldır 🗑️</button></div>
         </div>`).join('');
 };
 
-function favoriIkonlariniGuncelle() {
-    const favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
-    const kalpIkoni = document.getElementById('fav-icon-robot-09');
-    if (kalpIkoni) {
-        kalpIkoni.innerText = favoriler.some(fav => fav.id === 'robot-09') ? "♥" : "♡";
-    }
-}
-
-function gosterToast(mesaj) {
-    const toast = document.getElementById('toast-favourite');
-    if (toast) {
-        toast.innerText = mesaj;
-        toast.style.display = 'block';
-        setTimeout(() => { toast.style.display = 'none'; }, 3000);
-    }
-}
+function favoriIkonlariniGuncelle() {}
+function gosterToast(mesaj) {}
