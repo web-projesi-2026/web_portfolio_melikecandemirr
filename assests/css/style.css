@@ -1,44 +1,196 @@
+/* Tech-Timeline Kurumsal ve Fütüristik Yeni Nesil Tasarım */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+
 :root {
-    --dark-green: #00592D;
+    --dark-green: #004d26;
+    --light-green: #007a3d;
     --gold: #d4af37;
-    --bg-light: #f4f7f6;
-    --text-dark: #333;
+    --gold-hover: #b89225;
+    --bg-light: #f8fafc;
+    --text-dark: #0f172a;
+    --text-muted: #475569;
     --white: #ffffff;
-    --card-shadow: 0 4px 15px rgba(0,0,0,0.06);
-    --transition: all 0.3s ease;
+    --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.4);
+    --radius: 16px;
+    --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+/* Karanlık Mod Renk Paleti */
 .dark-mode {
-    --bg-light: #121212;
-    --text-dark: #f4f7f6;
-    --white: #1e1e1e;
-    --card-shadow: 0 4px 20px rgba(0,0,0,0.4);
-    background-color: #121212;
-    color: #ffffff;
+    --bg-light: #0b0f19;
+    --text-dark: #f8fafc;
+    --text-muted: #94a3b8;
+    --white: #131c2e;
+    --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    --glass-bg: rgba(19, 28, 46, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.05);
 }
+
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
-body { background-color: var(--bg-light); color: var(--text-dark); transition: var(--transition); min-height: 100vh; display: flex; flex-direction: column; }
-.header { background-color: var(--dark-green); color: white; padding: 15px 10%; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+body { background-color: var(--bg-light); color: var(--text-dark); transition: var(--transition); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+
+/* Şık Header ve Navigasyon */
+.header { 
+    background: var(--dark-green); 
+    padding: 20px 10%; 
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); 
+    position: sticky; 
+    top: 0; 
+    z-index: 1000;
+}
 .header-content { display: flex; justify-content: space-between; align-items: center; }
-.logo { display: flex; align-items: center; gap: 10px; }
-.logo-icon { font-size: 2rem; }
-.logo-text h1 { font-size: 1.3rem; letter-spacing: 1px; color: white; }
-.logo-text p { font-size: 0.75rem; color: var(--gold); }
-.navigation { display: flex; align-items: center; }
-.nav-menu { display: flex; list-style: none; gap: 15px; align-items: center; }
-.nav-link { color: white; text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: var(--transition); padding: 8px 14px; border-radius: 6px; }
-.nav-link:hover, .nav-link.active { color: var(--gold); background: rgba(255,255,255,0.12); }
-.theme-btn { background: none; border: 1px solid white; color: white; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-left: 15px; }
-.menu-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-.bar { width: 25px; height: 3px; background-color: white; border-radius: 2px; }
+.logo { display: flex; align-items: center; gap: 12px; }
+.logo-icon { font-size: 2.2rem; filter: drop-shadow(0 2px 8px rgba(212,175,55,0.4)); }
+.logo-text h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: 1.5px; color: #ffffff; }
+.logo-text p { font-size: 0.75rem; color: var(--gold); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+
+.navigation { display: flex; align-items: center; gap: 20px; }
+.nav-menu { display: flex; list-style: none; gap: 8px; align-items: center; }
+.nav-link { 
+    color: rgba(255, 255, 255, 0.8); 
+    text-decoration: none; 
+    font-weight: 600; 
+    font-size: 0.9rem; 
+    transition: var(--transition); 
+    padding: 10px 18px; 
+    border-radius: 30px; 
+}
+.nav-link:hover, .nav-link.active { 
+    color: var(--dark-green); 
+    background: var(--gold); 
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+}
+
+/* Yenilenen Tema Değiştirme Butonu */
+.theme-btn { 
+    background: rgba(255, 255, 255, 0.1); 
+    border: 1px solid rgba(255, 255, 255, 0.2); 
+    color: #ffffff; 
+    padding: 10px 20px; 
+    border-radius: 30px; 
+    cursor: pointer; 
+    font-weight: 600; 
+    font-size: 0.85rem;
+    transition: var(--transition); 
+    backdrop-filter: blur(5px);
+}
+.theme-btn:hover { background: #ffffff; color: var(--dark-green); transform: translateY(-2px); }
+
+/* Mobil Hamburger Menü İkonu */
+.menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; }
+.bar { width: 28px; height: 3px; background-color: #ffffff; border-radius: 4px; transition: var(--transition); }
+
 @media (max-width: 992px) {
     .menu-toggle { display: flex; }
-    .nav-menu { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--dark-green); flex-direction: column; padding: 20px; z-index: 1000; }
+    .nav-menu { 
+        display: none; 
+        position: absolute; 
+        top: 100%; 
+        left: 0; 
+        width: 100%; 
+        background: var(--dark-green); 
+        flex-direction: column; 
+        padding: 20px; 
+        gap: 12px; 
+        box-shadow: 0 15px 30px rgba(0,0,0,0.2); 
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
     .navigation.active .nav-menu { display: flex; }
 }
-.form-box { background: var(--white); padding: 30px; border-radius: 12px; box-shadow: var(--card-shadow); margin-bottom: 20px; }
-.form-group { position: relative; margin-bottom: 15px; }
-.form-group span { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); }
-.form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px 12px 12px 40px; border-radius: 8px; border: 1px solid #ccc; background: var(--white); color: var(--text-dark); }
-.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
-.card { background: var(--white); border-radius: 12px; box-shadow: var(--card-shadow); transition: var(--transition); overflow: hidden; }
-.footer { background: var(--dark-green); color: white; text-align: center; padding: 20px; border-top: 4px solid var(--gold); margin-top: auto; }
+
+/* Premium Hero Alanı */
+main { flex-grow: 1; padding: 4rem 10%; width: 100%; max-width: 1400px; margin: 0 auto; }
+.hero { display: flex; align-items: center; justify-content: space-between; gap: 60px; padding: 2rem 0; width: 100%; }
+.hero-content { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 40px; flex-wrap: wrap; }
+.hero-text { flex: 1.2; min-width: 320px; }
+.hero-title { font-size: 3.5rem; color: var(--dark-green); font-weight: 700; line-height: 1.15; letter-spacing: -1px; }
+.dark-mode .hero-title { color: var(--gold); }
+.hero-subtitle { margin: 20px 0 35px; color: var(--text-muted); font-size: 1.1rem; line-height: 1.6; font-weight: 400; }
+
+/* Şık Butonlar */
+.hero-buttons { display: flex; gap: 20px; }
+.btn { padding: 14px 32px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: var(--transition); text-align: center; }
+.btn-primary { 
+    background: linear-gradient(135deg, var(--dark-green), var(--light-green)); 
+    color: #ffffff; 
+    box-shadow: 0 8px 25px rgba(0, 77, 38, 0.25); 
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0, 77, 38, 0.4); }
+.btn-secondary { 
+    border: 2px solid var(--dark-green); 
+    color: var(--dark-green); 
+    background: transparent;
+}
+.dark-mode .btn-secondary { border-color: var(--gold); color: var(--gold); }
+.btn-secondary:hover { background: rgba(0, 77, 38, 0.05); transform: translateY(-3px); }
+.dark-mode .btn-secondary:hover { background: rgba(212, 175, 55, 0.05); }
+
+/* Sanatsal Kinetik SVG Görsel Alanı */
+.hero-visual { flex: 0.8; display: flex; justify-content: center; min-width: 300px; }
+.floating-element { 
+    animation: floatAnim 6s ease-in-out infinite; 
+    filter: drop-shadow(0 15px 35px rgba(0, 77, 38, 0.15));
+}
+.dark-mode .floating-element { filter: drop-shadow(0 15px 35px rgba(212, 175, 55, 0.1)); }
+
+@keyframes floatAnim {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(3deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+/* Koleksiyon Başlığı */
+.innovations { padding: 5rem 0 2rem; }
+.section-header { text-align: center; margin-bottom: 4rem; }
+.section-header h2 { font-size: 2.2rem; color: var(--dark-green); font-weight: 700; position: relative; display: inline-block; padding-bottom: 15px; }
+.dark-mode .section-header h2 { color: var(--gold); }
+.section-header h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 4px; background: var(--gold); border-radius: 2px; }
+.section-header p { margin-top: 12px; color: var(--text-muted); font-size: 1rem; }
+
+/* Premium Kart Izgarası ve Akıllı Kartlar */
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; width: 100%; }
+.card-link { text-decoration: none; color: inherit; display: block; }
+.card { 
+    background: var(--white); 
+    border-radius: var(--radius); 
+    box-shadow: var(--card-shadow); 
+    transition: var(--transition); 
+    overflow: hidden; 
+    display: flex; 
+    flex-direction: column; 
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    height: 100%;
+}
+.dark-mode .card { border-color: rgba(255, 255, 255, 0.03); }
+.card-image { height: 220px; overflow: hidden; position: relative; }
+.card-image img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
+.card h3 { padding: 22px 22px 10px; font-size: 1.25rem; color: var(--dark-green); font-weight: 700; transition: var(--transition); }
+.dark-mode .card h3 { color: var(--gold); }
+.card p { padding: 0 22px 25px; color: var(--text-muted); font-size: 0.92rem; line-height: 1.5; }
+
+/* Kart Hover Efektleri */
+.card-link:hover .card { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); border-color: var(--gold); }
+.dark-mode .card-link:hover .card { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+.card-link:hover .card-image img { transform: scale(1.06); }
+
+/* Minimalist ve Sabit Footer */
+.footer { 
+    background: var(--dark-green); 
+    color: rgba(255, 255, 255, 0.7); 
+    text-align: center; 
+    padding: 25px; 
+    font-size: 0.9rem; 
+    font-weight: 500;
+    border-top: 4px solid var(--gold); 
+    margin-top: auto; 
+    width: 100%;
+}
+
+/* Ekran Esneklik Ayarları */
+@media (max-width: 768px) {
+    .hero-title { font-size: 2.5rem; }
+    main { padding: 2rem 5%; }
+    .header { padding: 15px 5%; }
+}
