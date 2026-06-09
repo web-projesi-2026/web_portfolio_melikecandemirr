@@ -1,12 +1,29 @@
 /* Tech-Timeline Dijital Müze Projesi 
    Geliştirici: Melike Candemir
-   Görev: Etkileşim Kontrolleri, Dinamik Veri ve Veri Saklama
+   Görev: Etkileşim Kontrolleri, Dinamik Veri, Veri Saklama ve Oturum Yönetimi
 */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // --- 🌤️ HARİCI HAVA DURUMU API TETİKLEYİCİSİ ---
+    // --- 🌤️ HARİCİ HAVA DURUMU API TETİKLEYİCİSİ ---
     if (document.getElementById('weather-section')) {
         havaDurumuGetir();
+    }
+
+    // --- 🔐 1. ADIM: AUTH & OTURUM KONTROL MOTORU ---
+    oturumDurumunuKontrolEt();
+
+    const btnLogin = document.getElementById('btn-login');
+    const btnRegister = document.getElementById('btn-register');
+    const btnLogout = document.getElementById('btn-logout');
+
+    if (btnLogin) {
+        btnLogin.addEventListener('click', müzeGirisYap);
+    }
+    if (btnRegister) {
+        btnRegister.addEventListener('click', müzeKayıtOl);
+    }
+    if (btnLogout) {
+        btnLogout.addEventListener('click', müzeCıkısYap);
     }
 
     // --- 1. MOBİL MENÜ KONTROLÜ ---
@@ -58,7 +75,105 @@ document.addEventListener('DOMContentLoaded', () => {
     favoriIkonlariniGuncelle();
 });
 
-// HARİCİ OPENWEATHERMAP APISINDEN ANLIK VERİ ÇEKME MOTORU (KAHRAMANMARAŞ AFŞİN)
+// ==========================================
+// 🔐 KULLANICI SİSTEMİ FONKSİYONLARI (1. ADIM)
+// ==========================================
+
+function müzeKayıtOl() {
+    const userInp = document.getElementById('auth-username').value.trim();
+    const passInp = document.getElementById('auth-password').value.trim();
+
+    if (!userInp || !passInp) {
+        müzeToastAtesle("Lütfen tüm alanları doldurun! ⚠️");
+        return;
+    }
+
+    let üyeler = JSON.parse(localStorage.getItem('muzeUyeler')) || [];
+    
+    if (üyeler.some(u => u.username.toLowerCase() === userInp.toLowerCase())) {
+        müzeToastAtesle("Bu kullanıcı adı zaten alınmış! 🛑");
+        return;
+    }
+
+    üyeler.push({ username: userInp, password: passInp, role: userInp.toLowerCase() === 'admin' ? 'Yönetici' : 'Kullanıcı' });
+    localStorage.setItem('muzeUyeler', JSON.stringify(üyeler));
+    müzeToastAtesle("Kayıt başarıyla tamamlandı! Giriş yapabilirsiniz. 🎉");
+}
+
+function müzeGirisYap() {
+    const userInp = document.getElementById('auth-username').value.trim();
+    const passInp = document.getElementById('auth-password').value.trim();
+
+    if (!userInp || !passInp) {
+        müzeToastAtesle("Lütfen tüm alanları doldurun! ⚠️");
+        return;
+    }
+
+    // Hardcoded Admin Koruması veya kayıtlı üye kontrolü
+    let üyeler = JSON.parse(localStorage.getItem('muzeUyeler')) || [];
+    let bulunanUser = üyeler.find(u => u.username.toLowerCase() === userInp.toLowerCase() && u.password === passInp);
+
+    // Eğer sistemde hiç kullanıcı yoksa ilk açılış için kolaylık: admin/admin girişi
+    if (userInp.toLowerCase() === 'admin' && passInp === 'admin') {
+        bulunanUser = { username: 'admin', role: 'Yönetici' };
+    }
+
+    if (bulunanUser) {
+        localStorage.setItem('muzeAktifKullanıcı', JSON.stringify(bulunanUser));
+        oturumDurumunuKontrolEt();
+        müzeToastAtesle(`Başarıyla giriş yapıldı. Hoş geldin ${bulunanUser.username}! 🔑`);
+    } else {
+        müzeToastAtesle("Hatalı kullanıcı adı veya şifre! ❌");
+    }
+}
+
+function müzeCıkısYap() {
+    localStorage.removeItem('muzeAktifKullanıcı');
+    oturumDurumunuKontrolEt();
+    müzeToastAtesle("Güvenli çıkış yapıldı. Tekrar bekleriz! 🚪");
+}
+
+function oturumDurumunuKontrolEt() {
+    const aktifUser = JSON.parse(localStorage.getItem('muzeAktifKullanıcı'));
+    const loggedOutDiv = document.getElementById('auth-logged-out');
+    const loggedInDiv = document.getElementById('auth-logged-in');
+    const userStatusArea = document.getElementById('user-status-area');
+    const loggedUserName = document.getElementById('logged-user-name');
+    const userRoleBadge = document.getElementById('user-role-badge');
+
+    if (aktifUser) {
+        if (loggedOutDiv) loggedOutDiv.style.display = 'none';
+        if (loggedInDiv) loggedInDiv.style.display = 'flex';
+        if (loggedUserName) loggedUserName.innerText = aktifUser.username;
+        if (userRoleBadge) userRoleBadge.innerText = `Rol: ${aktifUser.role}`;
+        
+        if (userStatusArea) {
+            userStatusArea.innerHTML = `<span style="color: #FFB81C; font-weight: 700; padding: 10px 15px;">👤 ${aktifUser.username} (${aktifUser.role})</span>`;
+        }
+    } else {
+        if (loggedOutDiv) loggedOutDiv.style.display = 'block';
+        if (loggedInDiv) loggedInDiv.style.display = 'none';
+        if (userStatusArea) userStatusArea.innerHTML = '';
+    }
+}
+
+// TAM 4.5 SANİYELİK (4500 MS) PREMIUM TOAST BİLDİRİM ATEŞLEYİCİSİ
+function müzeToastAtesle(mesaj) {
+    const toastKutusu = document.getElementById('custom-toast');
+    if (toastKutusu) {
+        toastKutusu.innerText = mesaj;
+        toastKutusu.style.display = 'block';
+        
+        // 4500 milisaniye sonra otomatik gizleme
+        setTimeout(() => {
+            toastKutusu.style.display = 'none';
+        }, 4500);
+    }
+}
+
+// ==========================================
+// 🌤️ HAVA DURUMU API MOTORU
+// ==========================================
 async function havaDurumuGetir() {
     try {
         const apiKey = "b1b15e88fa797225412429c1c50c122a1";
@@ -76,7 +191,6 @@ async function havaDurumuGetir() {
     }
 }
 
-// İnternet kesintisi veya API limiti durumunda sitenin çökmesini önleyen emniyet sistemi
 function shadowWeather() {
     if(document.getElementById('weather-temp')) {
         document.getElementById('weather-temp').innerText = "22°C";
@@ -85,7 +199,9 @@ function shadowWeather() {
 }
 window.yedekHavaDurumu = shadowWeather;
 
-// JSON'dan Veri Çekme
+// ==========================================
+// 📂 JSON VERİ VE FAVORİ SİSTEMİ (ORİJİNAL)
+// ==========================================
 async function kategorileriGetir() {
     try {
         const yanit = await fetch('data.json');
@@ -105,7 +221,6 @@ async function kategorileriGetir() {
     } catch (e) { console.error("Veri yüklenemedi:", e); }
 }
 
-// Favori Kontrolü (Ekleme/Çıkarma Mantığı Düzeltildi)
 window.favoriKontrol = function(id, baslik) {
     let favoriler = JSON.parse(localStorage.getItem('techFavs')) || [];
     const index = favoriler.findIndex(item => item.id === id);
@@ -113,7 +228,7 @@ window.favoriKontrol = function(id, baslik) {
 
     if (index === -1) {
         favoriler.push({ id, baslik });
-        if (toast) gosterToast(`${navLinks} eklendi! ❤️`); // Orijinal metin korundu
+        if (toast) gosterToast(`${baslik} eklendi! ❤️`);
     } else {
         favoriler.splice(index, 1);
         if (toast) gosterToast(`${baslik} çıkarıldı. 😊`);
@@ -121,14 +236,12 @@ window.favoriKontrol = function(id, baslik) {
     
     localStorage.setItem('techFavs', JSON.stringify(favoriler));
     
-    // Favoriler sayfasındaysak anlık güncelle
     if (document.getElementById('favorites-container')) {
         window.favorileriGoster();
     }
     favoriIkonlariniGuncelle();
 };
 
-// Favorileri Listeleme (Boş Liste Mesajı Dahil)
 window.favorileriGoster = function() {
     const konteynir = document.getElementById('favorites-container');
     if (!konteynir) return;
