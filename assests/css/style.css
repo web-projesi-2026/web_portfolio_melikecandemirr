@@ -194,3 +194,32 @@ main { flex-grow: 1; padding: 4rem 10%; width: 100%; max-width: 1400px; margin: 
     main { padding: 2rem 5%; }
     .header { padding: 15px 5%; }
 }
+/* --- PREMIUM TOAST BİLDİRİM KUTUSU STİLLERİ --- */
+#custom-toast {
+    position: fixed !important;
+    bottom: 30px !important;
+    right: 30px !important;
+    background-color: #00592D !important; /* Müze Yeşili */
+    color: #ffffff !important;
+    padding: 16px 28px !important;
+    border-radius: 50px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25) !important;
+    border: 2px solid #FFB81C !important; /* Altın Sarısı Şerit */
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    z-index: 999999 !important; /* Her şeyin önünde gözüksün */
+    display: none;
+    animation: toastSlaytGiris 0.4s ease-out;
+}
+
+@keyframes toastSlaytGiris {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
