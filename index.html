@@ -6,6 +6,46 @@
     <title>Tech-Timeline | Dijital Müze</title>
     <link rel="stylesheet" href="assests/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Açılır Pencere (Modal) Tasarımları */
+        .muze-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            font-family: 'Montserrat', sans-serif;
+        }
+        .muze-modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%; max-width: 400px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        .muze-modal-close {
+            position: absolute; right: 20px; top: 15px;
+            font-size: 1.5rem; cursor: pointer; color: #666;
+        }
+        .muze-input {
+            width: 100%; padding: 10px; margin: 10px 0;
+            border: 1px solid #ccc; border-radius: 8px;
+            font-family: 'Montserrat'; outline: none; box-sizing: border-box;
+        }
+        .muze-btn-submit {
+            width: 100%; padding: 12px; background: #00592D;
+            color: white; border: none; border-radius: 8px;
+            font-weight: bold; cursor: pointer; font-family: 'Montserrat';
+        }
+        .nav-auth-btn {
+            color: white; text-decoration: none; font-weight: 700;
+            font-size: 0.95rem; margin-right: 15px; cursor: pointer;
+            transition: color 0.3s;
+        }
+        .nav-auth-btn:hover { color: #FFB81C; }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -28,54 +68,31 @@
                     <li><a href="pages/about.html" class="nav-link">Hakkımda</a></li>
                     <li><a href="pages/project.html" class="nav-link">Projeler</a></li>
                     <li><a href="pages/contact.html" class="nav-link">İletişim</a></li>
-                    <li id="user-status-area"></li>
                 </ul>
+                
+                <div style="display: flex; align-items: center; margin-right: 15px;">
+                    <div id="nav-auth-logged-out" style="display: flex; align-items: center;">
+                        <span id="trigger-login-modal" class="nav-auth-btn">Giriş Yap</span>
+                        <span id="trigger-register-modal" class="nav-auth-btn" style="background: #FFB81C; color: #00592D; padding: 6px 12px; border-radius: 20px;">Kayıt Ol</span>
+                    </div>
+                    <div id="nav-auth-logged-in" style="display: none; align-items: center;">
+                        <span id="nav-welcome-text" style="color: #FFB81C; font-weight: 700; margin-right: 15px; font-size: 0.95rem;"></span>
+                        <span id="btn-logout" class="nav-auth-btn" style="background: #e74c3c; padding: 6px 12px; border-radius: 20px;">Çıkış 🚪</span>
+                    </div>
+                </div>
+
                 <button id="theme-toggle" class="theme-btn">🌙 Koyu Tema</button>
             </nav>
         </div>
     </header>
 
     <main>
-        <div id="auth-container" style="background: var(--white); padding: 30px; border-radius: var(--radius); box-shadow: var(--card-shadow); border: 1px solid var(--glass-border); margin-bottom: 30px; font-family: 'Montserrat', sans-serif;">
-            <div id="auth-logged-out">
-                <h3 style="color: var(--dark-green); margin-bottom: 15px; font-size: 1.2rem;">🔐 Dijital Müze Üye Paneli</h3>
-                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                    <input type="text" id="auth-username" placeholder="Kullanıcı Adı" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc; outline: none; font-family: 'Montserrat';">
-                    <input type="password" id="auth-password" placeholder="Şifre" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc; outline: none; font-family: 'Montserrat';">
-                    <button id="btn-login" style="background: var(--dark-green); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer;">Giriş Yap</button>
-                    <button id="btn-register" style="background: transparent; color: var(--dark-green); border: 2px solid var(--dark-green); padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer;">Kayıt Ol</button>
-                </div>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 8px;">*Yönetici girişi için kullanıcı adını <strong>admin</strong> yapın.</p>
-            </div>
-            <div id="auth-logged-in" style="display: none; justify-content: space-between; align-items: center;">
-                <div>
-                    <h3 style="color: var(--dark-green); margin: 0;">👋 Hoş Geldiniz, <span id="logged-user-name" style="color: var(--gold);;">Misafir</span>!</h3>
-                    <p id="user-role-badge" style="margin: 4px 0 0; font-size: 0.85rem; font-weight: 600; color: var(--text-muted);"></p>
-                </div>
-                <button id="btn-logout" style="background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer;">Güvenli Çıkış 🚪</button>
-            </div>
-        </div>
-
-        <div id="weather-section" style="background: rgba(0, 89, 45, 0.06); padding: 15px 25px; border-radius: 12px; margin: 10px auto 30px; max-width: 100%; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--dark-green); font-family: 'Montserrat', sans-serif;">
+        <div id="weather-section" style="background: rgba(0, 89, 45, 0.06); padding: 15px 25px; border-radius: 12px; margin: 10px auto 30px; max-width: 100%; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid #00592D; font-family: 'Montserrat', sans-serif;">
             <div>
-                <h4 style="margin: 0; color: var(--dark-green); font-size: 0.95rem; font-weight: 700;">🌤️ Müze Bölgesi Canlı Hava Durumu (Afşin)</h4>
+                <h4 style="margin: 0; color: #00592D; font-size: 0.95rem; font-weight: 700;">🌤️ Müze Bölgesi Canlı Hava Durumu (Afşin)</h4>
                 <p id="weather-desc" style="margin: 4px 0 0; color: #555; font-size: 0.85rem; font-weight: 500;">Canlı iklim verileri senkronize ediliyor...</p>
             </div>
-            <h1 id="weather-temp" style="margin: 0; color: var(--dark-green); font-size: 1.8rem; font-weight: 700;">--°C</h1>
-        </div>
-
-        <div id="weather-crud-panel" style="display: none; background: var(--white); padding: 30px; border-radius: var(--radius); box-shadow: var(--card-shadow); border: 1px solid var(--glass-border); margin-bottom: 30px; font-family: 'Montserrat', sans-serif;">
-            <h3 style="color: var(--dark-green); margin-bottom: 15px; font-size: 1.2rem;">🌤️ Hava Durumu Veritabanı Yönetimi (CRUD)</h3>
-            
-            <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px;">
-                <input type="number" id="crud-weather-temp" placeholder="Derece (°C)" style="width: 120px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; outline: none; font-family: 'Montserrat';">
-                <input type="text" id="crud-weather-desc" placeholder="Atmosfer Durumu (Örn: Güneşli, Bulutlu)" style="flex: 1; min-width: 200px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; outline: none; font-family: 'Montserrat';">
-                <button id="btn-add-weather" style="background: var(--dark-green); color: white; border: none; padding: 10px 25px; border-radius: 8px; font-weight: bold; cursor: pointer;">Veri Ekle / Güncelle</button>
-            </div>
-
-            <h4 style="color: var(--gold); margin-bottom: 10px; font-size: 0.95rem; text-transform: uppercase;">🗄️ Veritabanı Kayıtlı İklim Listesi</h4>
-            <div id="crud-weather-list" style="display: flex; flex-direction: column; gap: 10px;">
-                </div>
+            <h1 id="weather-temp" style="margin: 0; color: #00592D; font-size: 1.8rem; font-weight: 700;">--°C</h1>
         </div>
 
         <section class="hero">
@@ -122,7 +139,7 @@
                             <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200" alt="Yapay Zeka">
                         </div>
                         <h3>🤖 Yapay Zeka (AI)</h3>
-                        <p>3D model deneyimi ve derin öğrenme süreci.</p>
+                        <p>3D model deneyimi og derin öğrenme süreci.</p>
                     </div>
                 </a>
 
@@ -138,6 +155,28 @@
             </div>
         </section>
     </main>
+
+    <div id="login-modal" class="muze-modal">
+        <div class="muze-modal-content">
+            <span id="close-login" class="muze-modal-close">&times;</span>
+            <h3 style="color: #00592D; margin-top: 0; border-bottom: 2px solid #FFB81C; padding-bottom: 8px;">🔑 Üye Girişi</h3>
+            <input type="text" id="login-username" class="muze-input" placeholder="Kullanıcı Adı">
+            <input type="password" id="login-password" class="muze-input" placeholder="Şifre">
+            <button id="btn-submit-login" class="muze-btn-submit" style="margin-top: 15px;">Giriş Yap</button>
+        </div>
+    </div>
+
+    <div id="register-modal" class="muze-modal">
+        <div class="muze-modal-content">
+            <span id="close-register" class="muze-modal-close">&times;</span>
+            <h3 style="color: #00592D; margin-top: 0; border-bottom: 2px solid #FFB81C; padding-bottom: 8px;">📝 Yeni Üye Kaydı</h3>
+            <input type="text" id="reg-fullname" class="muze-input" placeholder="Ad Soyad">
+            <input type="email" id="reg-email" class="muze-input" placeholder="E-posta Adresi">
+            <input type="text" id="reg-username" class="muze-input" placeholder="Kullanıcı Adı">
+            <input type="password" id="reg-password" class="muze-input" placeholder="Şifre">
+            <button id="btn-submit-register" class="muze-btn-submit" style="margin-top: 15px;">Hesap Oluştur</button>
+        </div>
+    </div>
 
     <div id="custom-toast" style="display: none; position: fixed; bottom: 30px; right: 30px; background: #004d26; color: white; padding: 16px 28px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 2px solid #d4af37; font-family: 'Montserrat'; font-weight: 600; z-index: 9999; animation: slideIn 0.4s ease;"></div>
 
