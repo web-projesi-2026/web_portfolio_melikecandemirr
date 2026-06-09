@@ -5,10 +5,12 @@
  * pages/icat.php
  */
 
+include '../config.php'; // 🔗 Veritabanı bağlantısı eklendi
+
 $page_title = "İcatlar - Tech-Timeline";
 $icat_id = isset($_GET['id']) ? intval($_GET['id']) : 1;
 
-// Örnek veri
+// Örnek veri (şimdilik duruyor, SQL'e geçince kaldırabilirsin)
 $icatlar = array(
     1 => array(
         'baslik' => 'Bilgisayarların Doğuşu',
