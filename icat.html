@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Müze Envanter Yönetimi (CRUD)</title>
+    <link rel="stylesheet" href="assests/css/style.css">
+</head>
+<body>
+    <div id="toast-favourite" style="display: none; position: fixed; bottom: 25px; right: 25px; background: #00592D; color: white; padding: 16px 28px; border-radius: 10px; z-index: 99999; font-weight: bold;"></div>
+
+    <header class="header">
+        <div class="header-content">
+            <h1>TECH-TIMELINE</h1>
+            <nav class="navigation">
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Ana Sayfa</a></li>
+                    <li><a href="project.html" class="nav-link">Projeler</a></li>
+                    <li><a href="timeline.html" class="nav-link">⏳ Zaman Çizgisi</a></li>
+                    <li><a href="icat.html" class="nav-link active">🛠️ Veri Yönetimi (CRUD)</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main style="padding: 2rem 10%;">
+        <section class="form-box" style="border-left: 6px solid var(--dark-green); margin-bottom: 3rem;">
+            <h3>🛠️ Müze Veritabanına Yeni Robot / İcat Ekle</h3>
+            <form id="crudForm" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                <input type="hidden" id="editIndex">
+                <div class="form-group"><span>🤖</span><input type="text" id="botTitle" placeholder="İcat/Robot Adı" required></div>
+                <div class="form-group"><span>📂</span><input type="text" id="botCategory" placeholder="Kategori" required></div>
+                <div class="form-group"><span>📅</span><input type="text" id="botYear" placeholder="Yıl (Örn: 2025)" required></div>
+                <div class="form-group"><span>🖼️</span><input type="text" id="botImage" placeholder="Resim URL" required></div>
+                <div class="form-group" style="grid-column: 1/-1;"><span>📝</span><textarea id="botDesc" placeholder="Teknik Analiz ve Açıklama" required style="height: 70px;"></textarea></div>
+                <button type="submit" id="submitCrudBtn" style="grid-column: 1/-1; background: var(--dark-green); color: white; padding: 12px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Veritabanına Kaydet 💾</button>
+            </form>
+        </section>
+
+        <h3>📋 Sistemde Kayıtlı Envanter Listesi</h3>
+        <section id="crud-vitrini" class="card-grid" style="margin-top:15px;"></section>
+    </main>
+
+    <script src="assests/js/main.js"></script>
+    <script>
+        // CRUD MOTORU
+        let envanter = JSON.parse(localStorage.getItem('müzeEnvanter')) || [];
+
+        function listeleEnvanter() {
+            const vitrin = document.getElementById('crud-vitrini');
+            if(!vitrin) return;
+            if(envanter.length === 0) {
+                vitrin.innerHTML = `<p style="grid-column:1/-1; text-align:center;">Şu an veritabanında ekli robot bulunmuyor.</p>`;
+                return;
+            }
+            vitrin.innerHTML = envanter.map((item, index) => `
+                <div class="card" style="padding:20px; background:white;">
+                    <span style="background:var(--gold); padding:2px 6px; border-radius:4px; font-size:0.8rem; font-weight:bold; color:black;">${item.kategori}</span>
+                    <h3 style="margin: 10px 0; color:var(--dark-green);">${item.baslik} (📅 ${item.yil})</h3>
+                    <p style="color:#666; font-size:0.9rem; line-height:1.5;">${item.aciklama}</p>
+                    <div style="margin-top:15px; display:flex; gap:10px;">
+                        <button onclick="duzenleHazirlik(${index})" style="background:#00592D; color:white; border:none; padding:6px 12px; border-radius:4px; cursor:pointer;">Düzenle 🔄</button>
+                        <button onclick="silEnvanter(${index})" style="background:#ff7675; color:white; border:none; padding:6px 12px; border-radius:4px; font-weight:bold; cursor:pointer;">Sil 🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        document.getElementById('crudForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const index = document.getElementById('editIndex').value;
+            const yeniRobot = {
+                baslik: document.getElementById('botTitle').value,
+                kategori: document.getElementById('botCategory').value,
+                yil: document.getElementById('botYear').value,
+                resim: document.getElementById('botImage').value,
+                aciklama: document.getElementById('botDesc').value
+            };
+
+            if(index === "") {
+                envanter.push(yeniRobot);
+                window.gosterToast("Yeni veri yerel veritabanına eklendi! 💾");
+            } else {
+                envanter[index] = yeniRobot;
+                window.gosterToast("Veri başarıyla güncellendi! 🔄");
+                document.getElementById('editIndex').value = "";
+                document.getElementById('submitCrudBtn').innerText = "Veritabanına Kaydet 💾";
+            }
+
+            localStorage.setItem('müzeEnvanter', JSON.stringify(envanter));
+            this.reset();
+            listeleEnvanter();
+        });
+
+        window.duzenleHazirlik = function(index) {
+            const data = envanter[index];
+            document.getElementById('editIndex').value = index;
+            document.getElementById('botTitle').value = data.baslik;
+            document.getElementById('botCategory').value = data.kategori;
+            document.getElementById('botYear').value = data.yil;
+            document.getElementById('botImage').value = data.resim;
+            document.getElementById('botDesc').value = data.aciklama;
+            document.getElementById('submitCrudBtn').innerText = "Değişiklikleri Güncelle 🔄";
+        };
+
+        window.silEnvanter = function(index) {
+            if(confirm("Bu robot modelini silmek istediğinize emin misiniz?")) {
+                envanter.splice(index, 1);
+                localStorage.setItem('müzeEnvanter', JSON.stringify(envanter));
+                window.gosterToast("Kayıt veritabanından kalıcı olarak silindi. 🗑️");
+                listeleEnvanter();
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', listeleEnvanter);
+    </script>
+</body>
+</html>
