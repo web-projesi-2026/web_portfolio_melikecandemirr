@@ -501,22 +501,39 @@ window.yedekHavaDurumu = shadowWeather;
 // ==========================================
 async function kategorileriGetir() {
     try {
-        const yanit   = await fetch('data.json');
-        const veriler = await yanit.json();
+        const yanit     = await fetch('data.json');
+        const veriler   = await yanit.json();
         const konteynir = document.getElementById('koleksiyon-konteynir');
+
         if (konteynir && veriler.kategoriler) {
             konteynir.innerHTML = veriler.kategoriler.map(kategori => `
-                <div class="card" onclick="location.href='${kategori.link}'" style="cursor: pointer;">
-                    <div class="card-image"><img src="${kategori.resim}"></div>
-                    <div class="card-body">
-                        <h3>${kategori.baslik}</h3>
-                        <p>${kategori.aciklama}</p>
-                        <div class="card-footer"><span>Yıl: ${kategori.yil}</span></div>
-                    </div>
-                </div>`).join('');
+                <div class="card-wrapper">
+                    <a href="${kategori.link}" class="card-link">
+                        <div class="card" id="card-${kategori.id}">
+                            <div class="card-image">
+                                <img src="${kategori.resim}" alt="${kategori.baslik}">
+                            </div>
+                            <h3>${kategori.baslik}</h3>
+                            <p>${kategori.aciklama}</p>
+                        </div>
+                    </a>
+                    <button
+                        class="fav-btn"
+                        id="fav-btn-${kategori.id}"
+                        onclick="event.stopPropagation(); window.muzeIcerikFavoriTetikle('${kategori.id}', '${kategori.baslik.replace(/'/g, "\\'")}')">
+                        ♡
+                    </button>
+                </div>
+            `).join('');
+
+            favoriIkonlariniGuncelle();
         }
     } catch (e) {
         console.error("Veri yüklenemedi:", e);
+        const konteynir = document.getElementById('koleksiyon-konteynir');
+        if (konteynir) {
+            konteynir.innerHTML = `<p style="text-align:center; color:#e74c3c; padding:40px;">Koleksiyon yüklenirken bir hata oluştu. ⚠️</p>`;
+        }
     }
 }
 
