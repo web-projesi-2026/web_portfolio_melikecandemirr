@@ -1,71 +1,58 @@
-📖 Proje Hakkında
-Tech-Timeline, ilk bilgisayarların icadından günümüz yapay zeka çağına kadar uzanan dijital teknoloji tarihini kronolojik ve etkileşimli biçimde sunan bir dijital müze platformudur.
-Kullanıcılar teknoloji tarihindeki önemli dönüm noktalarını inceleyebilir, içerikleri favorilerine ekleyebilir ve yorum yaparak topluluğa katkıda bulunabilir.
+🚀 Tech-Timeline | Dijital Müze ve Teknoloji Arşivi
+📝 Proje Tanımı
+Tech-Timeline, insanlık tarihinin mekanik hesap makinelerinden modern yapay zeka mimarilerine uzanan teknolojik evrimini dijitalleştiren, interaktif ve dinamik bir web platformudur. Bu proje, kullanıcıların teknoloji tarihini keşfetmelerine, kişiselleştirilmiş bir deneyimle favori içeriklerini yönetmelerine ve yerel iklim verileriyle etkileşime girmelerine olanak tanır.
 
-🌐 Canlı Demo
-🔗 https://web-projesi-2026.github.io/web_portfolio_melikecandemirr/
+🏗️ Mimari ve Teknolojik Yığın
+Proje, modern Serverless (Sunucusuz) prensiplere dayalı, yüksek performanslı ve taşınabilir bir mimari ile geliştirilmiştir:
 
-🎯 Hedef Kitle
-Kullanıcı GrubuAmaç🎓 Öğrenciler & AraştırmacılarTeknoloji tarihini kronolojik olarak incelemek💻 Yazılım GeliştiricilerDillerin ve donanımların kökenini keşfetmek🌍 Genel KullanıcılarTeknolojinin nasıl evrildiğini merak edenler
+Frontend Katmanı: HTML5, CSS3 (Semantik yapı, modern Grid/Flexbox düzenleri).
 
-✨ Özellikler
+İş Mantığı (Logic Layer): Vanilla JavaScript (ES6+), Asenkron Programlama (Async/Await), Fetch API.
 
-🔐 Kullanıcı Kayıt & Giriş Sistemi — Hesap oluşturma ve güvenli oturum yönetimi
-❤️ Favori Sistemi — İçerikleri favorilere ekleme ve profil panelinden yönetme
-💬 Yorum Sistemi — Her teknoloji başlığı altına kullanıcı yorumu ekleme
-🗂️ JSON Tabanlı Dinamik Kartlar — Kart verileri data.json üzerinden JS ile üretilir
-🌤️ Canlı Hava Durumu — Kullanıcının seçtiği müze bölgesine göre anlık iklim verisi
-🌙 Karanlık / Açık Tema — Tercih localStorage'a kaydedilir
-📱 Responsive Tasarım — Mobil uyumlu hamburger menü dahil tüm ekran boyutları desteklenir
-👤 Profil Yönetimi — Ad, e-posta, şehir ve profil fotoğrafı düzenleme
+Veri Yönetimi (Data Layer): * JSON: Müze koleksiyonu ve ansiklopedik verilerin dinamik listelenmesi.
 
+LocalStorage (NoSQL): Kullanıcı oturumları, profil tercihleri ve favori içeriklerin kalıcı olarak saklanması.
 
-🛠️ Kullanılan Teknolojiler
-Frontend       →  HTML5, CSS3, JavaScript (Vanilla)
-Backend        →  PHP
-Veritabanı     →  MySQL
-Yerel Sunucu   →  XAMPP / WampServer
-Versiyon Kont. →  Git & GitHub
+API Entegrasyonu: OpenWeatherMap REST API aracılığıyla gerçek zamanlı hava durumu verilerinin çekilmesi ve işlenmesi.
 
-📁 Proje Yapısı
+✨ Temel Fonksiyonel Özellikler
+🔐 Gelişmiş Kimlik Doğrulama
+Kayıt & Giriş: Ad-Soyad, E-posta ve şifre doğrulamalı dinamik modallar.
+
+Profil Yönetimi: Kullanıcıların profil bilgilerini düzenleme, profil fotoğrafını (Base64 formatında) yükleme ve iklim bölgesini özelleştirme yetkisi.
+
+🌤️ Dinamik İklim Yönetimi
+Kullanıcılar profillerinden tercih ettikleri il/ilçeyi seçebilirler. Sistem, bu tercihi anında localStorage'a işler ve OpenWeatherMap API ile bölgenin güncel verilerini ana sayfaya yansıtır.
+
+❤️ Favori Sistemi
+Proje kartları üzerinde bulunan interaktif favori butonları ile içerikleri koleksiyona ekleme/çıkarma imkanı.
+
+Profil paneli altında senkronize çalışan, anlık güncellenen "Favorilerim" sekmesi.
+
+🎨 Kullanıcı Deneyimi (UX) Optimizasyonu
+Toast Bildirim Sistemi: Her türlü veri değişikliğinde (giriş, kayıt, favori ekleme) sağ alt köşede 4.5 saniye boyunca görünen estetik bildirim kutusu.
+
+Tema Yönetimi: LocalStorage tabanlı, sayfalar arası geçişlerde hafızasını koruyan Dark/Light mod desteği.
+
+🛠️ Kurulum ve Çalıştırma
+Bu proje, herhangi bir sunucu yapılandırması (Apache/MySQL/XAMPP) gerektirmez.
+
+Depoyu Klonlayın:
+git clone https://github.com/web-projesi-2026/web_portfolio_melikecandemirr.git
+
+Projeyi Başlatın:
+index.html dosyasını herhangi bir modern tarayıcıda (Chrome, Edge, Firefox) açmanız yeterlidir.
+
+📂 Dosya Hiyerarşisi
+Plaintext
 Tech-Timeline/
-│
-├── index.html                  # Ana sayfa
-├── index.php                   # PHP giriş noktası
-├── data.json                   # Koleksiyon kart verileri
-│
+├── index.html          # Ana giriş ve dashboard
 ├── assests/
-│   ├── css/
-│   │   └── style.css           # Genel stiller & tema
-│   ├── js/
-│   │   └── main.js             # Etkileşim, auth, favori motoru
-│   └── img/                    # Görsel dosyaları
-│
-└── pages/
-    ├── about.html              # Hakkımda
-    ├── contact.html            # İletişim
-    ├── project.html            # Projeler
-    ├── computer-history.html   # Bilgisayar tarihi
-    ├── ai-history.html         # Yapay Zeka tarihi
-    └── cloud-history.html      # Bulut Bilişim tarihi
+│   ├── css/            # Global stiller ve Dark Mode ayarları
+│   └── js/             # Tüm iş mantığı, API motoru ve CRUD işlemleri
+├── pages/              # Alt kütüphane sayfaları (AI, Computer, Cloud)
+└── data.json           # Koleksiyon verilerinin tutulduğu veri havuzu
+🎓 Akademik Bildirim
+Bu proje, Ahi Evran Üniversitesi - Bilgisayar Programcılığı final ödevi kapsamında Melike Candemir tarafından; modern yazılım standartları, sunucusuz veri yönetimi ve dinamik arayüz tasarımı ilkeleri gözetilerek geliştirilmiştir.
 
-🚀 Kurulum
-
-Proje PHP ve MySQL tabanlıdır. Çalıştırmak için yerel bir sunucu gereklidir.
-
-1. Depoyu klonlayın
-bashgit clone https://github.com/web-projesi-2026/web_portfolio_melikecandemirr.git
-2. XAMPP veya WampServer kurun
-
-XAMPP İndir | WampServer İndir
-
-3. Proje klasörünü taşıyın
-Klasörü → htdocs/Tech-Timeline  konumuna kopyalayın
-4. Sunucuyu başlatın ve tarayıcıda açın
-http://localhost/Tech-Timeline
-
-👩‍💻 Geliştirici
-Melike Candemir
-Ahi Evran Üniversitesi — 2026
-
-Bu proje responsive tasarım, kullanıcı oturum yönetimi, JSON tabanlı dinamik veri ve GitHub versiyon kontrolü becerilerini kapsamaktadır.
+Geliştirici: Melike Candemir | 2026
