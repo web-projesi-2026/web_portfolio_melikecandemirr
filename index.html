@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="assests/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* Açılır Pencere (Modal) Tasarımları */
         .muze-modal {
             display: none;
             position: fixed;
@@ -46,7 +45,6 @@
         }
         .nav-auth-btn:hover { color: #FFB81C; }
         
-        /* Profil Menü Alanı */
         #trigger-profile-modal {
             display: flex;
             align-items: center;
@@ -146,39 +144,72 @@
             </div>
             
             <div class="card-grid">
-                <a href="pages/computer-history.html" class="card-link">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200" alt="Bilgisayar">
-                        </div>
-                        <h3>💻 Bilgisayarın Doğuşu</h3>
-                        <p>1950'lerden bugüne dijital evrimin temeli.</p>
-                    </div>
-                </a>
 
-                <a href="pages/ai-history.html" class="card-link">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200" alt="Yapay Zeka">
+                <!-- KART 1: Bilgisayarın Doğuşu -->
+                <div class="card-wrapper">
+                    <a href="pages/computer-history.html" class="card-link">
+                        <div class="card" id="card-bilgisayar">
+                            <div class="card-image">
+                                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200" alt="Bilgisayar">
+                            </div>
+                            <h3>💻 Bilgisayarın Doğuşu</h3>
+                            <p>1950'lerden bugüne dijital evrimin temeli.</p>
                         </div>
-                        <h3>🤖 Yapay Zeka (AI)</h3>
-                        <p>3D model deneyimi ve derin öğrenme süreci.</p>
-                    </div>
-                </a>
+                    </a>
+                    <button
+                        class="fav-btn"
+                        id="fav-btn-bilgisayar"
+                        onclick="event.stopPropagation(); window.muzeIcerikFavoriTetikle('bilgisayar', '💻 Bilgisayarın Doğuşu')"
+                        title="Favorilere Ekle">
+                        ♡
+                    </button>
+                </div>
 
-                <a href="pages/cloud-history.html" class="card-link">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=1200" alt="Bulut Bilişim">
+                <!-- KART 2: Yapay Zeka -->
+                <div class="card-wrapper">
+                    <a href="pages/ai-history.html" class="card-link">
+                        <div class="card" id="card-yapay-zeka">
+                            <div class="card-image">
+                                <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200" alt="Yapay Zeka">
+                            </div>
+                            <h3>🤖 Yapay Zeka (AI)</h3>
+                            <p>3D model deneyimi ve derin öğrenme süreci.</p>
                         </div>
-                        <h3>☁️ Bulut Bilişim</h3>
-                        <p>Verilerin fiziksel sınırlardan kurtulduğu yeni çağ.</p>
-                    </div>
-                </a>
+                    </a>
+                    <button
+                        class="fav-btn"
+                        id="fav-btn-yapay-zeka"
+                        onclick="event.stopPropagation(); window.muzeIcerikFavoriTetikle('yapay-zeka', '🤖 Yapay Zeka (AI)')"
+                        title="Favorilere Ekle">
+                        ♡
+                    </button>
+                </div>
+
+                <!-- KART 3: Bulut Bilişim -->
+                <div class="card-wrapper">
+                    <a href="pages/cloud-history.html" class="card-link">
+                        <div class="card" id="card-bulut">
+                            <div class="card-image">
+                                <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=1200" alt="Bulut Bilişim">
+                            </div>
+                            <h3>☁️ Bulut Bilişim</h3>
+                            <p>Verilerin fiziksel sınırlardan kurtulduğu yeni çağ.</p>
+                        </div>
+                    </a>
+                    <button
+                        class="fav-btn"
+                        id="fav-btn-bulut"
+                        onclick="event.stopPropagation(); window.muzeIcerikFavoriTetikle('bulut', '☁️ Bulut Bilişim')"
+                        title="Favorilere Ekle">
+                        ♡
+                    </button>
+                </div>
+
             </div>
         </section>
     </main>
 
+    <!-- GİRİŞ MODALI -->
     <div id="login-modal" class="muze-modal">
         <div class="muze-modal-content">
             <span id="close-login" class="muze-modal-close">&times;</span>
@@ -189,6 +220,7 @@
         </div>
     </div>
 
+    <!-- KAYIT MODALI -->
     <div id="register-modal" class="muze-modal">
         <div class="muze-modal-content">
             <span id="close-register" class="muze-modal-close">&times;</span>
@@ -201,6 +233,7 @@
         </div>
     </div>
 
+    <!-- PROFİL MODALI -->
     <div id="profile-modal" class="muze-modal">
         <div class="muze-modal-content" style="max-width: 460px;">
             <span id="close-profile" class="muze-modal-close">&times;</span>
@@ -235,12 +268,12 @@
             <div id="tab-content-favorites" style="display: none;">
                 <h4 style="color: #00592D; margin: 10px 0; font-size: 0.95rem;">📌 Favoriye Eklemiş Olduğunuz Başlıklar</h4>
                 <div id="profile-favorites-list" style="max-height: 240px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 5px;">
-                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div id="custom-toast" style="display: none;"></div>
+    <div id="custom-toast"></div>
 
     <footer class="footer">
         <p>&copy; 2026 Melike Candemir | Ahi Evran Üniversitesi</p>
