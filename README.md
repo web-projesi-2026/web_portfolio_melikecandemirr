@@ -1,45 +1,49 @@
-# web_portfolio_melikecandemirr
-# Tech-Timeline: Teknoloji Zaman Çizelgesi
-## Proje Açıklaması
-Bu proje, dijital teknolojinin tarihsel gelişimini (ilk bilgisayarlardan günümüze donanım ve yazılım evrimini)
-kronolojik bir sıra ile sunan etkileşimli bir dijital müze platformudur. Kullanıcılar teknoloji tarihindeki önemli dönüm noktalarını inceleyebilir ve
-bu içeriklere yorum yaparak etkileşime girebilirler.
+# 🚀 Tech-Timeline | Teknoloji Zaman Çizelgesi
 
-##  Canlı Link 
-✅[Tıklayınız...](https://web-projesi-2026.github.io/web_portfolio_melikecandemirr/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Status: Finalized](https://img.shields.io/badge/Status-Completed-blue.svg)]()
 
-## Hedef Kullanıcılar Kim?
-* Teknoloji tarihine meraklı öğrenciler ve araştırmacılar.
-* Yazılım dillerinin ve donanımların kökenini öğrenmek isteyen geliştiriciler.
-* Geçmişten günümüze teknolojinin nasıl değiştiğini merak eden genel kullanıcı kitlesi.
+**Tech-Timeline**, insanlık tarihinin mekanik hesap makinelerinden modern yapay zeka mimarilerine uzanan teknolojik evrimini dijitalleştiren, interaktif ve dinamik bir web platformudur. Bu proje, teknoloji tutkunlarına geçmişin mekanik hatıralarını, geleceğin dijital kodlarıyla birleştirerek sunar.
 
-## Temel Özellikler
-* **Kullanıcı Kayıt ve Giriş Sistemi:** Kullanıcıların hesap oluşturup güvenli giriş yapabilmesi.
-* **Etkileşimli Zaman Tüneli:** Teknoloji dünyasındaki önemli buluşların (ENIAC, C dili, İnternet vb.) listelenmesi.
-* **Yorum Sistemi:** Kullanıcıların her bir teknoloji başlığı altına görüşlerini yazabilmesi.
-* **Veri Listeleme:** Donanım ve yazılım kategorilerine göre teknolojilerin veritabanından çekilerek gösterilmesi.
+---
 
-## Kullanılan Teknolojiler
-* **HTML:** Sayfa yapısı ve iskeleti.
-* **CSS:** Görsel tasarım ve kullanıcı arayüzü.
-* **JavaScript:** Sayfa içi etkileşimler ve dinamik içerikler.
-* **PHP:** Sunucu taraflı işlemler ve veritabanı bağlantısı.
-* **MySQL:** Kullanıcı verileri, teknolojiler ve yorumların saklandığı veritabanı.
+## 🌐 Canlı Demo
+[Projeyi Görüntüle](https://web-projesi-2026.github.io/web_portfolio_melikecandemirr/)
 
-## Kurulum
-1. Bu projeyi yerel bilgisayarınızda çalıştırmak için önce dosyaları indirin (veya "git clone" komutunu kullanın).
-2. Proje PHP ve MySQL tabanlı olduğu için **XAMPP** veya **WampServer** gibi bir yerel sunucu yazılımı kullanılması gerekmektedir.
-3. İndirdiğiniz klasörü sunucunuzun "htdocs" klasörüne kopyalayın.
-4. Tarayıcınızın adres çubuğuna "localhost/Tech-Timeline" yazarak projeyi görüntüleyebilirsiniz.
+---
 
- Tech-Timeline/
+## 🎯 Hedef Kitle
+* **Akademisyenler & Öğrenciler:** Teknoloji tarihini kronolojik olarak incelemek isteyenler.
+* **Yazılım Geliştiriciler:** Dil ve donanım evrimini keşfetmek isteyenler.
+* **Dijital Müze Meraklıları:** Teknolojinin dünü ve bugünü arasında bağ kurmak isteyenler.
+
+---
+
+## ⚙️ Temel Özellikler
+* **🔐 Gelişmiş Kimlik Doğrulama:** Güvenli üye kayıt, giriş ve profil yönetimi modülleri.
+* **🌤️ Canlı İklim Entegrasyonu:** OpenWeatherMap API ile bölge bazlı anlık hava durumu verisi.
+* **❤️ Etkileşimli Favori Sistemi:** İçerikleri kaydetme ve profil panelinde yönetme.
+* **🌙 Dark/Light Mod:** LocalStorage ile kalıcı tema yönetimi.
+* **📱 Responsive Tasarım:** Hamburger menü ile mobilde kusursuz kullanıcı deneyimi.
+* **👤 Profil & Kişiselleştirme:** Fotoğraf yükleme ve kullanıcı tercihleri yönetimi.
+
+---
+
+## 🛠️ Kullanılan Teknolojiler
+* **Frontend:** HTML5, CSS3, JavaScript (ES6+)
+* **Veri Yönetimi:** JSON, LocalStorage (NoSQL tabanlı veritabanı simülasyonu)
+* **İletişim Katmanı:** Fetch API, Asenkron (Async/Await) işlemler
+* **Versiyon Kontrol:** Git & GitHub
+
+---
+
+## 📂 Dosya Hiyerarşisi
+```text
+Tech-Timeline/
 ├── index.html          # Ana giriş ve dashboard
 ├── assests/
 │   ├── css/            # Global stiller ve Dark Mode ayarları
-│   └── js/             # Tüm iş mantığı, API motoru ve CRUD işlemleri
+│   └── js/             # Ana mantık (main.js)
 ├── pages/              # Alt kütüphane sayfaları (AI, Computer, Cloud)
-└── data.json           # Koleksiyon verilerinin tutulduğu veri havuzu
-
-
-
-##Bu proje responsive tasarım ve GitHub yönetimi becerilerini içerir.Mobilde aktif olan hamburger menü mevcut.
+├── data.json           # Koleksiyon verileri
+└── README.md           # Proje dokümantasyonu
