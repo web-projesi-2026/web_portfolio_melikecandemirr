@@ -6,7 +6,6 @@
     <title>Tech-Timeline | Dijital Müze</title>
     <link rel="stylesheet" href="assests/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
     <style>
         .muze-modal {
             display: none;
@@ -144,68 +143,9 @@
                 <p>İnsanlık tarihini değiştiren dönüm noktaları</p>
             </div>
             
-            <div class="card-grid">
-
-                <!-- KART 1: Bilgisayarın Doğuşu -->
-                <div class="card-wrapper">
-                    <a href="pages/computer-history.html" class="card-link">
-                        <div class="card" id="card-bilgisayar">
-                            <div class="card-image">
-                                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200" alt="Bilgisayar">
-                            </div>
-                            <h3>💻 Bilgisayarın Doğuşu</h3>
-                            <p>1950'lerden bugüne dijital evrimin temeli.</p>
-                        </div>
-                    </a>
-                    <button
-                        class="fav-btn"
-                        id="fav-btn-bilgisayar"
-                        onclick="event.stopPropagation(); window.muzeIcerikFavoriTetikle('bilgisayar', '💻 Bilgisayarın Doğuşu')"
-                        title="Favorilere Ekle">
-                        ♡
-                    </button>
-                </div>
-
-                <!-- KART 2: Yapay Zeka -->
-                <div class="card-wrapper">
-                    <a href="pages/ai-history.html" class="card-link">
-                        <div class="card" id="card-yapay-zeka">
-                            <div class="card-image">
-                                <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200" alt="Yapay Zeka">
-                            </div>
-                            <h3>🤖 Yapay Zeka (AI)</h3>
-                            <p>3D model deneyimi ve derin öğrenme süreci.</p>
-                        </div>
-                    </a>
-                    <button
-                        class="fav-btn"
-                        id="fav-btn-yapay-zeka"
-                        onclick="event.stopPropagation(); window.muzeIcerikFavoriTetikle('yapay-zeka', '🤖 Yapay Zeka (AI)')"
-                        title="Favorilere Ekle">
-                        ♡
-                    </button>
-                </div>
-
-                <!-- KART 3: Bulut Bilişim -->
-                <div class="card-wrapper">
-                    <a href="pages/cloud-history.html" class="card-link">
-                        <div class="card" id="card-bulut">
-                            <div class="card-image">
-                                <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=1200" alt="Bulut Bilişim">
-                            </div>
-                            <h3>☁️ Bulut Bilişim</h3>
-                            <p>Verilerin fiziksel sınırlardan kurtulduğu yeni çağ.</p>
-                        </div>
-                    </a>
-                    <button
-                        class="fav-btn"
-                        id="fav-btn-bulut"
-                        onclick="event.stopPropagation(); window.muzeIcerikFavoriTetikle('bulut', '☁️ Bulut Bilişim')"
-                        title="Favorilere Ekle">
-                        ♡
-                    </button>
-                </div>
-
+            <!-- Kartlar data.json'dan JS tarafından dinamik olarak üretilir -->
+            <div class="card-grid" id="koleksiyon-konteynir">
+                <p style="text-align:center; color:#888; padding:40px;">Koleksiyon yükleniyor...</p>
             </div>
         </section>
     </main>
