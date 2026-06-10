@@ -1,37 +1,71 @@
-# web_portfolio_melikecandemirr
-# Tech-Timeline: Teknoloji Zaman Çizelgesi
-## Proje Açıklaması
-Bu proje, dijital teknolojinin tarihsel gelişimini (ilk bilgisayarlardan günümüze donanım ve yazılım evrimini)
-kronolojik bir sıra ile sunan etkileşimli bir dijital müze platformudur. Kullanıcılar teknoloji tarihindeki önemli dönüm noktalarını inceleyebilir ve
-bu içeriklere yorum yaparak etkileşime girebilirler.
+📖 Proje Hakkında
+Tech-Timeline, ilk bilgisayarların icadından günümüz yapay zeka çağına kadar uzanan dijital teknoloji tarihini kronolojik ve etkileşimli biçimde sunan bir dijital müze platformudur.
+Kullanıcılar teknoloji tarihindeki önemli dönüm noktalarını inceleyebilir, içerikleri favorilerine ekleyebilir ve yorum yaparak topluluğa katkıda bulunabilir.
 
-##  Canlı Link 
-✅[Tıklayınız...](https://web-projesi-2026.github.io/web_portfolio_melikecandemirr/)
+🌐 Canlı Demo
+🔗 https://web-projesi-2026.github.io/web_portfolio_melikecandemirr/
 
-## Hedef Kullanıcılar Kim?
-* Teknoloji tarihine meraklı öğrenciler ve araştırmacılar.
-* Yazılım dillerinin ve donanımların kökenini öğrenmek isteyen geliştiriciler.
-* Geçmişten günümüze teknolojinin nasıl değiştiğini merak eden genel kullanıcı kitlesi.
+🎯 Hedef Kitle
+Kullanıcı GrubuAmaç🎓 Öğrenciler & AraştırmacılarTeknoloji tarihini kronolojik olarak incelemek💻 Yazılım GeliştiricilerDillerin ve donanımların kökenini keşfetmek🌍 Genel KullanıcılarTeknolojinin nasıl evrildiğini merak edenler
 
-## Temel Özellikler
-* **Kullanıcı Kayıt ve Giriş Sistemi:** Kullanıcıların hesap oluşturup güvenli giriş yapabilmesi.
-* **Etkileşimli Zaman Tüneli:** Teknoloji dünyasındaki önemli buluşların (ENIAC, C dili, İnternet vb.) listelenmesi.
-* **Yorum Sistemi:** Kullanıcıların her bir teknoloji başlığı altına görüşlerini yazabilmesi.
-* **Veri Listeleme:** Donanım ve yazılım kategorilerine göre teknolojilerin veritabanından çekilerek gösterilmesi.
+✨ Özellikler
 
-## Kullanılan Teknolojiler
-* **HTML:** Sayfa yapısı ve iskeleti.
-* **CSS:** Görsel tasarım ve kullanıcı arayüzü.
-* **JavaScript:** Sayfa içi etkileşimler ve dinamik içerikler.
-* **PHP:** Sunucu taraflı işlemler ve veritabanı bağlantısı.
-* **MySQL:** Kullanıcı verileri, teknolojiler ve yorumların saklandığı veritabanı.
-
-## Kurulum
-1. Bu projeyi yerel bilgisayarınızda çalıştırmak için önce dosyaları indirin (veya "git clone" komutunu kullanın).
-2. Proje PHP ve MySQL tabanlı olduğu için **XAMPP** veya **WampServer** gibi bir yerel sunucu yazılımı kullanılması gerekmektedir.
-3. İndirdiğiniz klasörü sunucunuzun "htdocs" klasörüne kopyalayın.
-4. Tarayıcınızın adres çubuğuna "localhost/Tech-Timeline" yazarak projeyi görüntüleyebilirsiniz.
+🔐 Kullanıcı Kayıt & Giriş Sistemi — Hesap oluşturma ve güvenli oturum yönetimi
+❤️ Favori Sistemi — İçerikleri favorilere ekleme ve profil panelinden yönetme
+💬 Yorum Sistemi — Her teknoloji başlığı altına kullanıcı yorumu ekleme
+🗂️ JSON Tabanlı Dinamik Kartlar — Kart verileri data.json üzerinden JS ile üretilir
+🌤️ Canlı Hava Durumu — Kullanıcının seçtiği müze bölgesine göre anlık iklim verisi
+🌙 Karanlık / Açık Tema — Tercih localStorage'a kaydedilir
+📱 Responsive Tasarım — Mobil uyumlu hamburger menü dahil tüm ekran boyutları desteklenir
+👤 Profil Yönetimi — Ad, e-posta, şehir ve profil fotoğrafı düzenleme
 
 
+🛠️ Kullanılan Teknolojiler
+Frontend       →  HTML5, CSS3, JavaScript (Vanilla)
+Backend        →  PHP
+Veritabanı     →  MySQL
+Yerel Sunucu   →  XAMPP / WampServer
+Versiyon Kont. →  Git & GitHub
 
-##Bu proje responsive tasarım ve GitHub yönetimi becerilerini içerir.Mobilde aktif olan hamburger menü mevcut.
+📁 Proje Yapısı
+Tech-Timeline/
+│
+├── index.html                  # Ana sayfa
+├── index.php                   # PHP giriş noktası
+├── data.json                   # Koleksiyon kart verileri
+│
+├── assests/
+│   ├── css/
+│   │   └── style.css           # Genel stiller & tema
+│   ├── js/
+│   │   └── main.js             # Etkileşim, auth, favori motoru
+│   └── img/                    # Görsel dosyaları
+│
+└── pages/
+    ├── about.html              # Hakkımda
+    ├── contact.html            # İletişim
+    ├── project.html            # Projeler
+    ├── computer-history.html   # Bilgisayar tarihi
+    ├── ai-history.html         # Yapay Zeka tarihi
+    └── cloud-history.html      # Bulut Bilişim tarihi
+
+🚀 Kurulum
+
+Proje PHP ve MySQL tabanlıdır. Çalıştırmak için yerel bir sunucu gereklidir.
+
+1. Depoyu klonlayın
+bashgit clone https://github.com/web-projesi-2026/web_portfolio_melikecandemirr.git
+2. XAMPP veya WampServer kurun
+
+XAMPP İndir | WampServer İndir
+
+3. Proje klasörünü taşıyın
+Klasörü → htdocs/Tech-Timeline  konumuna kopyalayın
+4. Sunucuyu başlatın ve tarayıcıda açın
+http://localhost/Tech-Timeline
+
+👩‍💻 Geliştirici
+Melike Candemir
+Ahi Evran Üniversitesi — 2026
+
+Bu proje responsive tasarım, kullanıcı oturum yönetimi, JSON tabanlı dinamik veri ve GitHub versiyon kontrolü becerilerini kapsamaktadır.
